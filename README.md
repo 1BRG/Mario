@@ -1,5 +1,5 @@
 # State Machine
-###Scurta descriere a temei alese
+### Scurta descriere a temei alese
 Am implementat un automat finit (State Machine) care citește din fișierul input.txt configurarea unui automat. Programul analizează această configurare pentru a determina dacă automatul este valid sau nu. În cazul în care automatul este valid, se oferă și posibilitatea verificării apartenenței unui cuvânt la limbajul recunoscut de acesta
 
 ### Folosiți template-ul corespunzător grupei voastre!
