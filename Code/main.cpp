@@ -611,6 +611,9 @@ int main()
     // cout << T << "\n";
     a = Automat{citire};
     b = a;
+    if (a.isNFA() == false) {
+        return 0;
+    }
     cout << b;
     a.toDFA();
     cout << "\n\n Automat to DFA\n\n";
