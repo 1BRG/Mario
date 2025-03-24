@@ -611,7 +611,7 @@ int main()
     // cout << T << "\n";
     a = Automat{citire};
     b = a;
-    if (a.isNFA() == false) {
+    if (a.isValid() == false) {
         return 0;
     }
     cout << b;
