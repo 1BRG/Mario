@@ -598,7 +598,7 @@ int main()
     char cuv[n];
     Automat a, b;
 
-    Input citire_aux("input.txt");
+    Input citire_aux("Code/input.txt");
     Input citire;
     citire = citire_aux;
     // cout << citire << "\n";

@@ -4,6 +4,7 @@
 #include <Helper.h>
 
 int main() {
+    /*
     std::cout << "Hello, world!\n";
     std::array<int, 100> v{};
     int nr;
@@ -53,5 +54,6 @@ int main() {
     Helper helper;
     helper.help();
     ///////////////////////////////////////////////////////////////////////////
+    */
     return 0;
 }
