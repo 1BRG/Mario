@@ -19,6 +19,7 @@ int main()
         v.push_back(a);
         i = i + BrickTexture.width;
     }
+  ToggleFullscreen();
   while(!WindowShouldClose())
   {
 
