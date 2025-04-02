@@ -1,6 +1,6 @@
 #include <cmath>
-#include <raylib.h>
-#include "defineuri.h"
+#include <../cmake-build-debug/_deps/raylib-src/src/raylib.h>
+#include "include/defineuri.h"
 
 using namespace std;
 class Entity
@@ -107,7 +107,7 @@ public:
 class Brick : public Entity
 {
 public:
-    Brick(const double x, const double y) : Entity(x, y, BrickTexture) {}
+    Brick(const double x, const double y);
     Brick()
     {
         texture = BrickTexture;
@@ -115,8 +115,5 @@ public:
 };
 class Game {
     public:
-    void draw(vector <Entity> &v) {
-        for (int i = 0; i < v.size(); i ++)
-            v[i].draw();
-    }
+    void draw(vector <Entity> &v);
 };

@@ -42,11 +42,13 @@ endif()
 # Definirea executabilului
 
 add_executable(${MAIN_EXECUTABLE_NAME}
-        Code/main.cpp
+        Code/src/main.cpp
        # Code/statemachine.cpp
         generated/src/Helper.cpp
-        Code/Entitati.h
-        Code/defineuri.h
+        Code/Entitati1.h
+        Code/include/defineuri.h
+        Code/include/Entitati.h
+        Code/src/Entitati.cpp
 )
 target_compile_definitions(${MAIN_EXECUTABLE_NAME} PRIVATE RAYLIB_STATIC)
 target_link_libraries(${MAIN_EXECUTABLE_NAME} raylib)
