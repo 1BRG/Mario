@@ -9,17 +9,18 @@
 #include <memory>
 #include <raylib.h>
 #include <vector>
-#include "defineuri.h"
+#include "../defineuri.h"
 using namespace std;
 class Entity
 {
 protected:
     double coordX = 0, coordY = 0, x = 0, y = 0;
-
+    double targetX = 0, targetY = 0;
     int health = 1;
     double speed = 0;
     bool moving = true;
     bool damage = false;
+    bool updateLeft = true, updateRight = true, updateTop = true, updateBottom = true;
     Texture2D texture;
 public:
     virtual ~Entity() = default;
@@ -31,58 +32,47 @@ public:
 
     [[nodiscard]] double coord_y() const;
 
-    [[nodiscard]] double x1() const;
+    [[nodiscard]] double height() const;
 
-    [[nodiscard]] double y1() const;
+    [[nodiscard]] double width() const;
+
+    [[nodiscard]] double target_x() const;
+
+    [[nodiscard]] double target_y() const;
+
     bool danger() const;
     virtual void draw();
     virtual void update();
-    virtual void colision(Entity &other);
+    virtual void collision(Entity &other, int directie = 0);
     virtual void gravity(){}
+    virtual void moveToTarget();
+
+    ///
+    virtual void setLastY(){}
+    ///
 };
 
 class Player : public Entity {
-
-    double lastY = 0;
+    double lastY = screenHeight;
     bool canJump = true, cont = true, isJumping = false;
 public:
-    Player(double x, const double y);
+    Player(double x,  double y);
     Player();
     void handleInput();
     void moveX();
     void moveY();
     void update() override;
-    void colision(Entity &other) override;
+    void collision(Entity &other, int directie = 0) override;
+    void collision();
+    void moveToTarget() override;
     void gravity() override;
+    void setLastY() override;
 };
 class Enviroment : public Entity
 {
 public:
-    Enviroment(const double x, const double y);
+    Enviroment(double x, double y);
     Enviroment();
 };
-
-class game {
-    bool valid = true;
-    shared_ptr<Entity> grid[screenHeight][screenHeight];
-    vector<shared_ptr<Entity>> entities;
-
-    static game* instance;
-    game() {}
-public:
-    static game* GetInstance();
-    void setValid();
-    void insert(const shared_ptr<Entity> &entity);
-    void deleteEntity(const shared_ptr<Entity> &entity);
-    void topColision(const shared_ptr<Entity> &entity, int y) const;
-    void bottomColision(const shared_ptr<Entity>& entity, int y) const;
-    void rightColision(const shared_ptr<Entity> &entity, int x) const;
-    void leftColision(const shared_ptr<Entity>& entity, int x) const;
-
-    static void colision(const shared_ptr<Entity> &other);
-    void StartGameLoop();
-    void draw();
-};
-
 
 #endif //ENTITATI_H

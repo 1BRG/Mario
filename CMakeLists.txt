@@ -47,8 +47,9 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         generated/src/Helper.cpp
         Code/Entitati1.h
         Code/include/defineuri.h
-        Code/include/Entitati.h
+        Code/include/entitati/Entitati.h
         Code/src/Entitati.cpp
+        Code/src/gameFunction.cpp
 )
 target_compile_definitions(${MAIN_EXECUTABLE_NAME} PRIVATE RAYLIB_STATIC)
 target_link_libraries(${MAIN_EXECUTABLE_NAME} raylib)

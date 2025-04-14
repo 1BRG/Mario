@@ -2,8 +2,9 @@
 #include <raylib.h>
 #include <vector>
 
-#include "../include/Entitati.h"
+#include "../include/entitati/Entitati.h"
 #include "../include/defineuri.h"
+#include "../include/game/gameFunction.h"
 using namespace std;
 
 

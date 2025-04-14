@@ -11,7 +11,7 @@
 #define screenHeight 1080
 #define DefaultSpeed 1
 #define ProcentAlergare 0.05
-#define JumpMax (lastY-100)
-#define JumpMin (lastY-50)
-#define Jump 3
+#define JumpMax (lastY-320)
+#define JumpMin (lastY-256)
+#define Jump 5
 #endif //DEFINEURI_H

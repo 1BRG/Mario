@@ -2,19 +2,21 @@
 // Created by Gabriel on 4/1/2025.
 //
 #include <iostream>
-#include "../include/Entitati.h"
+#include "../include/entitati/Entitati.h"
 
 #include <bits/stl_algo.h>
 
 
 Entity::Entity(const double x, const double y, const Texture2D &Texture) : coordX(x), coordY(y), texture(Texture) {
-    this->x = x + Texture.width;
-    this->y = y + Texture.height;
+    this->x =  Texture.width;
+    this->y =  Texture.height;
+    targetX = coordX;
+    targetY = coordY;
 }
 
 Entity::Entity(const Texture2D &Texture) : texture(Texture) {
-    this->x = x + Texture.width;
-    this->y = y + Texture.height;
+    this->x =  Texture.width;
+    this->y =  Texture.height;
 };
 
 [[nodiscard]] double Entity::coord_x() const {
@@ -25,12 +27,20 @@ Entity::Entity(const Texture2D &Texture) : texture(Texture) {
     return coordY;
 }
 
-[[nodiscard]] double Entity::x1() const {
+[[nodiscard]] double Entity::width() const {
     return x;
 }
 
-[[nodiscard]] double Entity::y1() const {
+[[nodiscard]] double Entity::height() const {
     return y;
+}
+
+[[nodiscard]] double Entity::target_x() const {
+    return coordX;
+}
+
+[[nodiscard]] double Entity::target_y() const {
+    return coordY;
 }
 
 void Entity::draw() {
@@ -40,12 +50,31 @@ void Entity::draw() {
 void Entity::update() {
 }
 
-void Entity::colision(Entity &other) {
+void Entity::collision(Entity &other, int directie) {
+
 }
-bool Entity::danger() const {return damage;};
+bool Entity::danger() const {
+    return damage;
+};
+
+void Entity::moveToTarget() {
+    if (updateLeft && updateRight) {
+        coordX = targetX;
+    }
+    if (updateBottom && updateTop) {
+        coordY = targetY;
+    }
+    updateBottom = updateTop = true;
+    updateLeft = updateRight = true;
+   // canUpdate = true;
+    targetX = coordX;
+    targetY = coordY;
+}
+
 
 Player::Player(const double x, const double y) : Entity(x, y, MarioTexture) {
-    lastY = y;
+    lastY = screenHeight;
+    targetX = coordX, targetY = coordY;
 }
 
 Player::Player() : Entity(MarioTexture) {
@@ -68,20 +97,20 @@ void Player::handleInput() {
 
 void Player::moveX() {
     speed = clamp(speed, -DefaultSpeed * 1.5, DefaultSpeed * 1.5);
-    coordX += speed;
+    targetX += speed;
 }
 
 void Player::moveY() {
     if (isJumping) {
-        coordY -= Jump;
-        if (coordY <= JumpMax)
+        targetY -= Jump;
+        if (targetY <= JumpMax)
             canJump = false;
     } else {
-        if (coordY != lastY && cont == false)
-            coordY += Jump, canJump = false;
-        else if (coordY != lastY && cont == true) {
-            if (coordY > JumpMin)
-                coordY -= Jump;
+        if (targetY != lastY && cont == false)
+            targetY += Jump, canJump = false;
+        else if (targetY != lastY && cont == true) {
+            if (targetY > JumpMin && lastY != screenHeight)
+                targetY -= Jump;
             else cont = false;
         } else canJump = true, cont = true;
     }
@@ -93,16 +122,49 @@ void Player::update() {
     moveY();
 }
 
-void Player::colision(Entity &other) {
+void Player::collision(Entity &other, int directie) {
+    if (directie == 1)
+        lastY = coordY, updateBottom = false, targetY = min(targetY, other.coord_y() - y - 1);
+    else if (directie == -1)
+        cont = false, updateTop = false, cont = false, canJump = false;
+    else updateLeft = updateRight = false;
     if (other.danger())
         health --;
+    //canUpdate = false;
 }
-void Player::gravity() {
-    // if (canJump) {
-    //     if ()
-    // }
+void Player::collision() {
 }
 
+void Player::gravity() {
+    if (coordY == lastY)
+        canJump = true;
+     if (!canJump) {
+         targetY = coordY + 1;
+     }
+}
+
+void Player::moveToTarget() {
+   // cout << "ba";
+    if (updateLeft && updateRight) {
+        coordX = targetX;
+    }
+    if (updateBottom && targetY - coordY >= 0) {
+        coordY = targetY;
+    }
+    if (updateTop && targetY - coordY <= 0) {
+        coordY = targetY;
+    }
+    updateBottom = updateTop = true;
+    updateLeft = updateRight = true;
+    // canUpdate = true;
+    targetX = coordX;
+    targetY = coordY;
+}
+
+void Player::setLastY() {
+    if (coordY == lastY)
+    lastY = screenHeight;
+}
 
 Enviroment::Enviroment(const double x, const double y) : Entity(x, y, BrickTexture) {
 }
@@ -111,104 +173,6 @@ Enviroment::Enviroment() {
     texture = BrickTexture;
 }
 
-game* game::instance = nullptr;
-
-game* game::GetInstance() {
-    if(instance == nullptr) {
-        instance = new game();
-    }
-    return instance;
-}
-
-void game::insert(const shared_ptr<Entity> &entity) {
-    for (int i = entity->coord_y(); i <= entity->y1(); i++)
-        for (int j = entity->coord_x(); j <= entity->x1(); j++) {
-         //   grid[i][j].push_back(entity);
-            grid[i][j] = entity;
-        }
-}
-
-void game::deleteEntity(const shared_ptr<Entity> &entity) {
-    for (int i = entity->coord_y(); i <= entity->y1(); i++)
-        for (int j = entity->coord_x(); j <= entity->x1(); j++)
-           // for (int p = 0; p < grid[i][j].size(); p++)
-               // if (grid[i][j][p] == entity)
-                   // grid[i][j].erase(grid[i][j].begin() + p);
-                       grid[i][j] = nullptr;
-}
-
-void game::topColision(const shared_ptr<Entity> &entity, int y) const {
-    for (int i = entity->coord_x(); i <= entity->x1(); i++)
-        //for (int j = 0; j < grid[y][i].size(); j ++)
-            entity->colision(*grid[y][i]);
-}
-
-void game::bottomColision(const shared_ptr<Entity>& entity, int y) const {
-    for (int i = entity->coord_x(); i <= entity->x1(); i++)
-       // for (int j = 0; j < grid[y][i].size(); j ++)
-            entity->colision(*grid[y][i]);
-}
-
-void game::leftColision(const shared_ptr<Entity>& entity, int x) const {
-    for (int i = entity->coord_y(); i <= entity->y1(); i++)
-        //for (int j = 0; j < grid[i][x].size(); j ++)
-            entity->colision(*grid[i][x]);
-}
-
-void game::rightColision(const shared_ptr<Entity> &entity, int x) const {
-    for (int i = entity->coord_y(); i <= entity->y1(); i++)
-            entity->colision(*grid[i][x]);
-}
-void game::colision(const shared_ptr<Entity> &entity) {
-    // for (int i = entity->coord_y(); i <= entity->y1(); i++) {
-    //     if (i == entity->coord_y() || i == entity->y1())
-    //         for (int j = entity->coord_x(); j <= entity->x1(); j++) {
-    //             for (int p = 0; p < grid[i][j].size(); p++)
-    //                 entity->colision(*grid[i][j][p]);
-    //         }
-    //     else {
-    //         int j = entity->coord_x();
-    //         for (int p = 0; p < grid[i][j].size(); p++)
-    //             entity->colision(*grid[i][j][p]);
-    //         j = entity->x1();
-    //         for (int p = 0; p < grid[i][j].size(); p++)
-    //             entity->colision(*grid[i][j][p]);
-    //     }
-    // }
-
-
-}
-
-void game::setValid() {
-    ///daca player.health <= 0 false
-}
-void game::StartGameLoop() {
-    InitWindow(screenWidth, screenHeight, "Hello World");
-    SetTargetFPS(60);
-    ClearBackground(GREEN);
-    Player player(screenWidth / 2, screenHeight / 2);
-    for (int i = 0; i < screenWidth; ) {
-        shared_ptr<Enviroment> a = make_shared<Enviroment>(i, screenHeight - BrickTexture.height);
-
-        i = i + BrickTexture.width;
-        entities.push_back(a);
-    }
-    game* Game = game::GetInstance();
-    //ToggleFullscreen();
-    while(!WindowShouldClose())
-    {
-
-        BeginDrawing();
-        ClearBackground(GREEN);
-        player.update();
-        player.draw();
-        draw();
-        EndDrawing();
-    }
-}
-void game::draw() {
-    for (int i = 0; i < entities.size(); i++) {entities[i]->draw();}
-}
 
 
 
