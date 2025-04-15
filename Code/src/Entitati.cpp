@@ -36,11 +36,11 @@ Entity::Entity(const Texture2D &Texture) : texture(Texture) {
 }
 
 [[nodiscard]] double Entity::target_x() const {
-    return coordX;
+    return targetX;
 }
 
 [[nodiscard]] double Entity::target_y() const {
-    return coordY;
+    return targetY;
 }
 
 void Entity::draw() {
@@ -50,34 +50,30 @@ void Entity::draw() {
 void Entity::update() {
 }
 
-void Entity::collision(Entity &other, int directie) {
-
-}
-bool Entity::danger() const {
+int Entity::danger() const {
     return damage;
 };
-
-void Entity::moveToTarget() {
-    if (updateLeft && updateRight) {
-        coordX = targetX;
-    }
-    if (updateBottom && updateTop) {
-        coordY = targetY;
-    }
-    updateBottom = updateTop = true;
-    updateLeft = updateRight = true;
-   // canUpdate = true;
-    targetX = coordX;
-    targetY = coordY;
+void Entity::collision(Entity &other, int direction) {
 }
 
 
-Player::Player(const double x, const double y) : Entity(x, y, MarioTexture) {
+
+
+
+
+
+
+
+
+
+Player::Player(const double x, const double y) : Living(x, y, MarioTexture) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
+    health = 1;
 }
 
-Player::Player() : Entity(MarioTexture) {
+Player::Player() : Living(MarioTexture) {
+    health = 1;
 }
 
 void Player::handleInput() {
@@ -95,12 +91,95 @@ void Player::handleInput() {
     isJumping = (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) & canJump;
 }
 
-void Player::moveX() {
+void Player::update() {
+    handleInput();
+    moveX();
+    moveY();
+}
+
+void Player::collision(Entity &other, int directie) {
+    if (directie == 1) {
+        targetY = min(targetY, other.coord_y() - y - 1);
+            lastY = targetY;
+         if (other.danger()) other.incomingDamage(), gaveDamage = true;
+    }
+    else if (directie == -1) {
+        targetY = max(targetY, other.coord_y() + other.height() + 1);
+        cont = false, cont = false, canJump = false;
+    }
+    else if (directie == 2) updateRight = false;
+    else updateLeft = false;
+    if (other.danger() && directie != 1)
+        tookDamage = true;
+    //canUpdate = false;
+}
+void Player::collision() {
+}
+
+/*
+void Player::gravity() {
+    if (coordY == lastY)
+        canJump = true;
+     if (!canJump) {
+         targetY = coordY + 1;
+     }
+}
+*/
+void Player::moveToTarget() {
+   // cout << "ba";
+    if (updateLeft && targetX - coordX <= 0) {
+        coordX = targetX;
+    }
+    if (updateRight && targetX - coordX >= 0) {
+        coordX = targetX;
+    }
+    if (updateBottom && targetY - coordY >= 0) {
+        coordY = targetY;
+    }
+    if (updateTop && targetY - coordY <= 0) {
+        coordY = targetY;
+    }
+
+    updateBottom = updateTop = true;
+    updateLeft = updateRight = true;
+    // canUpdate = true;
+    targetX = coordX;
+    targetY = coordY;
+    if (tookDamage) {
+        health --;
+    }
+    if (tookDamage || gaveDamage){
+        // cont = true;
+        canJump = false;
+        cont = true;
+        coordY = targetY = coordY - 5 * Jump;
+    }
+    gaveDamage = false;
+    tookDamage = false;
+}
+
+void Living::setLastY() {
+    if (coordY >= lastY)
+    lastY = screenHeight;
+}
+
+Living::Living(const double x, const double y, const Texture2D &texture) : Entity(x, y, texture) {
+    lastY = screenHeight;
+    targetX = coordX, targetY = coordY;
+}
+
+Living::Living(const Texture2D &texture) : Entity(texture) {
+}
+
+void Living::moveX() {
     speed = clamp(speed, -DefaultSpeed * 1.5, DefaultSpeed * 1.5);
     targetX += speed;
 }
+bool Living::isAlive() const {
+    return health;
+}
 
-void Player::moveY() {
+void Living::moveY() {
     if (isJumping) {
         targetY -= Jump;
         if (targetY <= JumpMax)
@@ -116,55 +195,71 @@ void Player::moveY() {
     }
 }
 
-void Player::update() {
-    handleInput();
+void Living::collision(Entity &other, int directie)
+{}
+int Turtle::isd = 0;
+Enemy::Enemy(const double x, const double y, const Texture2D &texture) : Living(x, y, texture) {
+    lastY = screenHeight;
+    targetX = coordX, targetY = coordY;
+}
+void Enemy::incomingDamage() {
+    tookDamage = true;
+}
+
+
+Turtle::Turtle(const double x, const double y) : Enemy(x, y, TurtleTexture) {
+    health = 2;
+    damage = 1;
+    speed = DefaultSpeed;
+}
+
+void Turtle::update() {
     moveX();
     moveY();
 }
 
-void Player::collision(Entity &other, int directie) {
-    if (directie == 1)
-        lastY = coordY, updateBottom = false, targetY = min(targetY, other.coord_y() - y - 1);
-    else if (directie == -1)
-        cont = false, updateTop = false, cont = false, canJump = false;
-    else updateLeft = updateRight = false;
-    if (other.danger())
+void Turtle::collision(Entity &other, int directie) {
+
+    if (directie == 1) {
+        lastY = coordY;
+        updateBottom = false;
+        targetY = min(targetY, other.coord_y() - y - 1);
+    }
+    else if (directie == -1) {
+        cont = false;
+        updateTop = false;
+        cont = false;
+        canJump = false;
+    }
+    else if (directie == 2 && targetX - coordX > 0) {
+        targetX = min(targetX, other.coord_x() - x - 1), change = true;
+    }
+    else if (directie == -2 && targetX - coordX < 0) {
+        targetX = max(targetX, other.coord_x() + other.width() + 1), change = true;
+    }
+    if (other.danger() > 1)
+        tookDamage = true;
+}
+
+void Turtle::collision(){}
+
+void Turtle::moveToTarget() {
+    if (change) speed *= -1;
+    else coordX = targetX, coordY = targetY;
+change = false;
+    if (tookDamage) {
         health --;
-    //canUpdate = false;
-}
-void Player::collision() {
-}
-
-void Player::gravity() {
-    if (coordY == lastY)
-        canJump = true;
-     if (!canJump) {
-         targetY = coordY + 1;
-     }
-}
-
-void Player::moveToTarget() {
-   // cout << "ba";
-    if (updateLeft && updateRight) {
-        coordX = targetX;
+        texture = FuriousTurtleTexture;
+        x = texture.width;
+        y = texture.height;
+        damage ++;
+        speed *= 2;
     }
-    if (updateBottom && targetY - coordY >= 0) {
-        coordY = targetY;
-    }
-    if (updateTop && targetY - coordY <= 0) {
-        coordY = targetY;
-    }
-    updateBottom = updateTop = true;
-    updateLeft = updateRight = true;
-    // canUpdate = true;
-    targetX = coordX;
+    tookDamage = false;
     targetY = coordY;
+    targetX = coordX;
 }
 
-void Player::setLastY() {
-    if (coordY == lastY)
-    lastY = screenHeight;
-}
 
 Enviroment::Enviroment(const double x, const double y) : Entity(x, y, BrickTexture) {
 }

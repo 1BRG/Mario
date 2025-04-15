@@ -17,13 +17,14 @@ protected:
     double coordX = 0, coordY = 0, x = 0, y = 0;
     double targetX = 0, targetY = 0;
     int health = 1;
-    double speed = 0;
     bool moving = true;
-    bool damage = false;
+    int damage = 0;
     bool updateLeft = true, updateRight = true, updateTop = true, updateBottom = true;
     Texture2D texture;
 public:
     virtual ~Entity() = default;
+    virtual void incomingDamage() {}
+    virtual void collision(Entity &other, int direction);
     Entity(double x, const double y, const Texture2D &Texture);
     explicit Entity(const Texture2D &Texture);
     Entity() = default;
@@ -40,34 +41,73 @@ public:
 
     [[nodiscard]] double target_y() const;
 
-    bool danger() const;
+    [[nodiscard]] int danger() const;
     virtual void draw();
     virtual void update();
-    virtual void collision(Entity &other, int directie = 0);
-    virtual void gravity(){}
-    virtual void moveToTarget();
 
     ///
-    virtual void setLastY(){}
     ///
 };
-
-class Player : public Entity {
+class Living : public Entity {
+protected:
+    double speed = 0;
     double lastY = screenHeight;
     bool canJump = true, cont = true, isJumping = false;
+    bool tookDamage = false;
+    void moveX();
+    void moveY();
+public:
+    Living(double x, double y, const Texture2D &Texture);
+    explicit Living(const Texture2D &texture);
+    Living() = default;
+    [[nodiscard]] bool isAlive() const;
+    virtual void moveToTarget(){}
+    virtual void setLastY();
+    virtual void collision(Entity &other, int directie);
+};
+
+
+class Player : public Living {
+    bool gaveDamage = false;
 public:
     Player(double x,  double y);
     Player();
     void handleInput();
-    void moveX();
-    void moveY();
+   // void moveX();
+    //void moveY();
     void update() override;
-    void collision(Entity &other, int directie = 0) override;
+    void collision(Entity &other, int directie) override;
     void collision();
     void moveToTarget() override;
-    void gravity() override;
-    void setLastY() override;
+    //void moveToTarget() override;
+   // void gravity() override;
+  //  void setLastY() override;
 };
+
+
+class Enemy : public Living {
+protected:
+    bool change = false;
+public:
+    Enemy(double x, double y, const Texture2D &Texture);
+    void incomingDamage() override;
+};
+
+
+class Turtle : public Enemy {
+    static int isd;
+    int local_id = ++isd;
+public:
+    Turtle(double x, double y);
+    void collision(Entity &other, int directie) override;
+
+    static void collision();
+    void update() override;
+    void moveToTarget() override;
+};
+
+
+//class Enemy : public
 class Enviroment : public Entity
 {
 public:

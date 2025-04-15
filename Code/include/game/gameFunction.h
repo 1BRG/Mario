@@ -15,8 +15,7 @@
 class game {
     bool valid = true;
     shared_ptr<Entity> grid[screenHeight][screenWidth];
-    list<shared_ptr<Entity>> entities;
-
+    list<shared_ptr<Living>> entities;
     static game* instance;
     game() = default;
 public:
@@ -24,12 +23,12 @@ public:
     void setValid();
     void insertEntity(const shared_ptr<Entity> &entity);
     void deleteEntity(const shared_ptr<Entity> &entity);
-    void topCollision(const shared_ptr<Entity> &entity, int y) const;
-    void bottomCollision(const shared_ptr<Entity>& entity, int y) const;
-    void rightCollision(const shared_ptr<Entity> &entity, int x) const;
-    void leftCollision(const shared_ptr<Entity>& entity, int x) const;
+    void topCollision(const shared_ptr<Living> &entity, int y) const;
+    void bottomCollision(const shared_ptr<Living>& entity, int y) const;
+    void rightCollision(const shared_ptr<Living> &entity, int x) const;
+    void leftCollision(const shared_ptr<Living>& entity, int x) const;
 
-    static void collision(list<shared_ptr<Entity>> entities);
+    static void collision(list<shared_ptr<Living>> entities);
     void StartGameLoop();
     void draw() const;
 };
