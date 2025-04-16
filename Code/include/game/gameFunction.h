@@ -8,7 +8,7 @@
 #include <list>
 
 #include "../defineuri.h"
-#include "../entitati/Entitati.h"
+#include "../entitati/includeAll.h"
 
 
 
@@ -28,7 +28,7 @@ public:
     void rightCollision(const shared_ptr<Living> &entity, int x) const;
     void leftCollision(const shared_ptr<Living>& entity, int x) const;
 
-    static void collision(list<shared_ptr<Living>> entities);
+    static void collision(const list<shared_ptr<Living>> &entities);
     void StartGameLoop();
     void draw() const;
 };

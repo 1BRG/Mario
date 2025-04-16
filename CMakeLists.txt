@@ -46,10 +46,24 @@ add_executable(${MAIN_EXECUTABLE_NAME}
        # Code/statemachine.cpp
         generated/src/Helper.cpp
         Code/Entitati1.h
+
+
         Code/include/defineuri.h
-        Code/include/entitati/Entitati.h
-        Code/src/Entitati.cpp
+
+        Code/include/entitati/Entity.h
+        Code/include/entitati/Enemy.h
+        Code/include/entitati/includeAll.h
+        Code/include/entitati/Living.h
+        Code/include/entitati/Player.h
+        Code/include/entitati/Turtle.h
+
+        Code/src/Enemy.cpp
+        Code/src/Entity.cpp
         Code/src/gameFunction.cpp
+        Code/src/includeAll.cpp
+        Code/src/Player.cpp
+        Code/src/Turtle.cpp
+        Code/src/Living.cpp
 )
 target_compile_definitions(${MAIN_EXECUTABLE_NAME} PRIVATE RAYLIB_STATIC)
 target_link_libraries(${MAIN_EXECUTABLE_NAME} raylib)

@@ -71,10 +71,10 @@ void game::rightCollision(const shared_ptr<Living> &entity, int x = 1) const
         if (grid[i][x] != nullptr && grid[i][x] != entity)
         entity->collision(*grid[i][x], 2), grid[i][x]->collision(*entity, -2);
 }
-void game::collision(list<shared_ptr<Living>> entities)
+void game::collision(const list<shared_ptr<Living>> &entities)
 {
     game* currentGame = GetInstance();
-    for (auto entity : entities)
+    for (const auto& entity : entities)
     {
       //  currentGame->deleteEntity(entity);
 
@@ -119,7 +119,7 @@ void game::StartGameLoop()
     insertEntity(make_shared<Entity>(turtle)), insertEntity(make_shared<Entity>(player));
     for (int i = 0; i < screenWidth; )
     {
-        shared_ptr<Entity> a = make_shared<Entity>(i, screenHeight - BrickTexture.height, BrickTexture);
+        a = make_shared<Entity>(i, screenHeight - BrickTexture.height, BrickTexture);
         i = i + BrickTexture.width;
         enviroment.push_back(a);
         insertEntity(a);
@@ -167,13 +167,13 @@ void game::StartGameLoop()
                 ++it;
             }
         }
-        for (auto entity : entities)
+        for (const auto& entity : entities)
             bottomCollision(entity);
-        for (auto entity : entities)
+        for (const auto& entity : entities)
             entity->update();
         collision(entities);
 
-        for (auto entity : entities)
+        for (const auto& entity : entities)
            deleteEntity(entity);
 
         /*
@@ -193,10 +193,10 @@ void game::StartGameLoop()
         }
         */
 
-        for (auto entity : entities)
+        for (const auto& entity : entities)
             entity->moveToTarget();
 
-        for (auto entity : entities)
+        for (const auto& entity : entities)
             insertEntity(entity);
 
         for (const auto& entitate: enviroment)
