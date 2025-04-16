@@ -4,8 +4,6 @@
 #include <iostream>
 #include "../include/entitati/Entity.h"
 
-#include <bits/stl_algo.h>
-
 
 Entity::Entity(const double x, const double y, const Texture2D &Texture) : coordX(x), coordY(y), texture(Texture) {
     this->x =  Texture.width;
