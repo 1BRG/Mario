@@ -64,6 +64,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/src/Player.cpp
         Code/src/Turtle.cpp
         Code/src/Living.cpp
+
+        Code/Levels/level1.txt
 )
 target_compile_definitions(${MAIN_EXECUTABLE_NAME} PRIVATE RAYLIB_STATIC)
 target_link_libraries(${MAIN_EXECUTABLE_NAME} raylib)

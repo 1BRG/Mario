@@ -15,6 +15,7 @@ using namespace std;
 class Entity
 {
 protected:
+    float dt;
     double coordX = 0, coordY = 0, x = 0, y = 0;
     double targetX = 0, targetY = 0;
     int health = 1;
@@ -44,7 +45,9 @@ public:
 
     [[nodiscard]] int danger() const;
     virtual void draw();
+    void deltaTime(float dt);
     virtual void update();
+    void decreaseX(int dec);
 
     ///
     ///

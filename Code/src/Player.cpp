@@ -16,14 +16,14 @@ Player::Player() : Living(MarioTexture) {
 
 void Player::handleInput() {
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-        speed -= DefaultSpeed * ProcentAlergare;
+        speed -= DefaultSpeed * ProcentAlergare * dt;
     } else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-        speed += DefaultSpeed * ProcentAlergare;
+        speed += DefaultSpeed * ProcentAlergare * dt;
     } else {
         if (speed != 0) {
             if (speed < 0)
-                speed += DefaultSpeed * ProcentAlergare, speed = min(speed, 0.0);
-            else speed -= DefaultSpeed * ProcentAlergare, speed = max(speed, 0.0);
+                speed += DefaultSpeed * ProcentAlergare * dt, speed = min(speed, 0.0);
+            else speed -= DefaultSpeed * ProcentAlergare * dt, speed = max(speed, 0.0);
         }
     }
     isJumping = (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) & canJump;
@@ -39,7 +39,8 @@ void Player::collision(Entity &other, int directie) {
     if (directie == 1) {
         targetY = min(targetY, other.coord_y() - y - 1);
             lastY = targetY;
-         if (other.danger()) other.incomingDamage(), gaveDamage = true;
+         if (other.danger())
+             other.incomingDamage(), gaveDamage = true;
     }
     else if (directie == -1) {
         targetY = max(targetY, other.coord_y() + other.height() + 1);
@@ -90,7 +91,7 @@ void Player::moveToTarget() {
         // cont = true;
         canJump = false;
         cont = true;
-        coordY = targetY = coordY - 5 * Jump;
+        coordY = targetY = coordY - 5 * Jump * dt;
     }
     gaveDamage = false;
     tookDamage = false;

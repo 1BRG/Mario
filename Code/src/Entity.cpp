@@ -47,6 +47,9 @@ double Entity::clamp(double x, double st, double dr) {
         return dr;
     return x;
 }
+void Entity::deltaTime(float dt) {
+    this->dt = dt;
+}
 
 void Entity::draw() {
     DrawTexture(texture, floor(coordX), floor(coordY), WHITE);
@@ -59,6 +62,10 @@ int Entity::danger() const {
     return damage;
 };
 void Entity::collision(Entity &other, int direction) {
+}
+void Entity::decreaseX(int dec) {
+    coordX -= dec;
+    targetX = coordX;
 }
 
 

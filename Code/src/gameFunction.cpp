@@ -3,7 +3,6 @@
 //
 
 #include "../include/game/gameFunction.h"
-
 #include <iostream>
 int ct = 0;
 game* game::instance = nullptr;
@@ -76,105 +75,128 @@ void game::collision(const list<shared_ptr<Living>> &entities)
     game* currentGame = GetInstance();
     for (const auto& entity : entities)
     {
-      //  currentGame->deleteEntity(entity);
+        if (currentGame->inScreenEntity(entity)) {
+            //  currentGame->deleteEntity(entity);
 
-        currentGame->bottomCollision(entity);
-        currentGame->topCollision(entity);
-        currentGame->rightCollision(entity);
-        currentGame->leftCollision(entity);
+            currentGame->bottomCollision(entity);
+            currentGame->topCollision(entity);
+            currentGame->rightCollision(entity);
+            currentGame->leftCollision(entity);
+        }
 
       //  entity->moveToTarget();
     //    currentGame->insertEntity(entity);
     }
 
 }
+void game::setLevel(int k) {
+    string filename = "../Code/Levels/level" + to_string(k) + ".txt";
+    ifstream f(filename);
+    string line;
+    level.clear();
+
+    // 0 liber
+    // 1 brick
+    // P player
+    // 2 tortoise
+    int n = 1;
+
+    while (getline(f, line)) {
+        for (int i = 0; i < line.length(); i++) {
+            {
+                if (line[i] == '1') {
+                    shared_ptr<Entity> a = make_shared<Entity>((i) * 64, n * 64, BrickTexture);
+                    level.push_back(a);
+                }
+                else if (line[i] == '2') {
+                    shared_ptr<Entity> a = make_shared<Turtle>((i) * 64, n * 64);
+                    level.push_back(a);
+                }
+                else if (line[i] == 'P') {
+                    shared_ptr<Entity> a = make_shared<Player>((i) * 64, n * 64);
+                    level.push_back(a);
+                }
+            }
+        }
+        n ++;
+    }
+    f.close();
+    level.sort([] (const shared_ptr<Entity> &a, const shared_ptr<Entity> &b) -> bool {
+        return a->coord_x() < b->coord_x();
+    });
+}
+void game::setEntities() {
+    entities.clear();
+    environment.clear();
+    for (int i = 0; i < screenHeight; i ++)
+        for (int j = 0; j < screenWidth; j ++)
+            grid[i][j] = nullptr;
+    for (auto entity : level) {
+
+        if (dynamic_pointer_cast<Living>(entity) != nullptr)
+            entities.push_back(dynamic_pointer_cast<Living>(entity));
+        else environment.push_back(entity);
+        insertEntity(entity);
+    }
+}
 
 void game::setValid()
 {
     ///daca player.health <= 0 false
+}
+bool game::inScreenEntity(shared_ptr<Entity> entity) {
+    if (entity->coord_x() <= -entity->width() || entity->coord_x() >= screenWidth
+    || entity->coord_y() < -entity->height() || entity->coord_y() > screenHeight)
+        return false;
+    return true;
 }
 void game::StartGameLoop()
 {
     InitWindow(screenWidth, screenHeight, "Hello World");
     SetTargetFPS(144);
     ClearBackground(GREEN);
-    Player player(screenWidth / 2, screenHeight / 2);
-    Turtle turtle(screenWidth / 2 + 400, screenHeight / 2);
-    shared_ptr<Entity> a = make_shared<Entity>(screenWidth / 2, screenHeight / 2 + BrickTexture.height + 200, BrickTexture);
-    entities.push_back(make_shared<Player>(player));
-    Turtle turtle1(screenWidth / 2 - 400, screenHeight / 2);
-    entities.push_back(make_shared<Turtle>(turtle));
-
-    entities.push_back(make_shared<Turtle>(turtle1));
-    list<shared_ptr<Entity>> enviroment;
-    enviroment.push_back(a);
-    insertEntity(a);
-    a = make_shared<Entity>(124, screenHeight - 2 * BrickTexture.height, BrickTexture);
-    enviroment.push_back(a);
-    insertEntity(a);
-    a = make_shared<Entity>(screenWidth - 124, screenHeight - 2 * BrickTexture.height, BrickTexture);
-    enviroment.push_back(a);
-    insertEntity(a);
-
-    insertEntity(make_shared<Entity>(turtle)), insertEntity(make_shared<Entity>(player));
-    for (int i = 0; i < screenWidth; )
-    {
-        a = make_shared<Entity>(i, screenHeight - BrickTexture.height, BrickTexture);
-        i = i + BrickTexture.width;
-        enviroment.push_back(a);
-        insertEntity(a);
-    }
-    /*
-    for (int i = 0; i < screenHeight; i ++) {
-        for (int j = 0; j < screenWidth; j++) {
-            if (grid[i][j] != nullptr)
-                cout << i << " " << j << endl;
-         //   else cout << 0;
-        }
-        cout << endl;
-    }
-    */
-   // ToggleFullscreen();
-   // int ct = 0;
-    /*
-    for (int i = 0; i < screenHeight; i ++) {
-        for (int j = 0; j < screenWidth; j++) {
-            if (grid[i][j] != nullptr)
-                DrawPixel(j, i, BLACK);
-            else DrawPixel(j, i, GREEN);
-            if (grid[i][j] != nullptr) {
-                if ((i - grid[i][j]->coord_y() >= 0 && i - grid[i][j]->coord_y() < 10) && (j - grid[i][j]->coord_x() >= 0 && j - grid[i][j]->coord_x() < 10)) {
-                    DrawPixel(j, i, RED);
-                }
-            }
-            //   else cout << " ";
-        }
-        cout << endl;
-    }
-    */
+    setLevel(1);
+    setEntities();
+    float dt = GetFrameTime();
+    dt = 0;
+    int o = 0;
     while(!WindowShouldClose())
     {
-        ct ++;
+        o ++;
+        if (o > 2)
+            dt = GetFrameTime();
+        dt = 0.0096;
         BeginDrawing();
         ClearBackground(GREEN);
-
         for (auto it = entities.begin(); it != entities.end(); ) {
-            if (!(*it)->isAlive()) {
+            (*it)->deltaTime(dt);
+            if (!(*it)->isAlive() || (*it)->coord_x() <= -(*it)->width()) {
                 deleteEntity(*it);
                 it = entities.erase(it);
-            } else {
+            } else if (inScreenEntity(*it)){
                 (*it)->setLastY();
                 ++it;
             }
+            else ++it;
+        }
+        for (auto it = environment.begin(); it != environment.end(); ) {
+            if ((*it)->coord_x() <= -(*it)->width()) {
+            //    deleteEntity(*it);
+                it = environment.erase(it);
+            }
+            else ++it;
         }
         for (const auto& entity : entities)
-            bottomCollision(entity);
+            if (inScreenEntity(entity))
+               bottomCollision(entity);
         for (const auto& entity : entities)
-            entity->update();
+            if (inScreenEntity(entity))
+               entity->update();
         collision(entities);
 
         for (const auto& entity : entities)
-           deleteEntity(entity);
+            if (inScreenEntity(entity))
+                deleteEntity(entity);
 
         /*
         for (int i = 0; i < screenHeight; i ++) {
@@ -194,13 +216,58 @@ void game::StartGameLoop()
         */
 
         for (const auto& entity : entities)
+            if (inScreenEntity(entity))
             entity->moveToTarget();
 
         for (const auto& entity : entities)
+            if (inScreenEntity(entity))
             insertEntity(entity);
 
-        for (const auto& entitate: enviroment)
-            entitate->draw();
+
+
+        if (int(entities.front()->coord_x()) > screenWidth / 2) {
+            int dec = int(entities.front()->coord_x()) - int(screenWidth / 2);
+            vector <shared_ptr<Entity>> v;
+            for (const auto& entity : entities) {
+                int ct = 0;
+                if (!inScreenEntity(entity))
+                    ct = 1;
+                entity->decreaseX(dec);
+                if (inScreenEntity(entity))
+                    ct ++;
+                if (ct == 2)
+                    v.push_back(entity);
+                deleteEntity(entity);
+            }
+         //   entities.front()->decreaseX(dec);
+            for (const auto& entity : environment) {
+                int ct = 0;
+                if (!inScreenEntity(entity))
+                    ct = 1;
+                entity->decreaseX(dec);
+                if (inScreenEntity(entity))
+                    ct ++;
+                if (ct == 2)
+                    v.push_back(entity);
+                deleteEntity(entity);
+            }
+            for (int i = 0; i < screenHeight; i ++) {
+                for (int j = 0; j < screenWidth - dec; j ++)
+                    grid[i][j] = grid[i][j + dec];
+                for (int j = screenWidth - dec; j < screenWidth; j ++)
+                    grid[i][j] = nullptr;
+            }
+
+            for (const auto& entity : entities)
+                if (inScreenEntity(entity))
+                    insertEntity(entity);
+            for (const auto& entity : environment)
+                if (inScreenEntity(entity))
+                    insertEntity(entity);
+
+           // for (auto entity: v)
+             //   insertEntity(entity);
+        }
         draw();
         EndDrawing();
         cout << GetFPS() << "FPS" << endl;
@@ -208,6 +275,11 @@ void game::StartGameLoop()
 }
 void game::draw() const
 {
+    game* currentGame = GetInstance();
+    for (const auto& entitate: environment)
+        if (currentGame->inScreenEntity(entitate))
+            entitate->draw();
     for (const auto& entitate: entities)
+        if (currentGame->inScreenEntity(entitate))
         entitate->draw();
 }

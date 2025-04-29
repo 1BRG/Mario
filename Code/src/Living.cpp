@@ -19,7 +19,7 @@ Living::Living(const Texture2D &texture) : Entity(texture) {
 
 void Living::moveX() {
     speed = clamp(speed, -DefaultSpeed * 1.5, DefaultSpeed * 1.5);
-    targetX += speed;
+    targetX += speed * dt;
 }
 bool Living::isAlive() const {
     return health;
@@ -27,15 +27,15 @@ bool Living::isAlive() const {
 
 void Living::moveY() {
     if (isJumping) {
-        targetY -= Jump;
+        targetY -= Jump * dt;
         if (targetY <= JumpMax)
             canJump = false;
     } else {
         if (targetY != lastY && cont == false)
-            targetY += Jump, canJump = false;
+            targetY += Jump* dt, canJump = false;
         else if (targetY != lastY && cont == true) {
             if (targetY > JumpMin && lastY != screenHeight)
-                targetY -= Jump;
+                targetY -= Jump * dt;
             else cont = false;
         } else canJump = true, cont = true;
     }

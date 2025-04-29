@@ -9,18 +9,25 @@
 
 #include "../defineuri.h"
 #include "../entitati/includeAll.h"
-
-
-
+#include <fstream>
+#include <memory>
 class game {
     bool valid = true;
+    int cameraX = 0, cameraY = 0;
     shared_ptr<Entity> grid[screenHeight][screenWidth];
     list<shared_ptr<Living>> entities;
+    list<shared_ptr<Entity>> level;
+    list<shared_ptr<Entity>> environment;
     static game* instance;
     game() = default;
 public:
     static game* GetInstance();
+    void setLevel(int k);
+    void setEntities();
     void setValid();
+
+    bool inScreenEntity(shared_ptr<Entity> entity);
+
     void insertEntity(const shared_ptr<Entity> &entity);
     void deleteEntity(const shared_ptr<Entity> &entity);
     void topCollision(const shared_ptr<Living> &entity, int y) const;
