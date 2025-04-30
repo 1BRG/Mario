@@ -11,7 +11,7 @@ class Turtle : public Enemy {
     static int isd;
     int local_id = ++isd;
 public:
-    Turtle(double x, double y);
+    Turtle(float x, float y);
     void collision(Entity &other, int directie) override;
 
     static void collision();

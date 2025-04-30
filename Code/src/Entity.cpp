@@ -5,7 +5,7 @@
 #include "../include/entitati/Entity.h"
 
 
-Entity::Entity(const double x, const double y, const Texture2D &Texture) : coordX(x), coordY(y), texture(Texture) {
+Entity::Entity(const float x, const float y, const Texture2D &Texture) : coordX(x), coordY(y), texture(Texture) {
     this->x =  Texture.width;
     this->y =  Texture.height;
     targetX = coordX;
@@ -17,30 +17,30 @@ Entity::Entity(const Texture2D &Texture) : texture(Texture) {
     this->y =  Texture.height;
 };
 
-[[nodiscard]] double Entity::coord_x() const {
+[[nodiscard]] float Entity::coord_x() const {
     return coordX;
 }
 
-[[nodiscard]] double Entity::coord_y() const {
+[[nodiscard]] float Entity::coord_y() const {
     return coordY;
 }
 
-[[nodiscard]] double Entity::width() const {
+[[nodiscard]] float Entity::width() const {
     return x;
 }
 
-[[nodiscard]] double Entity::height() const {
+[[nodiscard]] float Entity::height() const {
     return y;
 }
 
-[[nodiscard]] double Entity::target_x() const {
+[[nodiscard]] float Entity::target_x() const {
     return targetX;
 }
 
-[[nodiscard]] double Entity::target_y() const {
+[[nodiscard]] float Entity::target_y() const {
     return targetY;
 }
-double Entity::clamp(double x, double st, double dr) {
+float Entity::clamp(float x, float st, float dr) {
     if (x <= st)
         return st;
     if (x >= dr)
@@ -68,9 +68,14 @@ void Entity::decreaseX(int dec) {
     targetX = coordX;
 }
 
+Rectangle Entity::getRect(const int a, const int b) const {
+    float x = targetX + a, y = targetY + b, width = this->width(), height = this->height();
+    Rectangle rect = {x, y, width, height};
+    return rect;
+}
 
 
-Enviroment::Enviroment(const double x, const double y) : Entity(x, y, BrickTexture) {
+Enviroment::Enviroment(const float x, const float y) : Entity(x, y, BrickTexture) {
 }
 
 Enviroment::Enviroment() {

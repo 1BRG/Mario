@@ -7,22 +7,33 @@
 #include "Entity.h"
 
 
+
 class Living : public Entity {
 protected:
-    double speed = 0;
-    double lastY = screenHeight;
+    float speed = 0;
+    float lastY = screenHeight;
     bool canJump = true, cont = true, isJumping = false;
     bool tookDamage = false;
     void moveX();
     void moveY();
 public:
-    Living(double x, double y, const Texture2D &Texture);
+    Living(float x, float y, const Texture2D &Texture);
     explicit Living(const Texture2D &texture);
     Living() = default;
     [[nodiscard]] bool isAlive() const;
     virtual void moveToTarget(){}
     virtual void setLastY();
     virtual void collision(Entity &other, int directie);
+
+    bool inCollision(const shared_ptr<Entity> &env, int a, int b) const;
+
+    bool bottomCollision(const shared_ptr<Entity> & env);
+
+    bool topCollision(const shared_ptr<Entity> & env);
+
+    bool leftCollision(const shared_ptr<Entity> & env);
+
+    bool rightCollision(const shared_ptr<Entity> & env);
 };
 
 

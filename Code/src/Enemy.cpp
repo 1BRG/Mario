@@ -4,7 +4,7 @@
 
 #include "../include/entitati/Enemy.h"
 
-Enemy::Enemy(const double x, const double y, const Texture2D &texture) : Living(x, y, texture) {
+Enemy::Enemy(const float x, const float y, const Texture2D &texture) : Living(x, y, texture) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
 }

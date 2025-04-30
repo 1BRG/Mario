@@ -10,7 +10,7 @@
 class Player : public Living {
     bool gaveDamage = false;
 public:
-    Player(double x,  double y);
+    Player(float x,  float y);
     Player();
     void handleInput();
     // void moveX();

@@ -15,5 +15,5 @@
 #define ProcentAlergare 0.05 * 100
 #define JumpMax (lastY-600)
 #define JumpMin (lastY-256)
-#define Jump 300
+#define Jump 280
 #endif //DEFINEURI_H

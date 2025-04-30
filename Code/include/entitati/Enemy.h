@@ -11,7 +11,7 @@ class Enemy : public Living {
 protected:
     bool change = false;
 public:
-    Enemy(double x, double y, const Texture2D &Texture);
+    Enemy(float x, float y, const Texture2D &Texture);
     void incomingDamage() override;
 };
 

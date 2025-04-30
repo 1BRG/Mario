@@ -8,7 +8,7 @@ int Turtle::isd = 0;
 
 
 
-Turtle::Turtle(const double x, const double y) : Enemy(x, y, TurtleTexture) {
+Turtle::Turtle(const float x, const float y) : Enemy(x, y, TurtleTexture) {
     health = 2;
     damage = 1;
     speed = DefaultSpeed;
@@ -24,7 +24,7 @@ void Turtle::collision(Entity &other, int directie) {
     if (directie == 1) {
         lastY = coordY;
         updateBottom = false;
-        targetY = min(targetY, other.coord_y() - y - 1);
+        targetY = min(targetY, other.coord_y() - y);
     }
     else if (directie == -1) {
         cont = false;
@@ -33,10 +33,10 @@ void Turtle::collision(Entity &other, int directie) {
         canJump = false;
     }
     else if (directie == 2 && targetX - coordX > 0) {
-        targetX = min(targetX, other.coord_x() - x - 1), change = true;
+        targetX = min(targetX, other.coord_x() - x), change = true;
     }
     else if (directie == -2 && targetX - coordX < 0) {
-        targetX = max(targetX, other.coord_x() + other.width() + 1), change = true;
+        targetX = max(targetX, other.coord_x() + other.width()), change = true;
     }
     if (other.danger() > 1)
         tookDamage = true;

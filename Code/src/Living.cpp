@@ -9,7 +9,7 @@ void Living::setLastY() {
         lastY = screenHeight;
 }
 
-Living::Living(const double x, const double y, const Texture2D &texture) : Entity(x, y, texture) {
+Living::Living(const float x, const float y, const Texture2D &texture) : Entity(x, y, texture) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
 }
@@ -28,18 +28,62 @@ bool Living::isAlive() const {
 void Living::moveY() {
     if (isJumping) {
         targetY -= Jump * dt;
+        updateTop = true;
         if (targetY <= JumpMax)
             canJump = false;
-    } else {
+    }
+    else {
         if (targetY != lastY && cont == false)
-            targetY += Jump* dt, canJump = false;
+            targetY += Jump * dt , canJump = false, updateBottom = true;
         else if (targetY != lastY && cont == true) {
             if (targetY > JumpMin && lastY != screenHeight)
-                targetY -= Jump * dt;
+                targetY -= Jump * dt, updateTop = true;
             else cont = false;
-        } else canJump = true, cont = true;
+        }
+        else canJump = true, cont = true;
     }
 }
 
 void Living::collision(Entity &other, int directie)
 {}
+
+bool Living::inCollision(const shared_ptr<Entity> &env, int a, int b) const {
+    return CheckCollisionRecs(env->getRect(0, 0), getRect(a,  b));
+}
+/*
+if (updateLeft && targetX - coordX <= 0) {
+    coordX = targetX;
+}
+if (updateRight && targetX - coordX >= 0) {
+    coordX = targetX;
+}
+if (updateBottom && targetY - coordY >= 0) {
+    coordY = targetY;
+}
+if (updateTop && targetY - coordY <= 0) {
+    coordY = targetY;
+}
+*/
+bool Living::bottomCollision(const shared_ptr<Entity> &env) {
+    if (inCollision(env, 0, 1) && int(env->coord_y()) <= int(targetY + height()) && targetY - coordY >= 0)
+        return true;
+    return false;
+}
+
+bool Living::topCollision(const shared_ptr<Entity> &env) {
+    if (inCollision(env, 0, -1) && int(env->coord_y() + env->height()) >= int(targetY) && targetY - coordY <= 0)
+        return true;
+    return false;
+}
+
+bool Living::leftCollision(const shared_ptr<Entity> &env) {
+    if (inCollision(env, -1, 0) && int(env->coord_x() + env->width()) <= int(targetX) && targetX - coordX <= 0)
+        return true;
+    return false;
+}
+
+bool Living::rightCollision(const shared_ptr<Entity> &env) {
+    if (inCollision(env, 1, 0) && int(env->coord_x()) <= int(targetX + width()) && targetX - coordX >= 0)
+        return true;
+    return false;
+}

@@ -4,7 +4,7 @@
 
 #include "../include/entitati/Player.h"
 
-Player::Player(const double x, const double y) : Living(x, y, MarioTexture) {
+Player::Player(const float x, const float y) : Living(x, y, MarioTexture) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
     health = 1;
@@ -15,18 +15,28 @@ Player::Player() : Living(MarioTexture) {
 }
 
 void Player::handleInput() {
+    updateLeft = updateRight = false;
+    updateTop = updateBottom = false;
+    bool ok = false;
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-        speed -= DefaultSpeed * ProcentAlergare * dt;
-    } else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-        speed += DefaultSpeed * ProcentAlergare * dt;
-    } else {
+        speed -= DefaultSpeed * ProcentAlergare * dt, updateLeft = true;
+        ok = true;
+    }  if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
+        speed += DefaultSpeed * ProcentAlergare * dt, updateRight = true;
+        ok = true;
+    } if (!ok) {
         if (speed != 0) {
             if (speed < 0)
-                speed += DefaultSpeed * ProcentAlergare * dt, speed = min(speed, 0.0);
-            else speed -= DefaultSpeed * ProcentAlergare * dt, speed = max(speed, 0.0);
+                speed += DefaultSpeed * ProcentAlergare * dt, speed = min(speed, float(0.0)), updateLeft = updateRight = true;
+            else speed -= DefaultSpeed * ProcentAlergare * dt, speed = max(speed, float(0.0)), updateRight = updateLeft = true;
         }
     }
+    if (IsKeyDown(KEY_UP)) {
+        bool ok;
+        ok = true;
+    }
     isJumping = (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) & canJump;
+    updateTop = isJumping;
 }
 
 void Player::update() {
@@ -36,18 +46,25 @@ void Player::update() {
 }
 
 void Player::collision(Entity &other, int directie) {
+    if (directie == -2) {
+        int mo;
+        mo = 0;
+    }
     if (directie == 1) {
-        targetY = min(targetY, other.coord_y() - y - 1);
+        targetY = max(coordY, min(targetY, other.coord_y() - y));
             lastY = targetY;
          if (other.danger())
              other.incomingDamage(), gaveDamage = true;
     }
-    else if (directie == -1) {
-        targetY = max(targetY, other.coord_y() + other.height() + 1);
+    else if (directie == -1 && targetY - coordY < 0) {
+        targetY = max(coordY, max(targetY, other.coord_y() + other.height()));
         cont = false, cont = false, canJump = false;
     }
-    else if (directie == 2) updateRight = false;
-    else updateLeft = false;
+    else if (directie == 2 && targetX - coordX > 0)
+        targetX = min(targetX, other.coord_x() - width());
+    else if (targetX - coordX < 0)
+        targetX = max(targetX, other.coord_x() + other.width());
+
     if (other.danger() && directie != 1)
         tookDamage = true;
     //canUpdate = false;
@@ -66,21 +83,20 @@ void Player::gravity() {
 */
 void Player::moveToTarget() {
    // cout << "ba";
-    if (updateLeft && targetX - coordX <= 0) {
+    if (updateLeft) {
         coordX = targetX;
     }
-    if (updateRight && targetX - coordX >= 0) {
+    if (updateRight) {
         coordX = targetX;
     }
-    if (updateBottom && targetY - coordY >= 0) {
+    if (updateBottom) {
         coordY = targetY;
     }
-    if (updateTop && targetY - coordY <= 0) {
+    if (updateTop) {
         coordY = targetY;
     }
-
-    updateBottom = updateTop = true;
-    updateLeft = updateRight = true;
+    updateBottom = updateTop = false;
+    updateLeft = updateRight = false;
     // canUpdate = true;
     targetX = coordX;
     targetY = coordY;

@@ -16,8 +16,8 @@ class Entity
 {
 protected:
     float dt;
-    double coordX = 0, coordY = 0, x = 0, y = 0;
-    double targetX = 0, targetY = 0;
+    float coordX = 0, coordY = 0, x = 0, y = 0;
+    float targetX = 0, targetY = 0;
     int health = 1;
     bool moving = true;
     int damage = 0;
@@ -27,28 +27,28 @@ public:
     virtual ~Entity() = default;
     virtual void incomingDamage() {}
     virtual void collision(Entity &other, int direction);
-    Entity(double x, double y, const Texture2D &Texture);
+    Entity(float x, float y, const Texture2D &Texture);
     explicit Entity(const Texture2D &Texture);
     Entity() = default;
-    [[nodiscard]] static double clamp(double x, double st, double dr);
-    [[nodiscard]] double coord_x() const;
+    [[nodiscard]] static float clamp(float x, float st, float dr);
+    [[nodiscard]] float coord_x() const;
 
-    [[nodiscard]] double coord_y() const;
+    [[nodiscard]] float coord_y() const;
 
-    [[nodiscard]] double height() const;
+    [[nodiscard]] float height() const;
 
-    [[nodiscard]] double width() const;
+    [[nodiscard]] float width() const;
 
-    [[nodiscard]] double target_x() const;
+    [[nodiscard]] float target_x() const;
 
-    [[nodiscard]] double target_y() const;
+    [[nodiscard]] float target_y() const;
 
     [[nodiscard]] int danger() const;
     virtual void draw();
     void deltaTime(float dt);
     virtual void update();
     void decreaseX(int dec);
-
+    [[nodiscard]] Rectangle getRect(int a, int b) const;
     ///
     ///
 };
@@ -58,7 +58,7 @@ public:
 class Enviroment : public Entity
 {
 public:
-    Enviroment(double x, double y);
+    Enviroment(float x, float y);
     Enviroment();
 };
 
