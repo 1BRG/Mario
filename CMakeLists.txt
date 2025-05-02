@@ -91,10 +91,3 @@ if (WIN32)
     target_link_libraries(${MAIN_EXECUTABLE_NAME} opengl32 gdi32 winmm)
 endif()
 copy_files(FILES tastatura.txt COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
-
-if (MSVC)
-    # Nu mai tratează warning-urile ca erori:
-    string(REPLACE "/WX" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-    # Sau dezactivează doar warning-ul 4458:
-    add_compile_options(/wd4458)
-endif()
