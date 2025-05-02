@@ -52,6 +52,7 @@ void Entity::deltaTime(float dt) {
 }
 
 void Entity::draw(int cameraX) {
+
     DrawTexture(texture, floor(coordX - cameraX), floor(coordY), WHITE);
 }
 
@@ -63,6 +64,11 @@ int Entity::danger() const {
 };
 
 void Entity::collision(Entity &other, int direction) {
+    //bs
+    bool ok = other.danger();
+    if (direction == 1) {
+        ok &= 1;
+    }
 }
 //GPT
 string Entity::detectCollisionSide(const shared_ptr<Entity>& env, int a, int b) const {

@@ -20,12 +20,7 @@ void Turtle::update() {
 }
 
 void Turtle::collision(Entity &other, int directie) {
-
     if (directie == 1) {
-        if (other.danger()) {
-           bool ok;
-            ok = true;
-        }
       //  updateBottom = false;
         targetY = min(targetY, other.coord_y() - y);
         lastY = targetY;

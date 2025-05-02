@@ -44,8 +44,13 @@ void Living::moveY() {
     }
 }
 
-void Living::collision(Entity &other, int directie)
-{}
+void Living::collision(Entity &other, int directie) {
+    //bs
+    bool ok = other.danger();
+    if (directie == 1) {
+        ok &= 1;
+    }
+}
 
 bool Living::inCollision(const shared_ptr<Entity> &env, int a, int b) const {
     return CheckCollisionRecs(env->getRect(0, 0), getRect(a,  b));
@@ -65,6 +70,7 @@ if (updateTop && targetY - coordY <= 0) {
 }
 */
 bool Living::bottomCollision(const shared_ptr<Entity> &env) {
+
     if (inCollision(env, 0, 1) && detectCollisionSide(env, 0, 1) == "BOTTOM")
         return true;
     return false;

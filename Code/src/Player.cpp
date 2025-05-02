@@ -28,10 +28,6 @@ void Player::handleInput() {
             else speed -= DefaultSpeed * ProcentAlergare * dt, speed = max(speed, float(0.0));
         }
     }
-    if (IsKeyDown(KEY_UP)) {
-        bool ok;
-        ok = true;
-    }
     isJumping = (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) & canJump;
 }
 
@@ -43,10 +39,6 @@ void Player::update() {
 
 void Player::collision(Entity &other, int directie) {
     cout << health << endl;
-    if (directie == -2) {
-        int mo;
-        mo = 0;
-    }
     if (directie == 1) {
         targetY = min(targetY, other.coord_y() - y);
         lastY = targetY;
@@ -80,6 +72,7 @@ void Player::gravity() {
 */
 void Player::moveToTarget() {
    // cout << "ba";
+
     if (updateLeft && targetX - coordX <= 0) {
         coordX = targetX;
     }

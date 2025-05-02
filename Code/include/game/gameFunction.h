@@ -30,10 +30,10 @@ public:
 
     void insertEntity(const shared_ptr<Entity> &entity);
     void deleteEntity(const shared_ptr<Entity> &entity);
-    void topCollision(const shared_ptr<Living> &entity, int y) const;
-    void bottomCollision(const shared_ptr<Living>& entity, int y) const;
-    void rightCollision(const shared_ptr<Living> &entity, int x) const;
-    void leftCollision(const shared_ptr<Living>& entity, int x) const;
+    void topCollision(const shared_ptr<Living> &entity) const;
+    void bottomCollision(const shared_ptr<Living>& entity) const;
+    void rightCollision(const shared_ptr<Living> &entity) const;
+    void leftCollision(const shared_ptr<Living>& entity) const;
 
     static void collision(const list<shared_ptr<Living>> &entities);
     void StartGameLoop();

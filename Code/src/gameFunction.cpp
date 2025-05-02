@@ -32,7 +32,7 @@ void game::deleteEntity(const shared_ptr<Entity> &entity)
             grid[i][j] = nullptr;
 }
 
-void game::topCollision(const shared_ptr<Living> &entity, int y = 1) const
+void game::topCollision(const shared_ptr<Living> &entity) const
 {
     for (const auto& env : environment) {
         if (entity->topCollision(env))
@@ -44,21 +44,11 @@ void game::topCollision(const shared_ptr<Living> &entity, int y = 1) const
     }
 }
 
-void game::bottomCollision(const shared_ptr<Living>& entity, int y = 1) const
+void game::bottomCollision(const shared_ptr<Living>& entity) const
 {
-    int i = 0;
     for (auto env : environment) {
-        if (i == 22) {
-            bool ok = true;
-            ok = false;
-        }
-        if (entity->bottomCollision(env) && env->coord_y() < 900) {
-            bool ok = true;
-            ok = false;
-        }
         if (entity->bottomCollision(env))
             entity->collision(*env, 1);
-        i ++;
     }
     for (const auto& env : entities) {
 
@@ -67,7 +57,7 @@ void game::bottomCollision(const shared_ptr<Living>& entity, int y = 1) const
     }
 }
 
-void game::leftCollision(const shared_ptr<Living>& entity, int x = 1) const
+void game::leftCollision(const shared_ptr<Living>& entity) const
 {
     for (const auto& env : environment) {
         if (entity->leftCollision(env))
@@ -79,7 +69,7 @@ void game::leftCollision(const shared_ptr<Living>& entity, int x = 1) const
     }
 }
 
-void game::rightCollision(const shared_ptr<Living> &entity, int x = 1) const
+void game::rightCollision(const shared_ptr<Living> &entity) const
 {
     for (const auto& env : environment) {
         if (entity->rightCollision(env))
@@ -121,7 +111,7 @@ void game::setLevel(int k) {
     int n = 1;
 
     while (getline(f, line)) {
-        for (int i = 0; i < line.length(); i++) {
+        for (long long unsigned int i = 0; i < line.length(); i++) {
             {
                 if (line[i] == '1') {
                     shared_ptr<Entity> a = make_shared<Entity>((i) * 64, n * 64, BrickTexture);
@@ -179,7 +169,6 @@ void game::StartGameLoop()
     float dt = GetFrameTime();
     dt = 0;
     int o = 0;
-    int cameraOFX = 0;
     while(!WindowShouldClose())
     {
         o ++;
@@ -242,7 +231,9 @@ void game::StartGameLoop()
         }
         draw();
         EndDrawing();
-        cout << GetFPS() << "FPS" << endl;
+       // cout << GetFPS() << "FPS" << endl;
+
+
     }
 }
 void game::draw() const
