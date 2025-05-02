@@ -18,17 +18,17 @@ game* game::GetInstance()
 
 void game::insertEntity(const shared_ptr<Entity> &entity)
 {
-    int y = entity->coord_y(), x = entity->coord_x();
-    for (int i = y; i < y + entity->height() && i < screenHeight - 1; i++)
-        for (int j = x; j < x + entity->width() && j < screenWidth - 1; j++)
+    int yy = entity->coord_y(), xx = entity->coord_x();
+    for (int i = yy; i < yy + entity->height() && i < screenHeight - 1; i++)
+        for (int j = xx; j < xx + entity->width() && j < screenWidth - 1; j++)
                 grid[i][j] = entity;
 }
 
 void game::deleteEntity(const shared_ptr<Entity> &entity)
 {
-    int y = entity->coord_y(), x = entity->coord_x();
-    for (int i = y; i < y + entity->height() && i < screenHeight - 1; i++)
-        for (int j = x; j < x + entity->width() && j < screenWidth - 1; j++)
+    int yy = entity->coord_y(), xx = entity->coord_x();
+    for (int i = yy; i < yy + entity->height() && i < screenHeight - 1; i++)
+        for (int j = xx; j < xx + entity->width() && j < screenWidth - 1; j++)
             grid[i][j] = nullptr;
 }
 
@@ -166,19 +166,19 @@ void game::StartGameLoop()
     ClearBackground(GREEN);
     setLevel(1);
     setEntities();
-    float dt = GetFrameTime();
-    dt = 0;
+    float fr = GetFrameTime();
+    fr = 0;
     int o = 0;
     while(!WindowShouldClose())
     {
         o ++;
         if (o > 2)
-            dt = GetFrameTime();
+            fr = GetFrameTime();
        // dt = 0.0096;
         BeginDrawing();
         ClearBackground(GREEN);
         for (auto it = entities.begin(); it != entities.end(); ) {
-            (*it)->deltaTime(dt);
+            (*it)->deltaTime(fr);
             if (!(*it)->isAlive()) {
                 deleteEntity(*it);
                 it = entities.erase(it);

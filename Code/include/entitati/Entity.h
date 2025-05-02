@@ -29,7 +29,7 @@ public:
     virtual void incomingDamage() {}
     virtual void collision(Entity &other, int direction);
 
-    string detectCollisionSide(const shared_ptr<Entity> &env, int a, int b) const;
+    [[nodiscard]] string detectCollisionSide(const shared_ptr<Entity> &env, int a, int b) const;
 
     Entity(float x, float y, const Texture2D &Texture);
     explicit Entity(const Texture2D &Texture);
