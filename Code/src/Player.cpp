@@ -38,7 +38,7 @@ void Player::update() {
 }
 
 void Player::collision(Entity &other, int directie) {
-    std::cout << health << std::endl;
+   // std::cout << health << std::endl;
     if (directie == 1) {
         targetY = std::min(targetY, other.coord_y() - y);
         lastY = targetY;

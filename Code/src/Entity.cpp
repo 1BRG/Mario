@@ -40,15 +40,15 @@ Entity::Entity(const Texture2D &Texture) : texture(Texture) {
 [[nodiscard]] float Entity::target_y() const {
     return targetY;
 }
-float Entity::clamp(float x, float st, float dr) {
-    if (x <= st)
+float Entity::clamp(float val, float st, float dr) {
+    if (val <= st)
         return st;
-    if (x >= dr)
+    if (val >= dr)
         return dr;
-    return x;
+    return val;
 }
-void Entity::deltaTime(float dt) {
-    this->dt = dt;
+void Entity::deltaTime(float deltatime) {
+    this->dt = deltatime;
 }
 
 void Entity::draw(int cameraX) {
@@ -103,19 +103,19 @@ std::string Entity::detectCollisionSide(const std::shared_ptr<Entity>& env, int 
     }
 }
 //GPT
-void Entity::decreaseX(int dec) {
+void Entity::decreaseX(float dec) {
     coordX -= dec;
     targetX = coordX;
 }
 
 Rectangle Entity::getRect(const int a, const int b) const {
-    float x = targetX + a, y = targetY + b, width = this->width(), height = this->height();
-    Rectangle rect = {x, y, width, height};
+    float dx = targetX + a, dy = targetY + b, width = this->width(), height = this->height();
+    Rectangle rect = {dx, dy, width, height};
     return rect;
 }
 
 
-Enviroment::Enviroment(const float x, const float y) : Entity(x, y, BrickTexture) {
+Enviroment::Enviroment(const float dx, const float dy) : Entity(dx, dy, BrickTexture) {
 }
 
 Enviroment::Enviroment() {

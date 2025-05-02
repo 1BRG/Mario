@@ -49,9 +49,9 @@ public:
 
     [[nodiscard]] int danger() const;
     virtual void draw(int cameraX);
-    void deltaTime(float dt);
+    void deltaTime(float deltatime);
     virtual void update();
-    void decreaseX(int dec);
+    void decreaseX(float dec);
     [[nodiscard]] Rectangle getRect(int a, int b) const;
     ///
     ///
