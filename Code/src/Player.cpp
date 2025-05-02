@@ -24,8 +24,8 @@ void Player::handleInput() {
     } else {
         if (speed != 0) {
             if (speed < 0)
-                speed += DefaultSpeed * ProcentAlergare * dt, speed = min(speed, float(0.0));
-            else speed -= DefaultSpeed * ProcentAlergare * dt, speed = max(speed, float(0.0));
+                speed += DefaultSpeed * ProcentAlergare * dt, speed = std::min(speed, float(0.0));
+            else speed -= DefaultSpeed * ProcentAlergare * dt, speed = std::max(speed, float(0.0));
         }
     }
     isJumping = (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) & canJump;
@@ -38,21 +38,21 @@ void Player::update() {
 }
 
 void Player::collision(Entity &other, int directie) {
-    cout << health << endl;
+    std::cout << health << std::endl;
     if (directie == 1) {
-        targetY = min(targetY, other.coord_y() - y);
+        targetY = std::min(targetY, other.coord_y() - y);
         lastY = targetY;
          if (other.danger())
              other.incomingDamage(), gaveDamage = true;
     }
     else if (directie == -1 && targetY - coordY < 0) {
-        targetY = max(targetY, other.coord_y() + other.height());
+        targetY = std::max(targetY, other.coord_y() + other.height());
         cont = false, cont = false, canJump = false;
     }
     else if (directie == 2)
-        targetX = min(targetX, other.coord_x() - width());
+        targetX = std::min(targetX, other.coord_x() - width());
     else
-        targetX = max(targetX, other.coord_x() + other.width());
+        targetX = std::max(targetX, other.coord_x() + other.width());
 
     if (other.danger() && directie != 1)
         tookDamage = true;

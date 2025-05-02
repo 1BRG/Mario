@@ -25,15 +25,15 @@ public:
     virtual void setLastY();
     virtual void collision(Entity &other, int directie);
 
-    bool inCollision(const shared_ptr<Entity> &env, int a, int b) const;
+    bool inCollision(const std::shared_ptr<Entity> &env, int a, int b) const;
 
-    bool bottomCollision(const shared_ptr<Entity> & env);
+    bool bottomCollision(const std::shared_ptr<Entity> & env);
 
-    bool topCollision(const shared_ptr<Entity> & env);
+    bool topCollision(const std::shared_ptr<Entity> & env);
 
-    bool leftCollision(const shared_ptr<Entity> & env);
+    bool leftCollision(const std::shared_ptr<Entity> & env);
 
-    bool rightCollision(const shared_ptr<Entity> & env);
+    bool rightCollision(const std::shared_ptr<Entity> & env);
 };
 
 

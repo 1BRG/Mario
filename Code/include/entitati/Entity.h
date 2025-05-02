@@ -11,7 +11,6 @@
 #include <vector>
 #include "../defineuri.h"
 
-using namespace std;
 class Entity
 {
 protected:
@@ -29,7 +28,7 @@ public:
     virtual void incomingDamage() {}
     virtual void collision(Entity &other, int direction);
 
-    [[nodiscard]] string detectCollisionSide(const shared_ptr<Entity> &env, int a, int b) const;
+    [[nodiscard]] std::string detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const;
 
     Entity(float x, float y, const Texture2D &Texture);
     explicit Entity(const Texture2D &Texture);

@@ -16,7 +16,7 @@ game* game::GetInstance()
     return instance;
 }
 
-void game::insertEntity(const shared_ptr<Entity> &entity)
+void game::insertEntity(const std::shared_ptr<Entity> &entity)
 {
     int yy = entity->coord_y(), xx = entity->coord_x();
     for (int i = yy; i < yy + entity->height() && i < screenHeight - 1; i++)
@@ -24,7 +24,7 @@ void game::insertEntity(const shared_ptr<Entity> &entity)
                 grid[i][j] = entity;
 }
 
-void game::deleteEntity(const shared_ptr<Entity> &entity)
+void game::deleteEntity(const std::shared_ptr<Entity> &entity)
 {
     int yy = entity->coord_y(), xx = entity->coord_x();
     for (int i = yy; i < yy + entity->height() && i < screenHeight - 1; i++)
@@ -32,7 +32,7 @@ void game::deleteEntity(const shared_ptr<Entity> &entity)
             grid[i][j] = nullptr;
 }
 
-void game::topCollision(const shared_ptr<Living> &entity) const
+void game::topCollision(const std::shared_ptr<Living> &entity) const
 {
     for (const auto& env : environment) {
         if (entity->topCollision(env))
@@ -44,7 +44,7 @@ void game::topCollision(const shared_ptr<Living> &entity) const
     }
 }
 
-void game::bottomCollision(const shared_ptr<Living>& entity) const
+void game::bottomCollision(const std::shared_ptr<Living>& entity) const
 {
     for (auto env : environment) {
         if (entity->bottomCollision(env))
@@ -57,7 +57,7 @@ void game::bottomCollision(const shared_ptr<Living>& entity) const
     }
 }
 
-void game::leftCollision(const shared_ptr<Living>& entity) const
+void game::leftCollision(const std::shared_ptr<Living>& entity) const
 {
     for (const auto& env : environment) {
         if (entity->leftCollision(env))
@@ -69,7 +69,7 @@ void game::leftCollision(const shared_ptr<Living>& entity) const
     }
 }
 
-void game::rightCollision(const shared_ptr<Living> &entity) const
+void game::rightCollision(const std::shared_ptr<Living> &entity) const
 {
     for (const auto& env : environment) {
         if (entity->rightCollision(env))
@@ -80,7 +80,7 @@ void game::rightCollision(const shared_ptr<Living> &entity) const
             entity->collision(*env, 2), env->collision(*entity, -2);
     }
 }
-void game::collision(const list<shared_ptr<Living>> &entities)
+void game::collision(const std::list<std::shared_ptr<Living>> &entities)
 {
     game* currentGame = GetInstance();
     for (const auto& entity : entities)
@@ -99,9 +99,9 @@ void game::collision(const list<shared_ptr<Living>> &entities)
 
 }
 void game::setLevel(int k) {
-    string filename = "../Code/Levels/level" + to_string(k) + ".txt";
-    ifstream f(filename);
-    string line;
+    std::string filename = "../Code/Levels/level" + std::to_string(k) + ".txt";
+    std::ifstream f(filename);
+    std::string line;
     level.clear();
 
     // 0 liber
@@ -114,15 +114,15 @@ void game::setLevel(int k) {
         for (long long unsigned int i = 0; i < line.length(); i++) {
             {
                 if (line[i] == '1') {
-                    shared_ptr<Entity> a = make_shared<Entity>((i) * 64, n * 64, BrickTexture);
+                   std:: shared_ptr<Entity> a = std::make_shared<Entity>((i) * 64, n * 64, BrickTexture);
                     level.push_back(a);
                 }
                 else if (line[i] == '2') {
-                    shared_ptr<Entity> a = make_shared<Turtle>((i) * 64, n * 64);
+                   std:: shared_ptr<Entity> a = std::make_shared<Turtle>((i) * 64, n * 64);
                   level.push_back(a);
                 }
                 else if (line[i] == 'P') {
-                    shared_ptr<Entity> a = make_shared<Player>((i) * 64, n * 64);
+                    std::shared_ptr<Entity> a = std::make_shared<Player>((i) * 64, n * 64);
                     level.push_back(a);
                 }
             }
@@ -130,7 +130,7 @@ void game::setLevel(int k) {
         n ++;
     }
     f.close();
-    level.sort([] (const shared_ptr<Entity> &a, const shared_ptr<Entity> &b) -> bool {
+    level.sort([] (const std::shared_ptr<Entity> &a, const std::shared_ptr<Entity> &b) -> bool {
         return a->coord_x() < b->coord_x();
     });
 }
@@ -142,8 +142,8 @@ void game::setEntities() {
             grid[i][j] = nullptr;
     for (auto entity : level) {
 
-        if (dynamic_pointer_cast<Living>(entity) != nullptr)
-            entities.push_back(dynamic_pointer_cast<Living>(entity));
+        if (std::dynamic_pointer_cast<Living>(entity) != nullptr)
+            entities.push_back(std::dynamic_pointer_cast<Living>(entity));
         else environment.push_back(entity);
       //  insertEntity(entity);
     }
@@ -153,7 +153,7 @@ void game::setValid()
 {
     ///daca player.health <= 0 false
 }
-bool game::inScreenEntity(shared_ptr<Entity> entity) const {
+bool game::inScreenEntity(std::shared_ptr<Entity> entity) const {
     if (entity->coord_x() <= -entity->width() - cameraX || entity->coord_x() - cameraX >= screenWidth
     || entity->coord_y() < -entity->height() || entity->coord_y() > screenHeight)
         return false;

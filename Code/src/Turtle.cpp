@@ -22,7 +22,7 @@ void Turtle::update() {
 void Turtle::collision(Entity &other, int directie) {
     if (directie == 1) {
       //  updateBottom = false;
-        targetY = min(targetY, other.coord_y() - y);
+        targetY = std::min(targetY, other.coord_y() - y);
         lastY = targetY;
     }
     else if (directie == -1) {
@@ -32,10 +32,10 @@ void Turtle::collision(Entity &other, int directie) {
         canJump = false;
     }
     else if (directie == 2) {
-        targetX = min(targetX, other.coord_x() - x), change = true;
+        targetX = std::min(targetX, other.coord_x() - x), change = true;
     }
     else if (directie == -2) {
-        targetX = max(targetX, other.coord_x() + other.width()), change = true;
+        targetX = std::max(targetX, other.coord_x() + other.width()), change = true;
     }
     if (other.danger() > 1)
         tookDamage = true;

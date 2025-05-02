@@ -71,7 +71,7 @@ void Entity::collision(Entity &other, int direction) {
     }
 }
 //GPT
-string Entity::detectCollisionSide(const shared_ptr<Entity>& env, int a, int b) const {
+std::string Entity::detectCollisionSide(const std::shared_ptr<Entity>& env, int a, int b) const {
     // 1) Construim cele două Rectangle fără offset-uri „magice”
     Rectangle r1 = getRect(a, b);             // dreptunghiul nostru la poziția targetX/Y
     Rectangle r2 = env->getRect(0, 0);        // dreptunghiul entității cu care testăm

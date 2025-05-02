@@ -52,7 +52,7 @@ void Living::collision(Entity &other, int directie) {
     }
 }
 
-bool Living::inCollision(const shared_ptr<Entity> &env, int a, int b) const {
+bool Living::inCollision(const std::shared_ptr<Entity> &env, int a, int b) const {
     return CheckCollisionRecs(env->getRect(0, 0), getRect(a,  b));
 }
 /*
@@ -69,26 +69,26 @@ if (updateTop && targetY - coordY <= 0) {
     coordY = targetY;
 }
 */
-bool Living::bottomCollision(const shared_ptr<Entity> &env) {
+bool Living::bottomCollision(const std::shared_ptr<Entity> &env) {
 
     if (inCollision(env, 0, 1) && detectCollisionSide(env, 0, 1) == "BOTTOM")
         return true;
     return false;
 }
 
-bool Living::topCollision(const shared_ptr<Entity> &env) {
+bool Living::topCollision(const std::shared_ptr<Entity> &env) {
     if (inCollision(env, 0, -1) && detectCollisionSide(env, 0, -1) == "TOP")
         return true;
     return false;
 }
 
-bool Living::leftCollision(const shared_ptr<Entity> &env) {
+bool Living::leftCollision(const std::shared_ptr<Entity> &env) {
     if (inCollision(env, -1, 0) && detectCollisionSide(env, -1, 0) == "LEFT")
         return true;
     return false;
 }
 
-bool Living::rightCollision(const shared_ptr<Entity> &env) {
+bool Living::rightCollision(const std::shared_ptr<Entity> &env) {
     if (inCollision(env, 1, 0) && detectCollisionSide(env, 1, 0) == "RIGHT")
         return true;
     return false;

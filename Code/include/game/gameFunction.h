@@ -14,10 +14,10 @@
 class game {
     bool valid = true;
     float cameraX = 0, cameraY = 0;
-    shared_ptr<Entity> grid[screenHeight][screenWidth];
-    list<shared_ptr<Living>> entities;
-    list<shared_ptr<Entity>> level;
-    list<shared_ptr<Entity>> environment;
+    std::shared_ptr<Entity> grid[screenHeight][screenWidth];
+    std::list<std::shared_ptr<Living>> entities;
+    std::list<std::shared_ptr<Entity>> level;
+    std::list<std::shared_ptr<Entity>> environment;
     static game* instance;
     game() = default;
 public:
@@ -26,16 +26,16 @@ public:
     void setEntities();
     void setValid();
 
-    bool inScreenEntity(shared_ptr<Entity> entity) const;
+    bool inScreenEntity(std::shared_ptr<Entity> entity) const;
 
-    void insertEntity(const shared_ptr<Entity> &entity);
-    void deleteEntity(const shared_ptr<Entity> &entity);
-    void topCollision(const shared_ptr<Living> &entity) const;
-    void bottomCollision(const shared_ptr<Living>& entity) const;
-    void rightCollision(const shared_ptr<Living> &entity) const;
-    void leftCollision(const shared_ptr<Living>& entity) const;
+    void insertEntity(const std::shared_ptr<Entity> &entity);
+    void deleteEntity(const std::shared_ptr<Entity> &entity);
+    void topCollision(const std::shared_ptr<Living> &entity) const;
+    void bottomCollision(const std::shared_ptr<Living>& entity) const;
+    void rightCollision(const std::shared_ptr<Living> &entity) const;
+    void leftCollision(const std::shared_ptr<Living>& entity) const;
 
-    static void collision(const list<shared_ptr<Living>> &entities);
+    static void collision(const std::list<std::shared_ptr<Living>> &entities);
     void StartGameLoop();
     void draw() const;
 };
