@@ -9,6 +9,8 @@
 
 #include "../defineuri.h"
 #include "../entitati/includeAll.h"
+#include <string>
+#include <iostream>
 #include <fstream>
 #include <memory>
 class game {

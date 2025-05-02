@@ -67,6 +67,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
 
         Code/Levels/level1.txt
 )
+target_compile_features(oop PUBLIC cxx_std_17)
 target_compile_definitions(${MAIN_EXECUTABLE_NAME} PRIVATE RAYLIB_STATIC)
 target_link_libraries(${MAIN_EXECUTABLE_NAME} raylib)
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

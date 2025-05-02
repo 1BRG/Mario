@@ -110,7 +110,7 @@ void game::setLevel(int k) {
     // 2 tortoise
     int n = 1;
 
-    while (getline(f, line)) {
+    while (std::getline(f, line)) {
         for (long long unsigned int i = 0; i < line.length(); i++) {
             {
                 if (line[i] == '1') {
