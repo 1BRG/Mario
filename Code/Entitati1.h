@@ -24,9 +24,9 @@ public:
         this -> y = y + Texture.height;
     };
     Entity() = default;
-    void draw()
+    void draw(int cameraX)
     {
-        DrawTexture(texture, floor(coordX), floor(coordY), WHITE);
+        DrawTexture(texture, floor(coordX) - cameraX, floor(coordY), WHITE);
     }
 };
 class Player : public Entity

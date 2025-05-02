@@ -11,9 +11,9 @@
 #define FuriousTurtleTexture LoadTexture("../Texture/furiousTurtleX.png")
 #define screenWidth 1920
 #define screenHeight 1080
-#define DefaultSpeed 200
-#define ProcentAlergare 0.05 * 100
-#define JumpMax (lastY-600)
-#define JumpMin (lastY-256)
-#define Jump 280
+#define DefaultSpeed 250
+#define ProcentAlergare 0.035 * 100
+#define JumpMax (lastY-384)
+#define JumpMin (lastY-128)
+#define Jump 300
 #endif //DEFINEURI_H

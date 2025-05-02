@@ -13,7 +13,7 @@
 #include <memory>
 class game {
     bool valid = true;
-    int cameraX = 0, cameraY = 0;
+    float cameraX = 0, cameraY = 0;
     shared_ptr<Entity> grid[screenHeight][screenWidth];
     list<shared_ptr<Living>> entities;
     list<shared_ptr<Entity>> level;
@@ -26,7 +26,7 @@ public:
     void setEntities();
     void setValid();
 
-    bool inScreenEntity(shared_ptr<Entity> entity);
+    bool inScreenEntity(shared_ptr<Entity> entity) const;
 
     void insertEntity(const shared_ptr<Entity> &entity);
     void deleteEntity(const shared_ptr<Entity> &entity);

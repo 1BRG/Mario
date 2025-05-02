@@ -24,9 +24,13 @@ protected:
     bool updateLeft = true, updateRight = true, updateTop = true, updateBottom = true;
     Texture2D texture;
 public:
+
     virtual ~Entity() = default;
     virtual void incomingDamage() {}
     virtual void collision(Entity &other, int direction);
+
+    string detectCollisionSide(const shared_ptr<Entity> &env, int a, int b) const;
+
     Entity(float x, float y, const Texture2D &Texture);
     explicit Entity(const Texture2D &Texture);
     Entity() = default;
@@ -44,7 +48,7 @@ public:
     [[nodiscard]] float target_y() const;
 
     [[nodiscard]] int danger() const;
-    virtual void draw();
+    virtual void draw(int cameraX);
     void deltaTime(float dt);
     virtual void update();
     void decreaseX(int dec);

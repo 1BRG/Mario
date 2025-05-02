@@ -22,20 +22,24 @@ void Turtle::update() {
 void Turtle::collision(Entity &other, int directie) {
 
     if (directie == 1) {
-        lastY = coordY;
-        updateBottom = false;
+        if (other.danger()) {
+           bool ok;
+            ok = true;
+        }
+      //  updateBottom = false;
         targetY = min(targetY, other.coord_y() - y);
+        lastY = targetY;
     }
     else if (directie == -1) {
         cont = false;
-        updateTop = false;
+    //    updateTop = false;
         cont = false;
         canJump = false;
     }
-    else if (directie == 2 && targetX - coordX > 0) {
+    else if (directie == 2) {
         targetX = min(targetX, other.coord_x() - x), change = true;
     }
-    else if (directie == -2 && targetX - coordX < 0) {
+    else if (directie == -2) {
         targetX = max(targetX, other.coord_x() + other.width()), change = true;
     }
     if (other.danger() > 1)

@@ -38,6 +38,10 @@ void game::topCollision(const shared_ptr<Living> &entity, int y = 1) const
         if (entity->topCollision(env))
             entity->collision(*env, -1);
     }
+    for (const auto& env : entities) {
+        if (entity->topCollision(env))
+            entity->collision(*env, -1), env->collision(*entity, 1);
+    }
 }
 
 void game::bottomCollision(const shared_ptr<Living>& entity, int y = 1) const
@@ -56,6 +60,11 @@ void game::bottomCollision(const shared_ptr<Living>& entity, int y = 1) const
             entity->collision(*env, 1);
         i ++;
     }
+    for (const auto& env : entities) {
+
+        if (entity->bottomCollision(env) && entity != env)
+            entity->collision(*env, 1), env->collision(*entity, -1);
+    }
 }
 
 void game::leftCollision(const shared_ptr<Living>& entity, int x = 1) const
@@ -63,6 +72,10 @@ void game::leftCollision(const shared_ptr<Living>& entity, int x = 1) const
     for (const auto& env : environment) {
         if (entity->leftCollision(env))
             entity->collision(*env, -2);
+    }
+    for (const auto& env : entities) {
+        if (entity->leftCollision(env) && entity != env)
+            entity->collision(*env, -2), env->collision(*entity, 2);
     }
 }
 
@@ -72,24 +85,27 @@ void game::rightCollision(const shared_ptr<Living> &entity, int x = 1) const
         if (entity->rightCollision(env))
             entity->collision(*env, 2);
     }
+    for (const auto& env : entities) {
+        if (entity->rightCollision(env) && entity != env)
+            entity->collision(*env, 2), env->collision(*entity, -2);
+    }
 }
 void game::collision(const list<shared_ptr<Living>> &entities)
 {
     game* currentGame = GetInstance();
     for (const auto& entity : entities)
     {
-        if (currentGame->inScreenEntity(entity)) {
-            //  currentGame->deleteEntity(entity);
-
+        //if (currentGame->inScreenEntity(entity)) {
             currentGame->bottomCollision(entity);
-            currentGame->topCollision(entity);
-            currentGame->rightCollision(entity);
+            //  currentGame->deleteEntity(entity);
             currentGame->leftCollision(entity);
-        }
-
-      //  entity->moveToTarget();
+            currentGame->rightCollision(entity);
+            currentGame->topCollision(entity);
+     //   }
+  //      entity->moveToTarget();
     //    currentGame->insertEntity(entity);
     }
+
 
 }
 void game::setLevel(int k) {
@@ -112,8 +128,8 @@ void game::setLevel(int k) {
                     level.push_back(a);
                 }
                 else if (line[i] == '2') {
-                //    shared_ptr<Entity> a = make_shared<Turtle>((i) * 64, n * 64);
-                  //level.push_back(a);
+                    shared_ptr<Entity> a = make_shared<Turtle>((i) * 64, n * 64);
+                  level.push_back(a);
                 }
                 else if (line[i] == 'P') {
                     shared_ptr<Entity> a = make_shared<Player>((i) * 64, n * 64);
@@ -147,8 +163,8 @@ void game::setValid()
 {
     ///daca player.health <= 0 false
 }
-bool game::inScreenEntity(shared_ptr<Entity> entity) {
-    if (entity->coord_x() <= -entity->width() || entity->coord_x() >= screenWidth
+bool game::inScreenEntity(shared_ptr<Entity> entity) const {
+    if (entity->coord_x() <= -entity->width() - cameraX || entity->coord_x() - cameraX >= screenWidth
     || entity->coord_y() < -entity->height() || entity->coord_y() > screenHeight)
         return false;
     return true;
@@ -163,12 +179,13 @@ void game::StartGameLoop()
     float dt = GetFrameTime();
     dt = 0;
     int o = 0;
+    int cameraOFX = 0;
     while(!WindowShouldClose())
     {
         o ++;
         if (o > 2)
             dt = GetFrameTime();
-        dt = 0.0096;
+       // dt = 0.0096;
         BeginDrawing();
         ClearBackground(GREEN);
         for (auto it = entities.begin(); it != entities.end(); ) {
@@ -183,13 +200,13 @@ void game::StartGameLoop()
             else ++it;
         }
         for (const auto& entity : entities)
-            if (inScreenEntity(entity))
+            //if (inScreenEntity(entity))
                bottomCollision(entity);
         for (const auto& entity : entities)
-            if (inScreenEntity(entity))
+           // if (inScreenEntity(entity))
                 entity->moveToTarget();
         for (const auto& entity : entities)
-            if (inScreenEntity(entity))
+           // if (inScreenEntity(entity))
                entity->update();
         collision(entities);
 
@@ -212,13 +229,15 @@ void game::StartGameLoop()
         */
 
         for (const auto& entity : entities)
-            if (inScreenEntity(entity))
+          //  if (inScreenEntity(entity))
             entity->moveToTarget();
 
 
 
 
-        if (int(entities.front()->coord_x()) > screenWidth / 2) {
+        if (entities.front()->coord_x() - cameraX > screenWidth * 1. / 2) {
+            float dec = entities.front()->coord_x() - cameraX - screenWidth * 1. / 2;
+            cameraX += dec;
 
         }
         draw();
@@ -231,8 +250,8 @@ void game::draw() const
     game* currentGame = GetInstance();
     for (const auto& entitate: environment)
         if (currentGame->inScreenEntity(entitate))
-            entitate->draw();
+            entitate->draw(cameraX);
     for (const auto& entitate: entities)
         if (currentGame->inScreenEntity(entitate))
-        entitate->draw();
+        entitate->draw(cameraX);
 }

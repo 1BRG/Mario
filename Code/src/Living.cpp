@@ -65,25 +65,25 @@ if (updateTop && targetY - coordY <= 0) {
 }
 */
 bool Living::bottomCollision(const shared_ptr<Entity> &env) {
-    if (inCollision(env, 0, 1) && int(env->coord_y()) <= int(targetY + height()) && targetY - coordY >= 0)
+    if (inCollision(env, 0, 1) && detectCollisionSide(env, 0, 1) == "BOTTOM")
         return true;
     return false;
 }
 
 bool Living::topCollision(const shared_ptr<Entity> &env) {
-    if (inCollision(env, 0, -1) && int(env->coord_y() + env->height()) >= int(targetY) && targetY - coordY <= 0)
+    if (inCollision(env, 0, -1) && detectCollisionSide(env, 0, -1) == "TOP")
         return true;
     return false;
 }
 
 bool Living::leftCollision(const shared_ptr<Entity> &env) {
-    if (inCollision(env, -1, 0) && int(env->coord_x() + env->width()) <= int(targetX) && targetX - coordX <= 0)
+    if (inCollision(env, -1, 0) && detectCollisionSide(env, -1, 0) == "LEFT")
         return true;
     return false;
 }
 
 bool Living::rightCollision(const shared_ptr<Entity> &env) {
-    if (inCollision(env, 1, 0) && int(env->coord_x()) <= int(targetX + width()) && targetX - coordX >= 0)
+    if (inCollision(env, 1, 0) && detectCollisionSide(env, 1, 0) == "RIGHT")
         return true;
     return false;
 }
