@@ -17,8 +17,8 @@ protected:
     void moveX();
     void moveY();
 public:
-    Living(float x, float y, const Texture2D &Texture);
-    explicit Living(const Texture2D &texture);
+    Living(float x, float y, std::string &texturePath);
+    explicit Living(std::string &texturePath);
     Living() = default;
     [[nodiscard]] bool isAlive() const;
     virtual void moveToTarget(){}

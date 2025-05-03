@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include "../defineuri.h"
+#include "../Exceptii/exceptii.h"
 
 class Entity
 {
@@ -25,14 +26,14 @@ protected:
     Texture2D texture;
 public:
 
-    virtual ~Entity() = default;
     virtual void incomingDamage() {}
-    virtual void collision(Entity &other, int direction);
+    virtual void collision(Entity &other, int direction) = 0;
 
     [[nodiscard]] std::string detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const;
 
-    Entity(float x, float y, const Texture2D &Texture);
-    explicit Entity(const Texture2D &Texture);
+    Entity(float x, float y, std::string &texturePath);
+
+    explicit Entity(std::string &texturePath);
     Entity() = default;
     [[nodiscard]] static float clamp(float x, float st, float dr);
     [[nodiscard]] float coord_x() const;
@@ -48,22 +49,15 @@ public:
     [[nodiscard]] float target_y() const;
 
     [[nodiscard]] int danger() const;
-    virtual void draw(int cameraX);
+    virtual void draw(float cameraX);
     void deltaTime(float deltatime);
     virtual void update();
     void decreaseX(float dec);
     [[nodiscard]] Rectangle getRect(int a, int b) const;
+    ~Entity();
     ///
     ///
 };
 
-
-//class Enemy : public
-class Enviroment : public Entity
-{
-public:
-    Enviroment(float x, float y);
-    Enviroment();
-};
 
 #endif //ENTITATI_H

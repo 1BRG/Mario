@@ -5,7 +5,6 @@
 #include "../include/entitati/Player.h"
 
 #include <iostream>
-
 Player::Player(const float x, const float y) : Living(x, y, MarioTexture) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;

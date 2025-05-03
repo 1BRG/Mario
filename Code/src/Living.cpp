@@ -9,12 +9,12 @@ void Living::setLastY() {
         lastY = screenHeight;
 }
 
-Living::Living(const float x, const float y, const Texture2D &texture) : Entity(x, y, texture) {
+Living::Living(const float x, const float y, std::string &texturePath) : Entity(x, y, texturePath) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
 }
 
-Living::Living(const Texture2D &texture) : Entity(texture) {
+Living::Living(std::string &texturePath) : Entity(texturePath) {
 }
 
 void Living::moveX() {

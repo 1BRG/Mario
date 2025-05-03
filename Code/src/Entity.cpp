@@ -4,17 +4,23 @@
 #include <iostream>
 #include "../include/entitati/Entity.h"
 
-
-Entity::Entity(const float x, const float y, const Texture2D &Texture) : coordX(x), coordY(y), texture(Texture) {
-    this->x =  Texture.width;
-    this->y =  Texture.height;
+#include <string>
+Entity::Entity(const float x, const float y, std::string &texturePath) : coordX(x), coordY(y){
+    texture = LoadTexture(texturePath.c_str());
+    if (texture.id == 0)
+        throw TextureException(texturePath);
+    this->x =  texture.width;
+    this->y =  texture.height;
     targetX = coordX;
     targetY = coordY;
 }
 
-Entity::Entity(const Texture2D &Texture) : texture(Texture) {
-    this->x =  Texture.width;
-    this->y =  Texture.height;
+Entity::Entity(std::string &texturePath) {
+    texture = LoadTexture(texturePath.c_str());
+    if (texture.id == 0)
+        throw TextureException(texturePath);
+    this->x =  texture.width;
+    this->y =  texture.height;
 };
 
 [[nodiscard]] float Entity::coord_x() const {
@@ -48,10 +54,10 @@ float Entity::clamp(float val, float st, float dr) {
     return val;
 }
 void Entity::deltaTime(float deltatime) {
-    this->dt = deltatime;
+    dt = deltatime;
 }
 
-void Entity::draw(int cameraX) {
+void Entity::draw(float cameraX) {
 
     DrawTexture(texture, floor(coordX - cameraX), floor(coordY), WHITE);
 }
@@ -63,13 +69,6 @@ int Entity::danger() const {
     return damage;
 };
 
-void Entity::collision(Entity &other, int direction) {
-    //bs
-    bool ok = other.danger();
-    if (direction == 1) {
-        ok &= 1;
-    }
-}
 //GPT
 std::string Entity::detectCollisionSide(const std::shared_ptr<Entity>& env, int a, int b) const {
     // 1) Construim cele două Rectangle fără offset-uri „magice”
@@ -114,12 +113,8 @@ Rectangle Entity::getRect(const int a, const int b) const {
     return rect;
 }
 
-
-Enviroment::Enviroment(const float dx, const float dy) : Entity(dx, dy, BrickTexture) {
-}
-
-Enviroment::Enviroment() {
-    texture = BrickTexture;
+Entity::~Entity() {
+    UnloadTexture(texture);
 }
 
 

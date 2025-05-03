@@ -4,11 +4,11 @@
 
 #ifndef DEFINEURI_H
 #define DEFINEURI_H
-
-#define MarioTexture LoadTexture("../Texture/MarioTest1X.png")
-#define BrickTexture LoadTexture("../Texture/BricksX.png")
-#define TurtleTexture LoadTexture("../Texture/TurtleX.png")
-#define FuriousTurtleTexture LoadTexture("../Texture/furiousTurtleX.png")
+#include <string>
+inline std::string MarioTexture = "../Texture/MarioTest1X.png";
+inline std::string BrickTexture = "../Texture/BricksX.png";
+inline std::string TurtleTexture = "../Texture/TurtleX.png";
+inline std::string FuriousTurtleTexture = "../Texture/furiousTurtleX.png";
 #define screenWidth 1920
 #define screenHeight 1080
 #define DefaultSpeed 250

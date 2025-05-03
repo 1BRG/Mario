@@ -13,6 +13,12 @@ Turtle::Turtle(const float x, const float y) : Enemy(x, y, TurtleTexture) {
     damage = 1;
     speed = DefaultSpeed;
 }
+Turtle::Turtle(const float x, const float y, int a) : Enemy(x, y, FuriousTurtleTexture) {
+    health = 1;
+    damage = 2;
+    speed = 2 * DefaultSpeed;
+    health = a;
+}
 
 void Turtle::update() {
     moveX();
@@ -49,13 +55,11 @@ void Turtle::moveToTarget() {
     change = false;
     if (tookDamage) {
         health --;
-        texture = FuriousTurtleTexture;
-        x = texture.width;
-        y = texture.height;
-        damage ++;
-        speed *= 2;
+        *this = Turtle(coordX, coordY, health);
     }
-    tookDamage = false;
-    targetY = coordY;
-    targetX = coordX;
+    else {
+        tookDamage = false;
+        targetY = coordY;
+        targetX = coordX;
+    }
 }
