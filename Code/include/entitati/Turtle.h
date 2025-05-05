@@ -22,6 +22,7 @@ public:
     void moveToTarget() override;
     Turtle * clone() const override;
     Turtle& operator=(const Turtle& other);
+    Turtle(const Turtle& other) = default;
 };
 
 

@@ -21,6 +21,7 @@ public:
     static void collision();
     void moveToTarget() override;
     Player * clone() const override;
+    Player(const Player& other) = default;
     //void moveToTarget() override;
     // void gravity() override;
     //  void setLastY() override;

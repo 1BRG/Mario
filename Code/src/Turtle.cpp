@@ -18,7 +18,7 @@ Turtle::Turtle(const float x, const float y, int a) : Enemy(x, y, FuriousTurtleT
     speed = 2 * DefaultSpeed;
     health = a;
 }
-Turtle * Turtle::clone() const {
+Turtle *Turtle::clone() const {
         return new Turtle(*this);
 }
 
