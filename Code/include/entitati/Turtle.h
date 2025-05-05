@@ -20,6 +20,8 @@ public:
     static void collision();
     void update() override;
     void moveToTarget() override;
+    Turtle * clone() const override;
+    Turtle& operator=(const Turtle& other);
 };
 
 

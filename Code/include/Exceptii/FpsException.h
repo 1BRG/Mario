@@ -9,7 +9,7 @@
 
 class FpsException : public BaseException {
  public:
- explicit FpsException(const std::string &txt);
+ explicit FpsException();
 };
 
 

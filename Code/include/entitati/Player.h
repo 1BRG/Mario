@@ -19,6 +19,7 @@ public:
     void collision(Entity &other, int directie) override;
     void collision();
     void moveToTarget() override;
+    Player * clone() const override;
     //void moveToTarget() override;
     // void gravity() override;
     //  void setLastY() override;

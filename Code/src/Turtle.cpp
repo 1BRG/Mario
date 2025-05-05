@@ -14,10 +14,30 @@ Turtle::Turtle(const float x, const float y) : Enemy(x, y, TurtleTexture) {
     speed = DefaultSpeed;
 }
 Turtle::Turtle(const float x, const float y, int a) : Enemy(x, y, FuriousTurtleTexture) {
-    health = 1;
     damage = 2;
     speed = 2 * DefaultSpeed;
     health = a;
+}
+Turtle * Turtle::clone() const {
+    {
+        return new Turtle(*this);
+    }
+}
+
+Turtle & Turtle::operator=(const Turtle &other) {
+    if (this == &other)
+        return *this;
+    UnloadTexture(texture);
+    Enemy::operator=(other);
+    damage      = other.damage;
+    speed       = other.speed;
+    health      = other.health;
+    texture = LoadTexture(other.texturePath.c_str());
+    if (texture.id == 0)
+        throw TextureException(texturePath);
+    x = texture.width;
+    y = texture.height;
+    return *this;
 }
 
 void Turtle::update() {

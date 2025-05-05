@@ -7,6 +7,7 @@
 #include <string>
 Entity::Entity(const float x, const float y, std::string &texturePath) : coordX(x), coordY(y){
     texture = LoadTexture(texturePath.c_str());
+    this->texturePath = texturePath;
     if (texture.id == 0)
         throw TextureException(texturePath);
     this->x =  texture.width;
@@ -16,6 +17,7 @@ Entity::Entity(const float x, const float y, std::string &texturePath) : coordX(
 }
 
 Entity::Entity(std::string &texturePath) {
+    this->texturePath = texturePath;
     texture = LoadTexture(texturePath.c_str());
     if (texture.id == 0)
         throw TextureException(texturePath);
@@ -62,8 +64,6 @@ void Entity::draw(float cameraX) {
     DrawTexture(texture, floor(coordX - cameraX), floor(coordY), WHITE);
 }
 
-void Entity::update() {
-}
 
 int Entity::danger() const {
     return damage;

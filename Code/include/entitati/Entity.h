@@ -17,6 +17,7 @@ class Entity
 {
 protected:
     float dt;
+    std::string texturePath;
     float coordX = 0, coordY = 0, x = 0, y = 0;
     float targetX = 0, targetY = 0;
     int health = 1;
@@ -51,7 +52,7 @@ public:
     [[nodiscard]] int danger() const;
     virtual void draw(float cameraX);
     void deltaTime(float deltatime);
-    virtual void update();
+    [[nodiscard]] virtual Entity* clone() const = 0;
     void decreaseX(float dec);
     [[nodiscard]] Rectangle getRect(int a, int b) const;
     ~Entity();

@@ -5,3 +5,8 @@
 #include "../include/entitati/Brick.h"
 
 Brick:: Brick(const float dx, const float dy) : Environment(dx, dy, BrickTexture){}
+Brick * Brick::clone() const {
+    {
+        return new Brick(*this);
+    }
+}

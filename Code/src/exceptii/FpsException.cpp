@@ -4,6 +4,6 @@
 
 #include "../../include/exceptii/FpsException.h"
 
-FpsException::FpsException(const std::string &txt) : BaseException("Timp prea mare intre cadre, posibil sa existe erori!") {
+FpsException::FpsException() : BaseException("Timp prea mare intre cadre, posibil sa existe erori!") {
 
 }

@@ -11,6 +11,7 @@ class Brick: public Environment {
 
   public:
     Brick(const float dx, const float dy);
+    Brick * clone() const override;
 };
 
 

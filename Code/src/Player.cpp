@@ -69,6 +69,9 @@ void Player::gravity() {
      }
 }
 */
+Player * Player::clone() const {
+    return new Player(*this);
+}
 void Player::moveToTarget() {
    // cout << "ba";
 

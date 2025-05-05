@@ -25,6 +25,7 @@ void game::StartGameLoop()
 {
     InitWindow(screenWidth, screenHeight, "Hello World");
     SetTargetFPS(144);
+ //   Texture2D texture = LoadTexture("../Texture/fundal.png");
     ClearBackground(GREEN);
     setLevel(1);
     setEntities();
@@ -35,12 +36,29 @@ void game::StartGameLoop()
     while(!WindowShouldClose())
     {
         o ++;
-        if (o > 2)
-            fr = GetFrameTime();
+        ClearBackground(GREEN);
+        fr = GetFrameTime();
+        try {
+            if (fr <= 0.20)
+                throw(fr);
+            if (o >= 10) throw(FpsException());
+            throw std::string("continua");
+        }
+        catch (FpsException &e) {
+            std::cout << e.what() << std::endl;
+//exit(0);
+        }
+        catch (float e) {
+            fr = e;
+        }
+        catch(std::string &s) {
+            fr = 0;
+        }
+        fr = 0.0056;
        // dt = 0.0096;
 
         BeginDrawing();
-        ClearBackground(GREEN);
+        //DrawTexturePro(texture, {0,0,float(texture.width), float(texture.height)}, {0, 0, screenWidth, screenHeight}, {0, 0}, 0, WHITE);
         for (auto it = entities.begin(); it != entities.end(); ) {
             (*it)->deltaTime(fr);
             if (!(*it)->isAlive()) {

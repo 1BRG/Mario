@@ -52,6 +52,7 @@ void Living::collision(Entity &other, int directie) {
     }
 }
 
+
 bool Living::inCollision(const std::shared_ptr<Entity> &env, int a, int b) const {
     return CheckCollisionRecs(env->getRect(0, 0), getRect(a,  b));
 }

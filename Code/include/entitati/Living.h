@@ -24,9 +24,8 @@ public:
     virtual void moveToTarget(){}
     virtual void setLastY();
     virtual void collision(Entity &other, int directie);
-
     bool inCollision(const std::shared_ptr<Entity> &env, int a, int b) const;
-
+    virtual void update() = 0;
     bool bottomCollision(const std::shared_ptr<Entity> & env);
 
     bool topCollision(const std::shared_ptr<Entity> & env);
