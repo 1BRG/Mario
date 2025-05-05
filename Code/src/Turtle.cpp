@@ -19,9 +19,7 @@ Turtle::Turtle(const float x, const float y, int a) : Enemy(x, y, FuriousTurtleT
     health = a;
 }
 Turtle * Turtle::clone() const {
-    {
         return new Turtle(*this);
-    }
 }
 
 Turtle & Turtle::operator=(const Turtle &other) {
@@ -32,6 +30,7 @@ Turtle & Turtle::operator=(const Turtle &other) {
     damage = other.damage;
     speed  = other.speed;
     health = other.health;
+
     texture = LoadTexture(other.texturePath.c_str());
     if (texture.id == 0)
         throw TextureException(texturePath);

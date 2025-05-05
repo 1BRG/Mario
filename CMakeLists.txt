@@ -45,7 +45,6 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/src/main.cpp
        # Code/statemachine.cpp
         generated/src/Helper.cpp
-        Code/Entitati1.h
 
 
         Code/include/defineuri.h
