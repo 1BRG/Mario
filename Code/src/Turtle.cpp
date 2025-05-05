@@ -29,9 +29,9 @@ Turtle & Turtle::operator=(const Turtle &other) {
         return *this;
     UnloadTexture(texture);
     Enemy::operator=(other);
-    damage      = other.damage;
-    speed       = other.speed;
-    health      = other.health;
+    damage = other.damage;
+    speed  = other.speed;
+    health = other.health;
     texture = LoadTexture(other.texturePath.c_str());
     if (texture.id == 0)
         throw TextureException(texturePath);

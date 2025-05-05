@@ -11,7 +11,7 @@
 class Environment : public Entity
 {
 public:
-    Environment(float x, float y, std::string &texturePath);
+    Environment(float x, float y, const std::string &texturePath);
     Environment() = default;
     void collision(Entity &other, int direction) override;
 };

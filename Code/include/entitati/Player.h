@@ -17,7 +17,8 @@ public:
     //void moveY();
     void update() override;
     void collision(Entity &other, int directie) override;
-    void collision();
+
+    static void collision();
     void moveToTarget() override;
     Player * clone() const override;
     //void moveToTarget() override;

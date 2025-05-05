@@ -29,8 +29,7 @@ void game::StartGameLoop()
     ClearBackground(GREEN);
     setLevel(1);
     setEntities();
-    float fr = GetFrameTime();
-    fr = 0;
+    float fr = 0;
     int o = 0;
   //  ToggleFullscreen();
     while(!WindowShouldClose())
@@ -50,11 +49,12 @@ void game::StartGameLoop()
         }
         catch (float e) {
             fr = e;
+
         }
-        catch(std::string &s) {
+        catch(...) {
             fr = 0;
         }
-        fr = 0.0056;
+       // fr = 0.0056;
        // dt = 0.0096;
 
         BeginDrawing();

@@ -32,9 +32,9 @@ public:
 
     [[nodiscard]] std::string detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const;
 
-    Entity(float x, float y, std::string &texturePath);
+    Entity(float x, float y, const std::string &texturePath);
 
-    explicit Entity(std::string &texturePath);
+    explicit Entity(const std::string &texturePath);
     Entity() = default;
     [[nodiscard]] static float clamp(float x, float st, float dr);
     [[nodiscard]] float coord_x() const;
@@ -55,7 +55,8 @@ public:
     [[nodiscard]] virtual Entity* clone() const = 0;
     void decreaseX(float dec);
     [[nodiscard]] Rectangle getRect(int a, int b) const;
-    ~Entity();
+
+    virtual ~Entity();
     ///
     ///
 };

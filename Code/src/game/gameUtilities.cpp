@@ -3,7 +3,7 @@
 //
 #include "../../include/game/gameFunction.h"
 
-bool game::inScreenEntity(std::shared_ptr<Entity> entity) const {
+bool game::inScreenEntity(const std::shared_ptr<Entity> &entity) const {
     if (entity->coord_x() <= -entity->width() - cameraX || entity->coord_x() - cameraX >= screenWidth
     || entity->coord_y() < -entity->height() || entity->coord_y() > screenHeight)
         return false;

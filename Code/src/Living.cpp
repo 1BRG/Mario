@@ -9,12 +9,12 @@ void Living::setLastY() {
         lastY = screenHeight;
 }
 
-Living::Living(const float x, const float y, std::string &texturePath) : Entity(x, y, texturePath) {
+Living::Living(const float x, const float y, const std::string &texturePath) : Entity(x, y, texturePath) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
 }
 
-Living::Living(std::string &texturePath) : Entity(texturePath) {
+Living::Living(const std::string &texturePath) : Entity(texturePath) {
 }
 
 void Living::moveX() {
@@ -46,10 +46,13 @@ void Living::moveY() {
 
 void Living::collision(Entity &other, int directie) {
     //bs
-    bool ok = other.danger();
+    int ok = other.danger();
     if (directie == 1) {
         ok &= 1;
+        directie += ok;
     }
+    other.decreaseX(directie);
+    other.decreaseX(-directie);
 }
 
 
@@ -70,26 +73,26 @@ if (updateTop && targetY - coordY <= 0) {
     coordY = targetY;
 }
 */
-bool Living::bottomCollision(const std::shared_ptr<Entity> &env) {
+bool Living::bottomCollision(const std::shared_ptr<Entity> &env) const {
 
     if (inCollision(env, 0, 1) && detectCollisionSide(env, 0, 1) == "BOTTOM")
         return true;
     return false;
 }
 
-bool Living::topCollision(const std::shared_ptr<Entity> &env) {
+bool Living::topCollision(const std::shared_ptr<Entity> &env) const {
     if (inCollision(env, 0, -1) && detectCollisionSide(env, 0, -1) == "TOP")
         return true;
     return false;
 }
 
-bool Living::leftCollision(const std::shared_ptr<Entity> &env) {
+bool Living::leftCollision(const std::shared_ptr<Entity> &env) const {
     if (inCollision(env, -1, 0) && detectCollisionSide(env, -1, 0) == "LEFT")
         return true;
     return false;
 }
 
-bool Living::rightCollision(const std::shared_ptr<Entity> &env) {
+bool Living::rightCollision(const std::shared_ptr<Entity> &env) const {
     if (inCollision(env, 1, 0) && detectCollisionSide(env, 1, 0) == "RIGHT")
         return true;
     return false;

@@ -26,9 +26,9 @@ public:
     static game* GetInstance();
     void setLevel(int k);
     void setEntities();
-    void setValid();
+    static void setValid();
 
-    bool inScreenEntity(std::shared_ptr<Entity> entity) const;
+    bool inScreenEntity(const std::shared_ptr<Entity> &entity) const;
 
     void insertEntity(const std::shared_ptr<Entity> &entity);
     void deleteEntity(const std::shared_ptr<Entity> &entity);

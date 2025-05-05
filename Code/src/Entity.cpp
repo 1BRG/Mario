@@ -5,7 +5,8 @@
 #include "../include/entitati/Entity.h"
 
 #include <string>
-Entity::Entity(const float x, const float y, std::string &texturePath) : coordX(x), coordY(y){
+Entity::Entity(const float x, const float y, const std::string &texturePath) : coordX(x), coordY(y){
+    dt = 0;
     texture = LoadTexture(texturePath.c_str());
     this->texturePath = texturePath;
     if (texture.id == 0)
@@ -16,7 +17,9 @@ Entity::Entity(const float x, const float y, std::string &texturePath) : coordX(
     targetY = coordY;
 }
 
-Entity::Entity(std::string &texturePath) {
+
+Entity::Entity(const std::string &texturePath) {
+    dt = 0;
     this->texturePath = texturePath;
     texture = LoadTexture(texturePath.c_str());
     if (texture.id == 0)

@@ -23,8 +23,8 @@ void Player::handleInput() {
     } else {
         if (speed != 0) {
             if (speed < 0)
-                speed += DefaultSpeed * ProcentAlergare * dt, speed = std::min(speed, float(0.0));
-            else speed -= DefaultSpeed * ProcentAlergare * dt, speed = std::max(speed, float(0.0));
+                speed += DefaultSpeed * ProcentAlergare * dt, speed = std::min(speed, static_cast<float>(0.0));
+            else speed -= DefaultSpeed * ProcentAlergare * dt, speed = std::max(speed, static_cast<float>(0.0));
         }
     }
     isJumping = (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) & canJump;

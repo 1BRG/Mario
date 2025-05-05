@@ -82,6 +82,4 @@ void game::setEntities() {
         }
         //  insertEntity(entity);
     }
-    bool ok;
-    ok = true;
 }
