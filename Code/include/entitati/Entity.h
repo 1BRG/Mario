@@ -12,10 +12,15 @@
 #include <vector>
 #include "../defineuri.h"
 #include "../Exceptii/exceptii.h"
-
+#include "Animation.h"
 class Entity
 {
+
 protected:
+    enum State { IDLE, RUN, JUMP };
+    Vector2 position;
+    State state;
+    Animation* animations[3];
     float dt;
     std::string texturePath;
     float coordX = 0, coordY = 0, x = 0, y = 0;
@@ -32,9 +37,9 @@ public:
 
     [[nodiscard]] std::string detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const;
 
-    Entity(float x, float y, const std::string &texturePath);
-
-    explicit Entity(const std::string &texturePath);
+    Entity(float x, float y, Animation* anim[3]);
+    virtual void print() const;
+    friend std::ostream &operator<<(std::ostream &os, const Entity &entity);
     Entity() = default;
     [[nodiscard]] static float clamp(float x, float st, float dr);
     [[nodiscard]] float coord_x() const;

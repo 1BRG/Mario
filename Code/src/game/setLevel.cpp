@@ -29,13 +29,13 @@ void game::setLevel(int k) {
                 std::shared_ptr<Entity> a;
                 try {
                     if (line[i] == '1') {
-                        a = std::make_shared<Brick>((i) * 64, n * 64);
+                        a = std::make_shared<Brick>((i) * 16, n * 16);
                         throw(a);
                     } else if (line[i] == '2') {
-                        a = std::make_shared<Turtle>((i) * 64, n * 64);
+                        a = std::make_shared<Turtle>((i) * 16, n * 16);
                         throw(a);
                     } else if (line[i] == 'P') {
-                        a = std::make_shared<Player>((i) * 64, n * 64);
+                        a = std::make_shared<Player>((i) * 16, n * 16);
                         throw(a);
                     } else if (line[i] != '0')
                         throw(BaseException("Nu exista aceasta entitate"));
@@ -64,7 +64,7 @@ void game::setEntities() {
         for (int j = 0; j < screenWidth; j ++)
             grid[i][j] = nullptr;
             */
-    for (auto entity: level) {
+    for (const auto& entity: level) {
         if (std::dynamic_pointer_cast<Living>(entity) != nullptr) {
             try {
                 entities.push_back(std::dynamic_pointer_cast<Living>(entity));

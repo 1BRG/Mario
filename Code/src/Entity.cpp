@@ -5,28 +5,22 @@
 #include "../include/entitati/Entity.h"
 
 #include <string>
-Entity::Entity(const float x, const float y, const std::string &texturePath) : coordX(x), coordY(y){
+Entity::Entity(const float x, const float y, Animation* anim[3]) : coordX(x), coordY(y){
     dt = 0;
-    texture = LoadTexture(texturePath.c_str());
-    this->texturePath = texturePath;
-    if (texture.id == 0)
-        throw TextureException(texturePath);
-    this->x =  texture.width;
-    this->y =  texture.height;
+    for (int i = 0; i < 3; ++i) {
+        animations[i] = anim[i];
+    }
+    state = IDLE;
+    this->x =  animations[state]->width();
+    this->y =  animations[state]->height();
     targetX = coordX;
     targetY = coordY;
 }
 
+void Entity::print() const {
+    std::cout << "Health: " << health << ";Danger: " << damage << std::endl;
+}
 
-Entity::Entity(const std::string &texturePath) {
-    dt = 0;
-    this->texturePath = texturePath;
-    texture = LoadTexture(texturePath.c_str());
-    if (texture.id == 0)
-        throw TextureException(texturePath);
-    this->x =  texture.width;
-    this->y =  texture.height;
-};
 
 [[nodiscard]] float Entity::coord_x() const {
     return coordX;
@@ -64,7 +58,8 @@ void Entity::deltaTime(float deltatime) {
 
 void Entity::draw(float cameraX) {
 
-    DrawTexture(texture, floor(coordX - cameraX), floor(coordY), WHITE);
+    animations[state]->Draw({ coordX - cameraX, coordY }, WHITE, dt);
+   // DrawTexture(texture, floor(coordX - cameraX), floor(coordY), WHITE);
 }
 
 
@@ -121,5 +116,7 @@ Entity::~Entity() {
 }
 
 
-
-
+std::ostream & operator<<(std::ostream &os, const Entity &entity) {
+    entity.print();
+    return os;
+}

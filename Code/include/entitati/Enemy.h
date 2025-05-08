@@ -11,7 +11,7 @@ class Enemy : public Living {
 protected:
     bool change = false;
 public:
-    Enemy(float x, float y, std::string &texturePath);
+    Enemy(float x, float y, Animation* anim[3]);
     void incomingDamage() override;
 };
 

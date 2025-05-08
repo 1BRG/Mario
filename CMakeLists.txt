@@ -83,6 +83,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/src/game/gameUtilities.cpp
         Code/src/game/setLevel.cpp
         Code/include/Exceptii/exceptii.h
+        Code/include/entitati/Animation.h
+        Code/src/Animation.cpp
 
 )
 target_compile_features(oop PUBLIC cxx_std_17)

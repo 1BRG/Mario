@@ -8,6 +8,9 @@
 
 
 class Player : public Living {
+    static std::string MarioIDLE;
+    static std::string MarioRUN;
+    static std::string MarioJUMP;
     bool gaveDamage = false;
 public:
     Player(float x,  float y);

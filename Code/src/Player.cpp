@@ -5,15 +5,23 @@
 #include "../include/entitati/Player.h"
 
 #include <iostream>
-Player::Player(const float x, const float y) : Living(x, y, MarioTexture) {
+std::string Player:: MarioIDLE = "../Texture/all/Mario.png";
+std::string Player::MarioRUN = "../Texture/all/MarioRun.png";
+std::string Player::MarioJUMP = "../Texture/all/MarioJumping.png";
+
+Player::Player(const float x, const float y)
+: Living(x, y, new Animation*[3] {
+    new Animation(MarioIDLE, 1, 6),
+    new Animation(MarioRUN, 3, 12),
+    new Animation(MarioJUMP, 1, 4)})
+{
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
     health = 1;
+
+    state = RUN;
 }
 
-Player::Player() : Living(MarioTexture) {
-    health = 1;
-}
 
 void Player::handleInput() {
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
@@ -81,10 +89,10 @@ void Player::moveToTarget() {
     if (updateRight && targetX - coordX >= 0) {
         coordX = targetX;
     }
-    if (updateBottom && targetY - coordY >= 0) {
+    if (updateBottom && targetY - coordY > 0) {
         coordY = targetY;
     }
-    if (updateTop && targetY - coordY <= 0) {
+    if (updateTop && targetY - coordY < 0) {
         coordY = targetY;
     }
     updateBottom = updateTop = true;

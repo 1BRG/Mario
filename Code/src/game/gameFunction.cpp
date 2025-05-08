@@ -21,21 +21,26 @@ void game::setValid()
 {
     ///daca player.health <= 0 false
 }
+
+
 void game::StartGameLoop()
 {
     InitWindow(screenWidth, screenHeight, "Hello World");
     SetTargetFPS(144);
  //   Texture2D texture = LoadTexture("../Texture/fundal.png");
     ClearBackground(GREEN);
+    Brick::InitStatics();
     setLevel(1);
     setEntities();
     float fr = 0;
     int o = 0;
   //  ToggleFullscreen();
+    ToggleFullscreen();
+    RenderTexture2D renderTexture = LoadRenderTexture(256, 250);
     while(!WindowShouldClose())
     {
         o ++;
-        ClearBackground(GREEN);
+        ClearBackground(BLUE);
         fr = GetFrameTime();
         try {
             if (fr <= 0.20)
@@ -57,7 +62,8 @@ void game::StartGameLoop()
        // fr = 0.0056;
        // dt = 0.0096;
 
-        BeginDrawing();
+        BeginTextureMode(renderTexture);
+        ClearBackground(BLUE);
         //DrawTexturePro(texture, {0,0,float(texture.width), float(texture.height)}, {0, 0, screenWidth, screenHeight}, {0, 0}, 0, WHITE);
         for (auto it = entities.begin(); it != entities.end(); ) {
             (*it)->deltaTime(fr);
@@ -120,15 +126,18 @@ void game::StartGameLoop()
 
 
 
-        if (entities.front()->coord_x() - cameraX > screenWidth * 1. / 2) {
-            float dec = entities.front()->coord_x() - cameraX - screenWidth * 1. / 2;
+        if (entities.front()->coord_x() - cameraX > 256 * 1. / 2) {
+            float dec = entities.front()->coord_x() - cameraX - 256 * 1. / 2;
             cameraX += dec;
 
         }
+      //  for (const auto& entity : entities)
+//            std::cout << (*entity);
         draw();
-        EndDrawing();
+        EndTextureMode();
        // cout << GetFPS() << "FPS" << endl;
-
-
+        BeginDrawing();
+        DrawTexturePro(renderTexture.texture, {0, 0, 256, -256}, {420, 0, 1080, 1080}, {0, 0}, 0, WHITE);
+EndDrawing();
     }
 }

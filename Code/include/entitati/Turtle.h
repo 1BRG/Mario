@@ -8,6 +8,10 @@
 
 
 class Turtle : public Enemy {
+    //std::string MarioIDLE = "../Texture/all/Mario.png";
+    static std::string TurtleRUN;
+    static std::string FuriousRUN;
+   // std::string MarioJUMP = "../Texture/all/MarioJumping.png";
     static int isd;
     int local_id = ++isd;
 public:

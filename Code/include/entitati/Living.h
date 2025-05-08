@@ -17,16 +17,17 @@ protected:
     void moveX();
     void moveY();
 public:
-    Living(float x, float y, const std::string &texturePath);
-    explicit Living(const std::string &texturePath);
+    Living(float x, float y, Animation* animations[3]);
     Living() = default;
     [[nodiscard]] bool isAlive() const;
     virtual void moveToTarget(){}
     virtual void setLastY();
 
     void collision(Entity &other, int directie) override;
-    bool inCollision(const std::shared_ptr<Entity> &env, int a, int b) const;
+    void print() const override;
+    [[nodiscard]] bool inCollision(const std::shared_ptr<Entity> &env, int a, int b) const;
     virtual void update() = 0;
+    friend std::ostream &operator<<(std::ostream &os, const Living &living);
     bool bottomCollision(const std::shared_ptr<Entity> & env) const;
 
     bool topCollision(const std::shared_ptr<Entity> & env) const;

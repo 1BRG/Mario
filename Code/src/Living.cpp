@@ -4,17 +4,16 @@
 
 #include "../include/entitati/Living.h"
 
+#include <iostream>
+
 void Living::setLastY() {
     if (coordY >= lastY)
         lastY = screenHeight;
 }
 
-Living::Living(const float x, const float y, const std::string &texturePath) : Entity(x, y, texturePath) {
+Living::Living(const float x, const float y, Animation* anim[3]) : Entity(x, y, anim) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
-}
-
-Living::Living(const std::string &texturePath) : Entity(texturePath) {
 }
 
 void Living::moveX() {
@@ -53,6 +52,11 @@ void Living::collision(Entity &other, int directie) {
     }
     other.decreaseX(directie);
     other.decreaseX(-directie);
+}
+
+void Living::print() const {
+    Entity::print();
+    std::cout << "Speed : " << speed << std::endl<< std::endl;
 }
 
 
@@ -96,4 +100,9 @@ bool Living::rightCollision(const std::shared_ptr<Entity> &env) const {
     if (inCollision(env, 1, 0) && detectCollisionSide(env, 1, 0) == "RIGHT")
         return true;
     return false;
+}
+
+std::ostream & operator<<(std::ostream &os, const Living &living) {
+    living.print();
+    return os;
 }

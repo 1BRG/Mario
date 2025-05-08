@@ -6,17 +6,27 @@
 
 int Turtle::isd = 0;
 
+std::string Turtle::TurtleRUN = "../Texture/all/TurtleRun.png";
+std::string Turtle::FuriousRUN = "../Texture/all/FuriousRun.png";
 
+Turtle::Turtle(const float x, const float y) : Enemy(x, y, new Animation*[3] {
+    new Animation(TurtleRUN, 2, 6),
+    new Animation(TurtleRUN, 2, 12),
+    new Animation(TurtleRUN, 2, 4)}) {
 
-Turtle::Turtle(const float x, const float y) : Enemy(x, y, TurtleTexture) {
     health = 2;
     damage = 1;
+    state = RUN;
     speed = DefaultSpeed;
 }
-Turtle::Turtle(const float x, const float y, int a) : Enemy(x, y, FuriousTurtleTexture) {
+Turtle::Turtle(const float x, const float y, int a) : Enemy(x, y, new Animation*[3] {
+    new Animation(FuriousRUN, 1, 1),
+    new Animation(FuriousRUN, 1, 1),
+    new Animation(FuriousRUN, 1, 1)}) {
     damage = 2;
     speed = 2 * DefaultSpeed;
     health = a;
+    state = RUN;
 }
 Turtle *Turtle::clone() const {
         return new Turtle(*this);
@@ -74,7 +84,10 @@ void Turtle::moveToTarget() {
     change = false;
     if (tookDamage) {
         health --;
-        *this = Turtle(coordX, coordY, health);
+      animations[RUN] =  new Animation(FuriousRUN, 1, 2000);
+        animations[JUMP] =  new Animation(FuriousRUN, 1, 2000);
+        animations[IDLE] =  new Animation(FuriousRUN, 1, 2000);
+        tookDamage = false;
     }
     else {
         tookDamage = false;
