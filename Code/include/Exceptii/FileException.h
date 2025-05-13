@@ -9,10 +9,9 @@
 
 
 class FileException : public BaseException {
-    public:
-      explicit FileException(const std::string &txt);
+public:
+    explicit FileException(const std::string &txt);
 };
-
 
 
 #endif //FILEEXCEPTION_H

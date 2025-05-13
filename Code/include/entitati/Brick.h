@@ -7,17 +7,20 @@
 #include "Environment.h"
 
 
-class Brick: public Environment {
-    static Animation* anim[3];
-  public:
+class Brick : public Environment {
+    static Animation *anim[3];
+
+public:
     static void InitStatics();
 
-    Brick(const float dx, const float dy);
-    Brick * clone() const override;
-    Brick(const Brick& other) = default;
-    ~Brick();
-};
+    Brick( float dx,  float dy);
 
+    [[nodiscard]] Brick *clone() const override;
+
+    Brick(const Brick &other) = default;
+
+    ~Brick() override;
+};
 
 
 #endif //BRICK_H

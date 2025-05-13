@@ -11,7 +11,7 @@ void Living::setLastY() {
         lastY = screenHeight;
 }
 
-Living::Living(const float x, const float y, Animation* anim[3]) : Entity(x, y, anim) {
+Living::Living(const float x, const float y, Animation *anim[3]) : Entity(x, y, anim) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
 }
@@ -20,6 +20,7 @@ void Living::moveX() {
     speed = clamp(speed, -DefaultSpeed * 1.5, DefaultSpeed * 1.5);
     targetX += speed * dt;
 }
+
 bool Living::isAlive() const {
     return health;
 }
@@ -30,39 +31,38 @@ void Living::moveY() {
         updateTop = true;
         if (targetY <= JumpMax)
             canJump = false;
-    }
-    else {
+    } else {
         if (targetY != lastY && cont == false)
-            targetY += Jump * dt , canJump = false, updateBottom = true;
+            targetY += Jump * dt, canJump = false, updateBottom = true;
         else if (targetY != lastY && cont == true) {
             if (targetY > JumpMin && lastY != screenHeight)
                 targetY -= Jump * dt, updateTop = true;
             else cont = false;
-        }
-        else canJump = true, cont = true;
+        } else canJump = true, cont = true;
     }
 }
 
-void Living::collision(Entity &other, int directie) {
+void Living::collision(Entity &other, int direction) {
     //bs
     int ok = other.danger();
-    if (directie == 1) {
+    if (direction == 1) {
         ok &= 1;
-        directie += ok;
+        direction += ok;
     }
-    other.decreaseX(directie);
-    other.decreaseX(-directie);
+    other.decreaseX(direction);
+    other.decreaseX(-direction);
 }
 
 void Living::print() const {
     Entity::print();
-    std::cout << "Speed : " << speed << std::endl<< std::endl;
+    std::cout << "Speed : " << speed << std::endl << std::endl;
 }
 
 
 bool Living::inCollision(const std::shared_ptr<Entity> &env, int a, int b) const {
-    return CheckCollisionRecs(env->getRect(0, 0), getRect(a,  b));
+    return CheckCollisionRecs(env->getRect(0, 0), getRect(a, b));
 }
+
 /*
 if (updateLeft && targetX - coordX <= 0) {
     coordX = targetX;
@@ -78,7 +78,6 @@ if (updateTop && targetY - coordY <= 0) {
 }
 */
 bool Living::bottomCollision(const std::shared_ptr<Entity> &env) const {
-
     if (inCollision(env, 0, 1) && detectCollisionSide(env, 0, 1) == "BOTTOM")
         return true;
     return false;
@@ -102,7 +101,7 @@ bool Living::rightCollision(const std::shared_ptr<Entity> &env) const {
     return false;
 }
 
-std::ostream & operator<<(std::ostream &os, const Living &living) {
+std::ostream &operator<<(std::ostream &os, const Living &living) {
     living.print();
     return os;
 }

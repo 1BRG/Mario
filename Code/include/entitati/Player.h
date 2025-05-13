@@ -11,26 +11,33 @@ class Player : public Living {
     static std::string MarioIDLE;
     static std::string MarioRUN;
     static std::string MarioJUMP;
-    bool gaveDamage = false;
+    bool gaveDamage {false};
+
 public:
-    Player(float x,  float y);
-    Player();
+    Player(float x, float y);
+
+    Player() = default;
+
     void handleInput();
+
     // void moveX();
     //void moveY();
     void update() override;
-    void collision(Entity &other, int directie) override;
+
+    void collision(Entity &other, int direction) override;
 
     static void collision();
+
     void moveToTarget() override;
-    Player * clone() const override;
-    Player(const Player& other) = default;
+
+    [[nodiscard]] Player *clone() const override;
+
+    Player(const Player &other) = default;
+
     //void moveToTarget() override;
     // void gravity() override;
     //  void setLastY() override;
 };
-
-
 
 
 #endif //PLAYER_H

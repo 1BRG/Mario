@@ -4,6 +4,5 @@
 
 #include "../../include/exceptii/FpsException.h"
 
-FpsException::FpsException() : BaseException("Timp prea mare intre cadre, posibil sa existe erori!") {
-
+FpsException::FpsException() : BaseException("Too much time between frames, possible errors!") {
 }

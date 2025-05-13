@@ -4,7 +4,7 @@
 
 #include "../include/entitati/Animation.h"
 
-Animation::Animation(const std::string& filePath, int frameCount, float frameSpeed)
+Animation::Animation(const std::string &filePath, int frameCount, float frameSpeed)
     : frameCount(frameCount), currentFrame(0), frameSpeed(frameSpeed), elapsedTime(0.0f) {
     texture = LoadTexture(filePath.c_str());
     if (texture.id == 0)
@@ -13,7 +13,7 @@ Animation::Animation(const std::string& filePath, int frameCount, float frameSpe
     float frameHeight = static_cast<float>(texture.height);
     frames.reserve(frameCount);
     for (int i = 0; i < frameCount; ++i) {
-        frames.push_back(Rectangle{ i * frameWidth, 0, frameWidth, frameHeight });
+        frames.push_back(Rectangle{i * frameWidth, 0, frameWidth, frameHeight});
     }
 }
 
@@ -29,7 +29,7 @@ void Animation::Update(float delta) {
     }
 }
 
-void Animation::Draw(const Vector2& position, const Color& tint, float delta) {
+void Animation::Draw(const Vector2 &position, const Color &tint, float delta) {
     Update(delta);
     DrawTextureRec(texture, frames[currentFrame], position, tint);
 }
@@ -54,6 +54,7 @@ int Animation::GetCurrentFrame() const {
 int Animation::width() const {
     return texture.width / frameCount;
 }
+
 int Animation::height() const {
     return texture.height;
 }

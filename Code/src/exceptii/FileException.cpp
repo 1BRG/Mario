@@ -4,6 +4,5 @@
 
 #include "../../include/exceptii/FileException.h"
 
-FileException::FileException(const std::string &txt) : BaseException("Fisierul: " + txt + " nu exista!") {
-
+FileException::FileException(const std::string &txt) : BaseException("File: " + txt + " doesn't exist!") {
 }

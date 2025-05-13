@@ -5,14 +5,15 @@
 #include "../include/entitati/Entity.h"
 
 #include <string>
-Entity::Entity(const float x, const float y, Animation* anim[3]) : coordX(x), coordY(y){
+
+Entity::Entity(const float x, const float y, Animation *anim[3]) : coordX(x), coordY(y) {
     dt = 0;
     for (int i = 0; i < 3; ++i) {
         animations[i] = anim[i];
     }
     state = IDLE;
-    this->x =  animations[state]->width();
-    this->y =  animations[state]->height();
+    this->x = animations[state]->width();
+    this->y = animations[state]->height();
     targetX = coordX;
     targetY = coordY;
 }
@@ -45,6 +46,7 @@ void Entity::print() const {
 [[nodiscard]] float Entity::target_y() const {
     return targetY;
 }
+
 float Entity::clamp(float val, float st, float dr) {
     if (val <= st)
         return st;
@@ -52,14 +54,14 @@ float Entity::clamp(float val, float st, float dr) {
         return dr;
     return val;
 }
+
 void Entity::deltaTime(float deltatime) {
     dt = deltatime;
 }
 
 void Entity::draw(float cameraX) {
-
-    animations[state]->Draw({ coordX - cameraX, coordY }, WHITE, dt);
-   // DrawTexture(texture, floor(coordX - cameraX), floor(coordY), WHITE);
+    animations[state]->Draw({coordX - cameraX, coordY}, WHITE, dt);
+    // DrawTexture(texture, floor(coordX - cameraX), floor(coordY), WHITE);
 }
 
 
@@ -68,37 +70,37 @@ int Entity::danger() const {
 };
 
 //GPT
-std::string Entity::detectCollisionSide(const std::shared_ptr<Entity>& env, int a, int b) const {
-    // 1) Construim cele două Rectangle fără offset-uri „magice”
-    Rectangle r1 = getRect(a, b);             // dreptunghiul nostru la poziția targetX/Y
-    Rectangle r2 = env->getRect(0, 0);        // dreptunghiul entității cu care testăm
+std::string Entity::detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const {
 
-    // 2) Dacă nu se intersectează, nu avem coliziune
+    Rectangle r1 = getRect(a, b);
+    Rectangle r2 = env->getRect(0, 0);
+
+
     if (!CheckCollisionRecs(r1, r2)) return "NONE";
 
-    // 3) Calculăm overlapii pe fiecare axă
-    float overlapX = std::min(r1.x + r1.width,  r2.x + r2.width)  - std::max(r1.x, r2.x);
+
+    float overlapX = std::min(r1.x + r1.width, r2.x + r2.width) - std::max(r1.x, r2.x);
     float overlapY = std::min(r1.y + r1.height, r2.y + r2.height) - std::max(r1.y, r2.y);
 
-    // 4) Pe axa cu suprapunere mai mică e coliziunea „principală”
     if (overlapX < overlapY) {
-        // stânga/dreapta
+
         float centerX1 = r1.x + r1.width * 0.5f;
         float centerX2 = r2.x + r2.width * 0.5f;
         if (centerX1 < centerX2)
-            return "RIGHT";  // lovim partea stângă a lui env
+            return "RIGHT";
         else
-            return "LEFT";   // lovim partea dreaptă a lui env
+            return "LEFT";
     } else {
-        // sus/jos
+
         float centerY1 = r1.y + r1.height * 0.5f;
         float centerY2 = r2.y + r2.height * 0.5f;
         if (centerY1 < centerY2)
-            return "BOTTOM"; // lovim partea de sus a lui env
+            return "BOTTOM";
         else
-            return "TOP";    // lovim partea de jos a lui env
+            return "TOP";
     }
 }
+
 //GPT
 void Entity::decreaseX(float dec) {
     coordX -= dec;
@@ -116,7 +118,7 @@ Entity::~Entity() {
 }
 
 
-std::ostream & operator<<(std::ostream &os, const Entity &entity) {
+std::ostream &operator<<(std::ostream &os, const Entity &entity) {
     entity.print();
     return os;
 }

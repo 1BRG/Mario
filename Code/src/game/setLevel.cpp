@@ -17,7 +17,7 @@ void game::setLevel(int k) {
         std::cout << txt.what() << std::endl;
         exit(0);
     }
-    // 0 liber
+    // 0 empty
     // 1 brick
     // P player
     // 2 tortoise
@@ -25,7 +25,6 @@ void game::setLevel(int k) {
 
     while (std::getline(f, line)) {
         for (long long unsigned int i = 0; i < line.length(); i++) {
-            {
                 std::shared_ptr<Entity> a;
                 try {
                     if (line[i] == '1') {
@@ -38,7 +37,7 @@ void game::setLevel(int k) {
                         a = std::make_shared<Player>((i) * 16, n * 16);
                         throw(a);
                     } else if (line[i] != '0')
-                        throw(BaseException("Nu exista aceasta entitate"));
+                        throw(BaseException("This entity does not exist!"));
                 } catch (const BaseException &txt) {
                     std::cout << txt.what() << std::endl;
                     exit(0);
@@ -46,7 +45,6 @@ void game::setLevel(int k) {
                 catch (...) {
                     level.push_back(a);
                 }
-            }
         }
         n++;
     }
@@ -64,7 +62,7 @@ void game::setEntities() {
         for (int j = 0; j < screenWidth; j ++)
             grid[i][j] = nullptr;
             */
-    for (const auto& entity: level) {
+    for (const auto &entity: level) {
         if (std::dynamic_pointer_cast<Living>(entity) != nullptr) {
             try {
                 entities.push_back(std::dynamic_pointer_cast<Living>(entity));

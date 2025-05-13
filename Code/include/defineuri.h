@@ -12,7 +12,7 @@ inline std::string FuriousTurtleTexture = "../Texture/furiousTurtleX.png";
 #define screenHeight 1080
 #define DefaultSpeed 75
 #define ProcentAlergare 0.035 * 50
-#define JumpMax (lastY-384)
-#define JumpMin (lastY-128)
+#define JumpMax (lastY-96)
+#define JumpMin (lastY-32)
 #define Jump 100
 #endif //DEFINEURI_H

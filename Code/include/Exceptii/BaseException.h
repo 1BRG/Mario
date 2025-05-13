@@ -9,13 +9,13 @@
 #include <string>
 
 class BaseException : public std::exception {
-  std::string mesaj;
+    std::string message;
+
 public:
     explicit BaseException(const std::string &txt);
 
-  const char* what() const throw() override;
+    [[nodiscard]] const char *what() const throw() override;
 };
-
 
 
 #endif //BASEEXCEPTION_H

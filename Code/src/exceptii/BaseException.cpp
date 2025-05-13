@@ -4,10 +4,9 @@
 
 #include "../../include/exceptii/BaseException.h"
 
-BaseException::BaseException(const std::string &txt) : mesaj(txt){
-
+BaseException::BaseException(const std::string &txt) : message(txt) {
 }
 
-const char* BaseException::what() const throw() {
-    return mesaj.c_str();
+const char *BaseException::what() const throw() {
+    return message.c_str();
 }

@@ -5,16 +5,16 @@
 #include "../include/entitati/Player.h"
 
 #include <iostream>
-std::string Player:: MarioIDLE = "../Texture/all/Mario.png";
+std::string Player::MarioIDLE = "../Texture/all/Mario.png";
 std::string Player::MarioRUN = "../Texture/all/MarioRun.png";
 std::string Player::MarioJUMP = "../Texture/all/MarioJumping.png";
 
 Player::Player(const float x, const float y)
-: Living(x, y, new Animation*[3] {
-    new Animation(MarioIDLE, 1, 6),
-    new Animation(MarioRUN, 3, 12),
-    new Animation(MarioJUMP, 1, 4)})
-{
+    : Living(x, y, new Animation *[3]{
+                 new Animation(MarioIDLE, 1, 6),
+                 new Animation(MarioRUN, 3, 12),
+                 new Animation(MarioJUMP, 1, 4)
+             }) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
     health = 1;
@@ -45,18 +45,16 @@ void Player::update() {
 }
 
 void Player::collision(Entity &other, int directie) {
-   // std::cout << health << std::endl;
+    // std::cout << health << std::endl;
     if (directie == 1) {
         targetY = std::min(targetY, other.coord_y() - y);
         lastY = targetY;
-         if (other.danger())
-             other.incomingDamage(), gaveDamage = true;
-    }
-    else if (directie == -1 && targetY - coordY < 0) {
+        if (other.danger())
+            other.incomingDamage(), gaveDamage = true;
+    } else if (directie == -1 && targetY - coordY < 0) {
         targetY = std::max(targetY, other.coord_y() + other.height());
         cont = false, cont = false, canJump = false;
-    }
-    else if (directie == 2)
+    } else if (directie == 2)
         targetX = std::min(targetX, other.coord_x() - width());
     else
         targetX = std::max(targetX, other.coord_x() + other.width());
@@ -65,6 +63,7 @@ void Player::collision(Entity &other, int directie) {
         tookDamage = true;
     //canUpdate = false;
 }
+
 void Player::collision() {
 }
 
@@ -77,11 +76,12 @@ void Player::gravity() {
      }
 }
 */
-Player * Player::clone() const {
+Player *Player::clone() const {
     return new Player(*this);
 }
+
 void Player::moveToTarget() {
-   // cout << "ba";
+    // cout << "ba";
 
     if (updateLeft && targetX - coordX <= 0) {
         coordX = targetX;
@@ -101,9 +101,9 @@ void Player::moveToTarget() {
     targetX = coordX;
     targetY = coordY;
     if (tookDamage) {
-        health --;
+        health--;
     }
-    if (tookDamage || gaveDamage){
+    if (tookDamage || gaveDamage) {
         // cont = true;
         canJump = false;
         cont = true;

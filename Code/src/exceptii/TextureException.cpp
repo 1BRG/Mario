@@ -4,5 +4,5 @@
 
 #include "../../include/exceptii/TextureException.h"
 
-TextureException::TextureException(const std::string &txt) : BaseException("Textura: " + txt + " nu exista!"){
+TextureException::TextureException(const std::string &txt) : BaseException("Texture: " + txt + " doesn't exist!") {
 }

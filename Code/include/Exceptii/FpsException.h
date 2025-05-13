@@ -8,10 +8,9 @@
 #include "BaseException.h"
 
 class FpsException : public BaseException {
- public:
- explicit FpsException();
+public:
+    explicit FpsException();
 };
-
 
 
 #endif //FPSEXCEPTION_H
