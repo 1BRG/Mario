@@ -11,6 +11,7 @@ class Player : public Living {
     static std::string MarioIDLE;
     static std::string MarioRUN;
     static std::string MarioJUMP;
+    static std::string MarioSKIDDING;
     bool gaveDamage {false};
 
 public:

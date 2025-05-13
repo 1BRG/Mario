@@ -21,7 +21,7 @@ public:
     void Update(float delta);
 
     // Draw current frame at position
-    void Draw(const Vector2 &position, const Color &tint, float delta);
+    void Draw(const Vector2 &position, const Color &tint, float delta, bool flipX);
 
     // Reset to first frame
     void Reset();

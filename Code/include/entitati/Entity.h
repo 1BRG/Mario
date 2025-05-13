@@ -16,11 +16,11 @@
 
 class Entity {
 protected:
-    enum State { IDLE, RUN, JUMP };
+    enum State { IDLE, RUN, JUMP, SKIDDING};
 
     Vector2 position;
     State state;
-    Animation *animations[3];
+    Animation *animations[4];
     float dt;
     std::string texturePath;
     float coordX{0}, coordY{0}, x{0}, y{0};
@@ -39,7 +39,7 @@ public:
 
     [[nodiscard]] std::string detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const;
 
-    Entity(float x, float y, Animation *anim[3]);
+    Entity(float x, float y, Animation *anim[4]);
 
     virtual void print() const;
 

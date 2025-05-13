@@ -11,7 +11,7 @@ void Living::setLastY() {
         lastY = screenHeight;
 }
 
-Living::Living(const float x, const float y, Animation *anim[3]) : Entity(x, y, anim) {
+Living::Living(const float x, const float y, Animation *anim[4]) : Entity(x, y, anim) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
 }
@@ -21,22 +21,29 @@ void Living::moveX() {
     targetX += speed * dt;
 }
 
+void Living::draw(float cameraX) {
+    animations[state]->Draw({coordX - cameraX, coordY}, WHITE, dt, speed < 0);
+    x = animations[state]->width();
+    y = animations[state]->height();
+}
+
 bool Living::isAlive() const {
     return health;
 }
 
 void Living::moveY() {
     if (isJumping) {
+        state = JUMP;
         targetY -= Jump * dt;
         updateTop = true;
         if (targetY <= JumpMax)
             canJump = false;
     } else {
         if (targetY != lastY && cont == false)
-            targetY += Jump * dt, canJump = false, updateBottom = true;
+            state = JUMP, targetY += Jump * dt, canJump = false, updateBottom = true;
         else if (targetY != lastY && cont == true) {
             if (targetY > JumpMin && lastY != screenHeight)
-                targetY -= Jump * dt, updateTop = true;
+                state =JUMP, targetY -= Jump * dt, updateTop = true;
             else cont = false;
         } else canJump = true, cont = true;
     }

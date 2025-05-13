@@ -6,9 +6,9 @@
 
 #include <string>
 
-Entity::Entity(const float x, const float y, Animation *anim[3]) : coordX(x), coordY(y) {
+Entity::Entity(const float x, const float y, Animation *anim[4]) : coordX(x), coordY(y) {
     dt = 0;
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 4; ++i) {
         animations[i] = anim[i];
     }
     state = IDLE;
@@ -60,8 +60,10 @@ void Entity::deltaTime(float deltatime) {
 }
 
 void Entity::draw(float cameraX) {
-    animations[state]->Draw({coordX - cameraX, coordY}, WHITE, dt);
+    animations[state]->Draw({coordX - cameraX, coordY}, WHITE, dt, false);
     // DrawTexture(texture, floor(coordX - cameraX), floor(coordY), WHITE);
+    x = animations[state]->width();
+    y = animations[state]->height();
 }
 
 

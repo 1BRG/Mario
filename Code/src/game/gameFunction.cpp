@@ -32,7 +32,7 @@ void game::StartGameLoop() {
     int o = 0;
     //  ToggleFullscreen();
     ToggleFullscreen();
-    RenderTexture2D renderTexture = LoadRenderTexture(256, 250);
+    RenderTexture2D renderTexture = LoadRenderTexture(495, 270);
     while (!WindowShouldClose()) {
         o++;
         ClearBackground(BLUE);
@@ -114,8 +114,8 @@ void game::StartGameLoop() {
             }
 
 
-        if (entities.front()->coord_x() - cameraX > 256 * 1. / 2) {
-            float dec = entities.front()->coord_x() - cameraX - 256 * 1. / 2;
+        if (entities.front()->coord_x() - cameraX > 495 * 1. / 2) {
+            float dec = entities.front()->coord_x() - cameraX - 495 * 1. / 2;
             cameraX += dec;
         }
         //  for (const auto& entity : entities)
@@ -124,7 +124,7 @@ void game::StartGameLoop() {
         EndTextureMode();
         // cout << GetFPS() << "FPS" << endl;
         BeginDrawing();
-        DrawTexturePro(renderTexture.texture, {0, 0, 256, -256}, {420, 0, 1080, 1080}, {0, 0}, 0, WHITE);
+        DrawTexturePro(renderTexture.texture, {0, 0, 495, -270}, {0, 0, 1920, 1080}, {0, 0}, 0, WHITE);
         EndDrawing();
     }
 }

@@ -8,12 +8,14 @@
 std::string Player::MarioIDLE = "../Texture/all/Mario.png";
 std::string Player::MarioRUN = "../Texture/all/MarioRun.png";
 std::string Player::MarioJUMP = "../Texture/all/MarioJumping.png";
+std::string Player::MarioSKIDDING = "../Texture/all/MarioSkidding.png";
 
 Player::Player(const float x, const float y)
-    : Living(x, y, new Animation *[3]{
+    : Living(x, y, new Animation *[4]{
                  new Animation(MarioIDLE, 1, 6),
                  new Animation(MarioRUN, 3, 12),
-                 new Animation(MarioJUMP, 1, 4)
+                 new Animation(MarioJUMP, 1, 4),
+                 new Animation(MarioSKIDDING, 1, 1000)
              }) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
@@ -24,9 +26,16 @@ Player::Player(const float x, const float y)
 
 
 void Player::handleInput() {
+    state = IDLE;
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
+        if (speed > 0)
+            state = SKIDDING;
+        else state = RUN;
         speed -= DefaultSpeed * ProcentAlergare * dt, updateLeft = true;
     } else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
+        if (speed < 0)
+            state = SKIDDING;
+        else state = RUN;
         speed += DefaultSpeed * ProcentAlergare * dt;
     } else {
         if (speed != 0) {
@@ -44,22 +53,22 @@ void Player::update() {
     moveY();
 }
 
-void Player::collision(Entity &other, int directie) {
+void Player::collision(Entity &other, const int direction) {
     // std::cout << health << std::endl;
-    if (directie == 1) {
+    if (direction == 1) {
         targetY = std::min(targetY, other.coord_y() - y);
         lastY = targetY;
         if (other.danger())
             other.incomingDamage(), gaveDamage = true;
-    } else if (directie == -1 && targetY - coordY < 0) {
+    } else if (direction == -1 && targetY - coordY < 0) {
         targetY = std::max(targetY, other.coord_y() + other.height());
         cont = false, cont = false, canJump = false;
-    } else if (directie == 2)
+    } else if (direction == 2)
         targetX = std::min(targetX, other.coord_x() - width());
     else
         targetX = std::max(targetX, other.coord_x() + other.width());
 
-    if (other.danger() && directie != 1)
+    if (other.danger() && direction != 1)
         tookDamage = true;
     //canUpdate = false;
 }

@@ -29,9 +29,15 @@ void Animation::Update(float delta) {
     }
 }
 
-void Animation::Draw(const Vector2 &position, const Color &tint, float delta) {
+void Animation::Draw(const Vector2 &position, const Color &tint, float delta, bool flipX) {
     Update(delta);
-    DrawTextureRec(texture, frames[currentFrame], position, tint);
+    Rectangle src = frames[currentFrame];
+
+    if (flipX) {
+        src.x += src.width;
+        src.width *= -1;
+    }
+    DrawTextureRec(texture, src, position, tint);
 }
 
 void Animation::Reset() {

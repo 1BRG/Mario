@@ -88,6 +88,7 @@ void Turtle::moveToTarget() {
         animations[RUN] = new Animation(FuriousRUN, 1, 2000);
         animations[JUMP] = new Animation(FuriousRUN, 1, 2000);
         animations[IDLE] = new Animation(FuriousRUN, 1, 2000);
+        speed *= 3              ;
         tookDamage = false;
     } else {
         tookDamage = false;

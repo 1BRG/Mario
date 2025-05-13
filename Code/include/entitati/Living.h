@@ -19,10 +19,11 @@ protected:
     void moveY();
 
 public:
+
     Living(float x, float y, Animation *animations[3]);
 
     Living() = default;
-
+    void draw(float cameraX) override;
     [[nodiscard]] bool isAlive() const;
 
     virtual void moveToTarget() {
