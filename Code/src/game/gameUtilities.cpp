@@ -12,13 +12,17 @@ bool game::inScreenEntity(const std::shared_ptr<Entity> &entity) const {
 
 void game::draw() const {
     game *currentGame = GetInstance();
-    for (const auto &entitate: environment)
-        if (currentGame->inScreenEntity(entitate)) {
-            entitate->draw(cameraX);
+    for (const auto &entity: environment)
+        if (currentGame->inScreenEntity(entity)) {
+            entity->draw(cameraX);
         }
-    for (const auto &entitate: entities) {
-        if (currentGame->inScreenEntity(entitate))
-            entitate->draw(cameraX);
+    for (const auto &entity: entities) {
+        if (currentGame->inScreenEntity(entity))
+            entity->draw(cameraX);
+    }
+    for (const auto &entity: movEnv) {
+        if (currentGame->inScreenEntity(entity))
+            entity->draw(cameraX);
     }
 }
 
@@ -36,3 +40,39 @@ void game::deleteEntity(const std::shared_ptr<Entity> &entity) {
         for (int j = xx; j < xx + entity->width() && j < screenWidth - 1; j++)
             grid[i][j] = nullptr;
 }
+
+void game::setFPS(float &fr, int o) {
+    fr = GetFrameTime();
+    try {
+        if (fr <= 0.20)
+            throw(fr);
+        if (o >= 10) throw(FpsException());
+        throw std::string("continua");
+    } catch (FpsException &e) {
+        std::cout << e.what() << std::endl;
+        //exit(0);
+    }
+    catch (float e) {
+        fr = e;
+    }
+    catch (...) {
+        fr = 0;
+    }
+}/*
+void DrawPixels()
+{
+        for (int i = 0; i < screenHeight; i ++) {
+            for (int j = 0; j < screenWidth; j++) {
+                if (grid[i][j] != nullptr)
+                    DrawPixel(j, i, BLACK);
+                else DrawPixel(j, i, GREEN);
+                if (grid[i][j] != nullptr) {
+                    if ((i - grid[i][j]->coord_y() >= 0 && i - grid[i][j]->coord_y() < 10) && (j - grid[i][j]->coord_x() >= 0 && j - grid[i][j]->coord_x() < 10)) {
+                        DrawPixel(j, i, RED);
+                    }
+                }
+                //   else cout << " ";
+            }
+            cout << endl;
+        }
+        }*/

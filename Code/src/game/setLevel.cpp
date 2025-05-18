@@ -2,6 +2,7 @@
 // Created by Gabriel on 5/3/2025.
 //
 
+#include "../../include/entitati/environment/QuestionBlock.h"
 #include "../../include/game/gameFunction.h"
 
 void game::setLevel(int k) {
@@ -21,6 +22,7 @@ void game::setLevel(int k) {
     // 1 brick
     // P player
     // 2 tortoise
+    //3 question block
     int n = 1;
 
     while (std::getline(f, line)) {
@@ -36,8 +38,17 @@ void game::setLevel(int k) {
                     } else if (line[i] == 'P') {
                         a = std::make_shared<Player>((i) * 16, n * 16);
                         throw(a);
-                    } else if (line[i] != '0')
+
+                    } else if (line[i] == '3') {
+                        a = std::make_shared<QuestionBlock>((i) * 16, n * 16);
+                        throw(a);
+                    }
+                    else if (line[i] == '4') {
+                        a = std::make_shared<BrickBlock>((i) * 16, n * 16);
+                        throw(a);
+                    }else if (line[i] != '0')
                         throw(BaseException("This entity does not exist!"));
+
                 } catch (const BaseException &txt) {
                     std::cout << txt.what() << std::endl;
                     exit(0);
@@ -70,7 +81,15 @@ void game::setEntities() {
                 std::cout << txt.what() << std::endl;
                 exit(0);
             }
-        } else {
+        } else if (std::dynamic_pointer_cast<MovebleEnvironment>(entity) != nullptr) {
+            try {
+                movEnv.push_back(std::dynamic_pointer_cast<MovebleEnvironment>(entity));
+            }
+            catch (TextureException &txt) {
+                std::cout << txt.what() << std::endl;
+                exit(0);
+            }
+        }else {
             try {
                 environment.push_back(std::dynamic_pointer_cast<Environment>(entity));
             } catch (TextureException &txt) {

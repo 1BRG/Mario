@@ -31,7 +31,8 @@ void Player::handleInput() {
         if (speed > 0)
             state = SKIDDING;
         else state = RUN;
-        speed -= DefaultSpeed * ProcentAlergare * dt, updateLeft = true;
+        speed -= DefaultSpeed * ProcentAlergare * dt;
+        updateLeft = true;
     } else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
         if (speed < 0)
             state = SKIDDING;
@@ -39,9 +40,14 @@ void Player::handleInput() {
         speed += DefaultSpeed * ProcentAlergare * dt;
     } else {
         if (speed != 0) {
-            if (speed < 0)
-                speed += DefaultSpeed * ProcentAlergare * dt, speed = std::min(speed, static_cast<float>(0.0));
-            else speed -= DefaultSpeed * ProcentAlergare * dt, speed = std::max(speed, static_cast<float>(0.0));
+            state = RUN;
+            if (speed < 0) {
+                speed += DefaultSpeed * ProcentAlergare * dt;
+                speed = std::min(speed, static_cast<float>(0.0));
+            } else {
+                speed -= DefaultSpeed * ProcentAlergare * dt;
+                speed = std::max(speed, static_cast<float>(0.0));
+            }
         }
     }
     isJumping = (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) & canJump;
@@ -55,17 +61,17 @@ void Player::update() {
 
 void Player::collision(Entity &other, const int direction) {
     // std::cout << health << std::endl;
-    if (direction == 1) {
+    if (direction == 1 && targetY - coordY >= 0) {
         targetY = std::min(targetY, other.coord_y() - y);
         lastY = targetY;
         if (other.danger())
             other.incomingDamage(), gaveDamage = true;
-    } else if (direction == -1 && targetY - coordY < 0) {
+    } else if (direction == -1 && targetY - coordY <= 0) {
         targetY = std::max(targetY, other.coord_y() + other.height());
         cont = false, cont = false, canJump = false;
     } else if (direction == 2)
         targetX = std::min(targetX, other.coord_x() - width());
-    else
+    else if (direction == -2)
         targetX = std::max(targetX, other.coord_x() + other.width());
 
     if (other.danger() && direction != 1)

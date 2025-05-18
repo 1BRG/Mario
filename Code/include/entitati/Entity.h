@@ -15,7 +15,13 @@
 #include "Animation.h"
 
 class Entity {
+    struct CollisionInfo {
+        float   time;       // momentul (0..1) al coliziunii în cadrul mișcării
+        Vector2 normal;     // normală a feței lovite
+        bool    collided;   // există coliziune în acest frame?
+    };
 protected:
+    Vector2 velocity{0, 0};
     enum State { IDLE, RUN, JUMP, SKIDDING};
 
     Vector2 position;
@@ -30,8 +36,10 @@ protected:
     int damage {0};
     bool updateLeft {true}, updateRight {true}, updateTop {true}, updateBottom {true};
     Texture2D texture;
+    float lastY {screenHeight};
 
 public:
+    static CollisionInfo SweptAABB(const Rectangle& moving, const Vector2& vel, const Rectangle& target);
     virtual void incomingDamage() {
     }
 
@@ -62,7 +70,7 @@ public:
     [[nodiscard]] float target_y() const;
 
     [[nodiscard]] int danger() const;
-
+    [[nodiscard]] bool isAlive() const;
     virtual void draw(float cameraX);
 
     void deltaTime(float deltatime);

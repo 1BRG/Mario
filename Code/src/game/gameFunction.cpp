@@ -31,28 +31,13 @@ void game::StartGameLoop() {
     float fr = 0;
     int o = 0;
     //  ToggleFullscreen();
-    ToggleFullscreen();
+ //   ToggleFullscreen();
     RenderTexture2D renderTexture = LoadRenderTexture(495, 270);
     while (!WindowShouldClose()) {
         o++;
         ClearBackground(BLUE);
-        fr = GetFrameTime();
-        try {
-            if (fr <= 0.20)
-                throw(fr);
-            if (o >= 10) throw(FpsException());
-            throw std::string("continua");
-        } catch (FpsException &e) {
-            std::cout << e.what() << std::endl;
-            //exit(0);
-        }
-        catch (float e) {
-            fr = e;
-        }
-        catch (...) {
-            fr = 0;
-        }
-        // fr = 0.0056;
+        //setFPS(fr, o);
+         fr = 0.0056;
         // dt = 0.0096;
 
         BeginTextureMode(renderTexture);
@@ -66,6 +51,13 @@ void game::StartGameLoop() {
             } else if (inScreenEntity(*it)) {
                 (*it)->setLastY();
                 ++it;
+            } else ++it;
+        }
+        for (auto it = movEnv.begin(); it != movEnv.end(); ) {
+            (*it)->deltaTime(fr);
+            if (!(*it)->isAlive()) {
+                deleteEntity(*it);
+                it = movEnv.erase(it);
             } else ++it;
         }
         for (const auto &entity: entities)
@@ -85,24 +77,10 @@ void game::StartGameLoop() {
             // if (inScreenEntity(entity))
             entity->update();
         collision(entities);
-
-
-        /*
-        for (int i = 0; i < screenHeight; i ++) {
-            for (int j = 0; j < screenWidth; j++) {
-                if (grid[i][j] != nullptr)
-                    DrawPixel(j, i, BLACK);
-                else DrawPixel(j, i, GREEN);
-                if (grid[i][j] != nullptr) {
-                    if ((i - grid[i][j]->coord_y() >= 0 && i - grid[i][j]->coord_y() < 10) && (j - grid[i][j]->coord_x() >= 0 && j - grid[i][j]->coord_x() < 10)) {
-                        DrawPixel(j, i, RED);
-                    }
-                }
-                //   else cout << " ";
-            }
-            cout << endl;
-        }
-        */
+        for (const auto &entity: movEnv)
+            // if (inScreenEntity(entity))
+                entity->update();
+       //DrawPixels()
 
         for (const auto &entity: entities)
             //  if (inScreenEntity(entity))
@@ -112,7 +90,8 @@ void game::StartGameLoop() {
                 std::cout << txt.what() << std::endl;
                 exit(0);
             }
-
+        for (const auto &entity: movEnv)
+            entity->moveToTarget();
 
         if (entities.front()->coord_x() - cameraX > 495 * 1. / 2) {
             float dec = entities.front()->coord_x() - cameraX - 495 * 1. / 2;

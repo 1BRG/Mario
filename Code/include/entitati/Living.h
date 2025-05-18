@@ -10,7 +10,6 @@
 class Living : public Entity {
 protected:
     float speed {0};
-    float lastY {screenHeight};
     bool canJump {true}, cont {true}, isJumping {false};
     bool tookDamage {false};
 
@@ -24,10 +23,8 @@ public:
 
     Living() = default;
     void draw(float cameraX) override;
-    [[nodiscard]] bool isAlive() const;
 
-    virtual void moveToTarget() {
-    }
+    virtual void moveToTarget() = 0;
 
     virtual void setLastY();
 

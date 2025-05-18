@@ -18,6 +18,7 @@ Living::Living(const float x, const float y, Animation *anim[4]) : Entity(x, y, 
 
 void Living::moveX() {
     speed = clamp(speed, -DefaultSpeed * 1.5, DefaultSpeed * 1.5);
+    velocity.x = speed * dt;
     targetX += speed * dt;
 }
 
@@ -27,25 +28,30 @@ void Living::draw(float cameraX) {
     y = animations[state]->height();
 }
 
-bool Living::isAlive() const {
-    return health;
-}
 
 void Living::moveY() {
     if (isJumping) {
         state = JUMP;
         targetY -= Jump * dt;
+        velocity.y -= Jump * dt;
         updateTop = true;
         if (targetY <= JumpMax)
             canJump = false;
     } else {
-        if (targetY != lastY && cont == false)
-            state = JUMP, targetY += Jump * dt, canJump = false, updateBottom = true;
-        else if (targetY != lastY && cont == true) {
-            if (targetY > JumpMin && lastY != screenHeight)
-                state =JUMP, targetY -= Jump * dt, updateTop = true;
-            else cont = false;
-        } else canJump = true, cont = true;
+        if (targetY != lastY && cont == false) {
+            state = JUMP;
+            targetY += Jump * dt;
+            canJump = false;
+            updateBottom = true;
+            velocity.y += Jump * dt;
+        } else if (targetY != lastY && cont == true) {
+            if (targetY > JumpMin && lastY != screenHeight) {
+                state = JUMP;
+                targetY -= Jump * dt;
+                updateTop = true;
+                velocity.y -= Jump * dt;
+            } else cont = false;
+        } else canJump = true, cont = true, velocity.y = 0;
     }
 }
 
@@ -85,25 +91,29 @@ if (updateTop && targetY - coordY <= 0) {
 }
 */
 bool Living::bottomCollision(const std::shared_ptr<Entity> &env) const {
-    if (inCollision(env, 0, 1) && detectCollisionSide(env, 0, 1) == "BOTTOM")
+    if (inCollision(env, 0, 2) && detectCollisionSide(env, 0, 1) == "BOTTOM")
         return true;
     return false;
 }
 
 bool Living::topCollision(const std::shared_ptr<Entity> &env) const {
-    if (inCollision(env, 0, -1) && detectCollisionSide(env, 0, -1) == "TOP")
+    if (inCollision(env, 0, -2) && detectCollisionSide(env, 0, -1) == "TOP")
         return true;
     return false;
 }
 
 bool Living::leftCollision(const std::shared_ptr<Entity> &env) const {
-    if (inCollision(env, -1, 0) && detectCollisionSide(env, -1, 0) == "LEFT")
+    if (inCollision(env, -2, 0) && detectCollisionSide(env, -1, 0) == "LEFT") {
+        bool ok;
+        ok = true;
+    }
+    if (inCollision(env, -2, 0) && detectCollisionSide(env, -1, 0) == "LEFT")
         return true;
     return false;
 }
 
 bool Living::rightCollision(const std::shared_ptr<Entity> &env) const {
-    if (inCollision(env, 1, 0) && detectCollisionSide(env, 1, 0) == "RIGHT")
+    if (inCollision(env, 2, 0) && detectCollisionSide(env, 1, 0) == "RIGHT")
         return true;
     return false;
 }

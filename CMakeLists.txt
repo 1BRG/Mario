@@ -58,10 +58,17 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/include/entitati/Living.h
         Code/include/entitati/Player.h
         Code/include/entitati/Turtle.h
-        Code/include/entitati/Environment.h
-        Code/include/entitati/Brick.h
+        Code/include/entitati/environment/Environment.h
+        Code/include/entitati/environment/Brick.h
         Code/include/exceptii/BaseException.h
         Code/include/exceptii/FileException.h
+        Code/include/Exceptii/TextureException.h
+        Code/include/Exceptii/FpsException.h
+        Code/include/Exceptii/exceptii.h
+        Code/include/entitati/Animation.h
+        Code/include/entitati/environment/QuestionBlock.h
+        Code/include/entitati/environment/MovebleEnvironment.h
+        Code/include/entitati/environment/BrickBlock.h
 
         Code/src/Enemy.cpp
         Code/src/Entity.cpp
@@ -70,21 +77,21 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/src/Player.cpp
         Code/src/Turtle.cpp
         Code/src/Living.cpp
-        Code/src/Environment.cpp
-        Code/src/Brick.cpp
-        Code/Levels/level1.txt
+        Code/src/environment/Environment.cpp
+        Code/src/environment/Brick.cpp
         Code/src/exceptii/BaseException.cpp
         Code/src/exceptii/FileException.cpp
-        Code/include/Exceptii/TextureException.h
         Code/src/exceptii/TextureException.cpp
-        Code/include/Exceptii/FpsException.h
         Code/src/exceptii/FpsException.cpp
         Code/src/game/collision.cpp
         Code/src/game/gameUtilities.cpp
         Code/src/game/setLevel.cpp
-        Code/include/Exceptii/exceptii.h
-        Code/include/entitati/Animation.h
         Code/src/Animation.cpp
+        Code/src/environment/QuestionBlock.cpp
+        Code/src/environment/MovebleEnvironment.cpp
+        Code/src/environment/BrickBlock.cpp
+
+        Code/Levels/level1.txt
 
 )
 target_compile_features(oop PUBLIC cxx_std_17)

@@ -9,8 +9,9 @@
 #include "Living.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Environment.h"
-#include "Brick.h"
-
-
+#include "environment/Environment.h"
+#include "environment/Brick.h"
+#include "environment/MovebleEnvironment.h"
+#include "environment/QuestionBlock.h"
+#include "environment/BrickBlock.h"
 #endif //INCLUDEALL_H

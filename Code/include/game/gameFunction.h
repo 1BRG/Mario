@@ -21,6 +21,7 @@ class game {
     std::list<std::shared_ptr<Living> > entities;
     std::list<std::shared_ptr<Entity> > level;
     std::list<std::shared_ptr<Entity> > environment;
+    std::list<std::shared_ptr<MovebleEnvironment>> movEnv;
     static game *instance;
 
     game() = default;
@@ -49,6 +50,8 @@ public:
     void leftCollision(const std::shared_ptr<Living> &entity) const;
 
     static void collision(const std::list<std::shared_ptr<Living> > &entities);
+
+    void setFPS(float &fr, int o);
 
     void StartGameLoop();
 

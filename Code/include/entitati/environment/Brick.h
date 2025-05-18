@@ -13,9 +13,11 @@ class Brick : public Environment {
 public:
     static void InitStatics();
 
+    void collision(Entity &other, int direction) override {}
+
     Brick( float dx,  float dy);
 
-    [[nodiscard]] Brick *clone() const override;
+     [[nodiscard]] Brick *clone() const override;
 
     Brick(const Brick &other) = default;
 

@@ -8,6 +8,7 @@
 
 Entity::Entity(const float x, const float y, Animation *anim[4]) : coordX(x), coordY(y) {
     dt = 0;
+    lastY = y;
     for (int i = 0; i < 4; ++i) {
         animations[i] = anim[i];
     }
@@ -66,6 +67,9 @@ void Entity::draw(float cameraX) {
     y = animations[state]->height();
 }
 
+bool Entity::isAlive() const {
+    return health;
+}
 
 int Entity::danger() const {
     return damage;
