@@ -10,7 +10,7 @@
 class MovebleEnvironment : public Environment {
     bool cont {true};
     public:
-    MovebleEnvironment(float x, float y, Animation *anim[3]);
+    MovebleEnvironment(float x, float y);
     void collision(Entity &other, int direction) override;
     void moveY();
 

@@ -30,7 +30,7 @@ void game::setLevel(int k) {
                 std::shared_ptr<Entity> a;
                 try {
                     if (line[i] == '1') {
-                        a = std::make_shared<Brick>((i) * 16, n * 16);
+                        a = std::make_shared<GroundBlock>((i) * 16, n * 16);
                         throw(a);
                     } else if (line[i] == '2') {
                         a = std::make_shared<Turtle>((i) * 16, n * 16);

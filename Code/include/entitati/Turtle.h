@@ -18,8 +18,6 @@ class Turtle : public Enemy {
 public:
     Turtle(float x, float y);
 
-    Turtle(float x, float y, int i);
-
     void collision(Entity &other, int direction) override;
 
     static void collision();

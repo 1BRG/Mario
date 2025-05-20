@@ -6,15 +6,10 @@
 
 #include <string>
 
-Entity::Entity(const float x, const float y, Animation *anim[4]) : coordX(x), coordY(y) {
+Entity::Entity(const float x, const float y) : coordX(x), coordY(y) {
     dt = 0;
     lastY = y;
-    for (int i = 0; i < 4; ++i) {
-        animations[i] = anim[i];
-    }
     state = IDLE;
-    this->x = animations[state]->width();
-    this->y = animations[state]->height();
     targetX = coordX;
     targetY = coordY;
 }
@@ -48,13 +43,6 @@ void Entity::print() const {
     return targetY;
 }
 
-float Entity::clamp(float val, float st, float dr) {
-    if (val <= st)
-        return st;
-    if (val >= dr)
-        return dr;
-    return val;
-}
 
 void Entity::deltaTime(float deltatime) {
     dt = deltatime;
@@ -120,6 +108,7 @@ Rectangle Entity::getRect(const int a, const int b) const {
 }
 
 Entity::~Entity() {
+
     UnloadTexture(texture);
 }
 

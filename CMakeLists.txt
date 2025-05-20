@@ -59,7 +59,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/include/entitati/Player.h
         Code/include/entitati/Turtle.h
         Code/include/entitati/environment/Environment.h
-        Code/include/entitati/environment/Brick.h
+        Code/include/entitati/environment/GroundBlock.h
         Code/include/exceptii/BaseException.h
         Code/include/exceptii/FileException.h
         Code/include/Exceptii/TextureException.h
@@ -69,6 +69,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/include/entitati/environment/QuestionBlock.h
         Code/include/entitati/environment/MovebleEnvironment.h
         Code/include/entitati/environment/BrickBlock.h
+        Code/include/Template/ResourceManager.h
+        Code/include/entitati/Audio.h
 
         Code/src/Enemy.cpp
         Code/src/Entity.cpp
@@ -78,7 +80,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/src/Turtle.cpp
         Code/src/Living.cpp
         Code/src/environment/Environment.cpp
-        Code/src/environment/Brick.cpp
+        Code/src/environment/GroundBlock.cpp
         Code/src/exceptii/BaseException.cpp
         Code/src/exceptii/FileException.cpp
         Code/src/exceptii/TextureException.cpp
@@ -90,8 +92,11 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/src/environment/QuestionBlock.cpp
         Code/src/environment/MovebleEnvironment.cpp
         Code/src/environment/BrickBlock.cpp
+        Code/src/Audio.cpp
 
         Code/Levels/level1.txt
+        Code/include/Template/templateFunction.h
+        Code/include/Template/ResourceAudio.h
 
 )
 target_compile_features(oop PUBLIC cxx_std_17)

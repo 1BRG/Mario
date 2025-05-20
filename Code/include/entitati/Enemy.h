@@ -12,7 +12,7 @@ protected:
     bool change{false};
 
 public:
-    Enemy(float x, float y, Animation *anim[3]);
+    Enemy(float x, float y);
 
     void incomingDamage() override;
 };

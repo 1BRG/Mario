@@ -10,7 +10,7 @@
 class Environment : public Entity {
 
 public:
-    Environment(float x, float y, Animation *anim[3]);
+    Environment(float x, float y);
 
     Environment() = default;
 

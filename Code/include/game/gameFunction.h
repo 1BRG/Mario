@@ -14,7 +14,9 @@
 #include <fstream>
 #include <memory>
 
+
 class game {
+    std::shared_ptr<Audio> bgMusic;
     bool valid = true;
     float cameraX {0}, cameraY {0};
     std::shared_ptr<Entity> grid[screenHeight][screenWidth];

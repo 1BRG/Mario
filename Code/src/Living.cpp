@@ -11,13 +11,13 @@ void Living::setLastY() {
         lastY = screenHeight;
 }
 
-Living::Living(const float x, const float y, Animation *anim[4]) : Entity(x, y, anim) {
+Living::Living(const float x, const float y) : Entity(x, y) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
 }
 
 void Living::moveX() {
-    speed = clamp(speed, -DefaultSpeed * 1.5, DefaultSpeed * 1.5);
+    speed = clamp(double(speed), -DefaultSpeed * 1.5, DefaultSpeed * 1.5);
     velocity.x = speed * dt;
     targetX += speed * dt;
 }

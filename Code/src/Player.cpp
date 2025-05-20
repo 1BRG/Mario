@@ -11,16 +11,20 @@ std::string Player::MarioJUMP = "../Texture/all/MarioJumping.png";
 std::string Player::MarioSKIDDING = "../Texture/all/MarioSkidding.png";
 
 Player::Player(const float x, const float y)
-    : Living(x, y, new Animation *[4]{
-                 new Animation(MarioIDLE, 1, 6),
-                 new Animation(MarioRUN, 3, 12),
-                 new Animation(MarioJUMP, 1, 4),
-                 new Animation(MarioSKIDDING, 1, 1000)
-             }) {
+    : Living(x, y) {
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
     health = 1;
-
+    animations[IDLE] = AnimationManager::animations.load(
+        "mario_idle", MarioIDLE, 1, 6);
+    animations[RUN] = AnimationManager::animations.load(
+        "mario_run", MarioRUN, 3, 12);
+    animations[JUMP] = AnimationManager::animations.load(
+        "mario_jump", MarioJUMP, 1, 4);
+    animations[SKIDDING] = AnimationManager::animations.load(
+        "mario_skidding", MarioSKIDDING, 1, 1);
+    this->x = animations[IDLE]->width();
+    this->y = animations[IDLE]->height();
     state = RUN;
 }
 

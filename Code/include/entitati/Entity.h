@@ -13,20 +13,27 @@
 #include "../defineuri.h"
 #include "../Exceptii/exceptii.h"
 #include "Animation.h"
+#include "../Template/templateFunction.h"
+#include "../Template/ResourceAnimation.h"
+#include <unordered_map>
+#include "../Template/ResourceAudio.h"
 
 class Entity {
     struct CollisionInfo {
-        float   time;       // momentul (0..1) al coliziunii în cadrul mișcării
-        Vector2 normal;     // normală a feței lovite
-        bool    collided;   // există coliziune în acest frame?
+        float   time;
+        Vector2 normal;
+        bool    collided;
     };
 protected:
     Vector2 velocity{0, 0};
     enum State { IDLE, RUN, JUMP, SKIDDING};
+    std::unordered_map<State, std::shared_ptr<Animation>> animations;
+
+    enum Sound {DIE, JUMPPING, COIN};
+    std::unordered_map<Sound, std::shared_ptr<Sound>> sounds;
 
     Vector2 position;
     State state;
-    Animation *animations[4];
     float dt;
     std::string texturePath;
     float coordX{0}, coordY{0}, x{0}, y{0};
@@ -47,15 +54,13 @@ public:
 
     [[nodiscard]] std::string detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const;
 
-    Entity(float x, float y, Animation *anim[4]);
+    Entity(float x, float y);
 
     virtual void print() const;
 
     friend std::ostream &operator<<(std::ostream &os, const Entity &entity);
 
     Entity() = default;
-
-    [[nodiscard]] static float clamp(float x, float st, float dr);
 
     [[nodiscard]] float coord_x() const;
 

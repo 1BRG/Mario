@@ -19,7 +19,7 @@ protected:
 
 public:
 
-    Living(float x, float y, Animation *animations[3]);
+    Living(float x, float y);
 
     Living() = default;
     void draw(float cameraX) override;

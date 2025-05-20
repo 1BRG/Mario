@@ -5,7 +5,6 @@
 #ifndef DEFINEURI_H
 #define DEFINEURI_H
 #include <string>
-inline std::string BrickTexture = "../Texture/all/BrickBlockBrown.png";
 inline std::string TurtleTexture = "../Texture/TurtleX.png";
 inline std::string FuriousTurtleTexture = "../Texture/furiousTurtleX.png";
 #define screenWidth 1920

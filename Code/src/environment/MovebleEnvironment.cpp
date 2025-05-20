@@ -4,7 +4,7 @@
 
 #include "../../include/entitati/environment/MovebleEnvironment.h"
 
-MovebleEnvironment::MovebleEnvironment(const float dx, const float dy, Animation *anim[3]) : Environment(dx, dy, anim) {
+MovebleEnvironment::MovebleEnvironment(const float dx, const float dy) : Environment(dx, dy) {
 }
 
 
@@ -18,10 +18,10 @@ void MovebleEnvironment::collision(Entity &other, int direction) {
 
 void MovebleEnvironment::moveY() {
         if (targetY != lastY && cont == false)
-            state = JUMP, targetY = std::min(targetY+ Jump * dt * 0.5, double(lastY)), updateBottom = true;
+             targetY = std::min(targetY+ Jump * dt * 0.5, double(lastY)), updateBottom = true;
         else if (targetY != lastY && cont == true) {
             if (targetY > lastY - 8 && lastY != screenHeight)
-                state = JUMP, targetY -= Jump * dt * 0.5, updateTop = true;
+                 targetY -= Jump * dt * 0.5, updateTop = true;
             else cont = false;
         }
 }

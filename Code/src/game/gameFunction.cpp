@@ -21,23 +21,25 @@ void game::setValid() {
 
 
 void game::StartGameLoop() {
+    InitAudioDevice();
+    bgMusic = ResourceAudio::audio.load("themeSound", "../Sound/ThemeSong.mp3", Audio::Type::MUSIC, true);
+    bgMusic->play();
+    bgMusic->setVolume(0.5);
     InitWindow(screenWidth, screenHeight, "Hello World");
     SetTargetFPS(144);
     //   Texture2D texture = LoadTexture("../Texture/fundal.png");
     ClearBackground(GREEN);
-    Brick::InitStatics();
     setLevel(1);
     setEntities();
     float fr = 0;
     int o = 0;
-    //  ToggleFullscreen();
- //   ToggleFullscreen();
     RenderTexture2D renderTexture = LoadRenderTexture(495, 270);
     while (!WindowShouldClose()) {
         o++;
         ClearBackground(BLUE);
         //setFPS(fr, o);
          fr = 0.0056;
+        bgMusic->update();
         // dt = 0.0096;
 
         BeginTextureMode(renderTexture);
@@ -106,4 +108,5 @@ void game::StartGameLoop() {
         DrawTexturePro(renderTexture.texture, {0, 0, 495, -270}, {0, 0, 1920, 1080}, {0, 0}, 0, WHITE);
         EndDrawing();
     }
+    CloseAudioDevice();
 }

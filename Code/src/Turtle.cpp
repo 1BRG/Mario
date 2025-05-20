@@ -4,31 +4,23 @@
 
 #include "../include/entitati/Turtle.h"
 
+#include <iostream>
+
 int Turtle::isd = 0;
 
 std::string Turtle::TurtleRUN = "../Texture/all/TurtleRun.png";
-std::string Turtle::FuriousRUN = "../Texture/all/FuriousRun.png";
+std::string Turtle::FuriousRUN = "../Texture/all/FuriousRunFixed.png";
 
-Turtle::Turtle(const float x, const float y) : Enemy(x, y, new Animation *[3]{
-                                                         new Animation(TurtleRUN, 2, 6),
-                                                         new Animation(TurtleRUN, 2, 12),
-                                                         new Animation(TurtleRUN, 2, 4)
-                                                     }) {
+Turtle::Turtle(const float x, const float y) : Enemy(x, y) {
+    animations[IDLE] = AnimationManager::animations.load("turtle_idle", TurtleRUN, 2, 3);
+
+    animations[RUN] = AnimationManager::animations.load("turtle_run", TurtleRUN, 2, 3);
     health = 2;
     damage = 1;
     state = RUN;
+    this->x = animations[IDLE]->width();
+    this->y = animations[IDLE]->height();
     speed = DefaultSpeed;
-}
-
-Turtle::Turtle(const float x, const float y, int a) : Enemy(x, y, new Animation *[3]{
-                                                                new Animation(FuriousRUN, 1, 1),
-                                                                new Animation(FuriousRUN, 1, 1),
-                                                                new Animation(FuriousRUN, 1, 1)
-                                                            }) {
-    damage = 2;
-    speed = 2 * DefaultSpeed;
-    health = a;
-    state = RUN;
 }
 
 Turtle *Turtle::clone() const {
@@ -85,10 +77,20 @@ void Turtle::moveToTarget() {
     change = false;
     if (tookDamage) {
         health--;
-        animations[RUN] = new Animation(FuriousRUN, 1, 2000);
-        animations[JUMP] = new Animation(FuriousRUN, 1, 2000);
-        animations[IDLE] = new Animation(FuriousRUN, 1, 2000);
-        speed *= 3              ;
+        health    = clamp(health, 0, 1000000);
+        try {
+            auto furiousAnim  = AnimationManager::animations.load("furiousRun", FuriousRUN, 1, 1);
+            animations[RUN]  = furiousAnim;
+            animations[JUMP] = animations[IDLE] =  furiousAnim;
+        }
+        catch (TextureException ex) {
+            std::cout << ex.what() << std::endl;
+            exit(0);
+        }
+
+
+     //   animations[IDLE] = animations[RUN];
+        speed *= 3;
         tookDamage = false;
     } else {
         tookDamage = false;
