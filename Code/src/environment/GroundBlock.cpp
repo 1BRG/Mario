@@ -6,13 +6,11 @@
 
 std::string GroundBlock::GroundBlockTexture = "../Texture/all/FloorTile.png";
 GroundBlock *GroundBlock::clone() const {
-
         return new GroundBlock(*this);
-
 }
 
 GroundBlock::GroundBlock(const float dx, const float dy) : Environment(dx, dy) {
-    animations[IDLE] = AnimationManager::animations.load("GroundBlock", GroundBlockTexture, 1, 1);
+    animations[IDLE] = AnimationManager::animations.get("GroundBlock");
     this->x = animations[IDLE]->width();
     this->y = animations[IDLE]->height();
     state = IDLE;

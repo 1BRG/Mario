@@ -12,9 +12,10 @@ std::string Turtle::TurtleRUN = "../Texture/all/TurtleRun.png";
 std::string Turtle::FuriousRUN = "../Texture/all/FuriousRunFixed.png";
 
 Turtle::Turtle(const float x, const float y) : Enemy(x, y) {
-    animations[IDLE] = AnimationManager::animations.load("turtle_idle", TurtleRUN, 2, 3);
-
-    animations[RUN] = AnimationManager::animations.load("turtle_run", TurtleRUN, 2, 3);
+    animations[IDLE] = AnimationManager::animations.get("turtle_idle");
+    animations[JUMP] = AnimationManager::animations.get("turtle_jump");
+    animations[RUN] = AnimationManager::animations.get("turtle_run");
+    sounds[DIE] = ResourceAudio::audio.get("kickKill");
     health = 2;
     damage = 1;
     state = RUN;
@@ -77,9 +78,9 @@ void Turtle::moveToTarget() {
     change = false;
     if (tookDamage) {
         health--;
-        health    = clamp(health, 0, 1000000);
+        health = clamp(health, 0, 1000000);
         try {
-            auto furiousAnim  = AnimationManager::animations.load("furiousRun", FuriousRUN, 1, 1);
+            auto furiousAnim = AnimationManager::animations.get("furiousRun");
             animations[RUN]  = furiousAnim;
             animations[JUMP] = animations[IDLE] =  furiousAnim;
         }
@@ -87,6 +88,8 @@ void Turtle::moveToTarget() {
             std::cout << ex.what() << std::endl;
             exit(0);
         }
+        sounds[DIE]->play();
+        damage = 2;
 
 
      //   animations[IDLE] = animations[RUN];

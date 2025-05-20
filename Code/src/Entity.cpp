@@ -61,7 +61,7 @@ bool Entity::isAlive() const {
 
 int Entity::danger() const {
     return damage;
-};
+}
 
 //GPT
 std::string Entity::detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const {

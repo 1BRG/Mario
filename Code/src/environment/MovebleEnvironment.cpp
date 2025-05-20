@@ -5,6 +5,7 @@
 #include "../../include/entitati/environment/MovebleEnvironment.h"
 
 MovebleEnvironment::MovebleEnvironment(const float dx, const float dy) : Environment(dx, dy) {
+    sounds[DIE] = ResourceAudio::audio.get("brickDestroy");
 }
 
 
@@ -12,7 +13,7 @@ void MovebleEnvironment::collision(Entity &other, int direction) {
     if (direction == 1 && moving) {
         targetY -= 1;
         if (other.danger() > health)
-        health = 0;
+        health = 0, sounds[DIE]->play();
     }
 }
 

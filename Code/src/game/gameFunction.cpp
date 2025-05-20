@@ -26,6 +26,8 @@ void game::StartGameLoop() {
     bgMusic->play();
     bgMusic->setVolume(0.5);
     InitWindow(screenWidth, screenHeight, "Hello World");
+    Entity::INIT();
+    Texture2D bgTexture = LoadTexture("../Texture/image.jpg");
     SetTargetFPS(144);
     //   Texture2D texture = LoadTexture("../Texture/fundal.png");
     ClearBackground(GREEN);
@@ -37,8 +39,8 @@ void game::StartGameLoop() {
     while (!WindowShouldClose()) {
         o++;
         ClearBackground(BLUE);
-        //setFPS(fr, o);
-         fr = 0.0056;
+        setFPS(fr, o);
+        // fr = 0.0056;
         bgMusic->update();
         // dt = 0.0096;
 
@@ -101,6 +103,13 @@ void game::StartGameLoop() {
         }
         //  for (const auto& entity : entities)
         //            std::cout << (*entity);
+        for (int x = -bgTexture.width; x < screenWidth + bgTexture.width; x += bgTexture.width)
+        {
+            for (int y = -bgTexture.height; y < screenHeight + bgTexture.height; y += bgTexture.height)
+            {
+                DrawTexture(bgTexture, x * 1. - cameraX, y, WHITE);
+            }
+        }
         draw();
         EndTextureMode();
         // cout << GetFPS() << "FPS" << endl;

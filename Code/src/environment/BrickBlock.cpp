@@ -8,9 +8,9 @@ std::string BrickBlock::BrickTexture = "../Texture/all/BrickBlockBrown.png";
 
 
 BrickBlock::BrickBlock(const float dx, const float dy) : MovebleEnvironment(dx, dy) {
-    animations[IDLE] = AnimationManager::animations.load("BrickBlock",BrickTexture, 1, 1);
+    animations[IDLE] = AnimationManager::animations.get("BrickBlock");
     state = IDLE;
-    health = 2;
+    health = 1;
     this->x = animations[IDLE]->width();
     this->y = animations[IDLE]->height();
 }

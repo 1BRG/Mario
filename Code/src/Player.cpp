@@ -15,14 +15,12 @@ Player::Player(const float x, const float y)
     lastY = screenHeight;
     targetX = coordX, targetY = coordY;
     health = 1;
-    animations[IDLE] = AnimationManager::animations.load(
-        "mario_idle", MarioIDLE, 1, 6);
-    animations[RUN] = AnimationManager::animations.load(
-        "mario_run", MarioRUN, 3, 12);
-    animations[JUMP] = AnimationManager::animations.load(
-        "mario_jump", MarioJUMP, 1, 4);
-    animations[SKIDDING] = AnimationManager::animations.load(
-        "mario_skidding", MarioSKIDDING, 1, 1);
+    damage = 1;
+    animations[IDLE] = AnimationManager::animations.get("mario_idle");
+    animations[RUN] = AnimationManager::animations.get("mario_run");
+    animations[JUMP] = AnimationManager::animations.get("mario_jump");
+    animations[SKIDDING] = AnimationManager::animations.get("mario_skidding");
+    sounds[JUMPPING] = ResourceAudio::audio.get("marioJump");
     this->x = animations[IDLE]->width();
     this->y = animations[IDLE]->height();
     state = RUN;
@@ -55,12 +53,19 @@ void Player::handleInput() {
         }
     }
     isJumping = (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) & canJump;
+    if (isJumping) {
+        bool ok;
+        ok = true;
+    }
 }
 
 void Player::update() {
     handleInput();
     moveX();
     moveY();
+    if (targetY < coordY && coordY == lastY) {
+        sounds[JUMPPING]->play();
+    }
 }
 
 void Player::collision(Entity &other, const int direction) {

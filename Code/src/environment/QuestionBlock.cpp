@@ -9,7 +9,7 @@ std::string QuestionBlock::QuestionTexture = "../Texture/all/QuestionBlock.png";
 std::string QuestionBlock::EmptyBlockTexture = "../Texture/all/EmptyBlock.png";
 
 QuestionBlock::QuestionBlock(const float dx, const float dy) : MovebleEnvironment(dx, dy) {
-    animations[IDLE] = AnimationManager::animations.load("questionBlock", QuestionTexture, 6, 6);
+    animations[IDLE] = AnimationManager::animations.get("questionBlock");
     state = IDLE;
     health = 1e8;
     this->x = animations[IDLE]->width();
@@ -24,7 +24,7 @@ void QuestionBlock::collision(Entity &other, int direction) {
 
 void QuestionBlock::update() {
     if (targetY != lastY && moving)
-        animations[IDLE] = AnimationManager::animations.load("EmptyBlock", EmptyBlockTexture, 1, 6);
+        animations[IDLE] = AnimationManager::animations.get("EmptyBlock");
     if (targetY != lastY)
         moving = false;
     MovebleEnvironment::update();

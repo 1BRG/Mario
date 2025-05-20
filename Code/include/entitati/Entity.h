@@ -30,7 +30,7 @@ protected:
     std::unordered_map<State, std::shared_ptr<Animation>> animations;
 
     enum Sound {DIE, JUMPPING, COIN};
-    std::unordered_map<Sound, std::shared_ptr<Sound>> sounds;
+    std::unordered_map<Sound, std::shared_ptr<Audio>> sounds;
 
     Vector2 position;
     State state;
@@ -47,6 +47,7 @@ protected:
 
 public:
     static CollisionInfo SweptAABB(const Rectangle& moving, const Vector2& vel, const Rectangle& target);
+    static void INIT();
     virtual void incomingDamage() {
     }
 
