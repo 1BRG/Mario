@@ -1,6 +1,6 @@
-# State Machine
+# Super Mario
 ### Scurta descriere a temei alese
-Am implementat un automat finit (State Machine) care citește din fișierul input.txt configurarea unui automat. Programul analizează această configurare pentru a determina dacă automatul este valid sau nu. În cazul în care automatul este valid, acesta se transforma intr-un DFA si oferă posibilitatea verificării apartenenței unui cuvânt la limbajul recunoscut de acesta
+Super Mario POO este o reinterpretare a clasicului joc platformer, în care îl controlezi pe Mario într-o lume plină de blocuri de cărămidă, blocuri misterioase cu semn de întrebare şi inamici ţestoşi. Sari peste obstacole, colectează monede și power-up-uri, evită duşmanii sau transformă-i în furioşi când îi lovești pe verticală. Scopul este să parcurgi nivelurile, să aduni cât mai multe puncte și să ajungi la capăt în stilul autentic Super Mario!
 
 ### Folosiți template-ul corespunzător grupei voastre!
 
