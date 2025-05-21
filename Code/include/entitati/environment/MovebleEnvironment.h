@@ -13,7 +13,6 @@ class MovebleEnvironment : public Environment {
     MovebleEnvironment(float x, float y);
     void collision(Entity &other, int direction) override;
     void moveY();
-
     virtual void update();
     void moveToTarget();
 };

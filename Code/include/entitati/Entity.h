@@ -46,10 +46,10 @@ protected:
     float lastY {screenHeight};
 
 public:
-    static CollisionInfo SweptAABB(const Rectangle& moving, const Vector2& vel, const Rectangle& target);
+    bool lasty()
+    {return targetY < lastY;}
     static void INIT();
-    virtual void incomingDamage() {
-    }
+    virtual void incomingDamage(){};
 
     virtual void collision(Entity &other, int direction) = 0;
 

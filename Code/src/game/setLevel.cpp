@@ -30,21 +30,21 @@ void game::setLevel(int k) {
                 std::shared_ptr<Entity> a;
                 try {
                     if (line[i] == '1') {
-                        a = std::make_shared<GroundBlock>((i) * 16, n * 16);
+                        a = EntityFactory::createEntity(EntityFactory::Type::groundBlock, i * 16, n * 16);
                         throw(a);
                     } else if (line[i] == '2') {
-                        a = std::make_shared<Turtle>((i) * 16, n * 16);
+                        a = EntityFactory::createEntity(EntityFactory::Type::turtle,(i) * 16, n * 16);
                         throw(a);
                     } else if (line[i] == 'P') {
-                        a = std::make_shared<Player>((i) * 16, n * 16);
+                        a = EntityFactory::createEntity(EntityFactory::Type::player,i * 16, n * 16);
                         throw(a);
 
                     } else if (line[i] == '3') {
-                        a = std::make_shared<QuestionBlock>((i) * 16, n * 16);
+                        a = EntityFactory::createEntity(EntityFactory::Type::questionBlock,i * 16, n * 16);
                         throw(a);
                     }
                     else if (line[i] == '4') {
-                        a = std::make_shared<BrickBlock>((i) * 16, n * 16);
+                        a = EntityFactory::createEntity(EntityFactory::Type::brickBlock,i * 16, n * 16);
                         throw(a);
                     }else if (line[i] != '0')
                         throw(BaseException("This entity does not exist!"));

@@ -16,4 +16,6 @@
 #include "environment/BrickBlock.h"
 #include "Audio.h"
 #include "../Template/ResourceAudio.h"
+#include "EntityFactory.h"
+
 #endif //INCLUDEALL_H

@@ -15,6 +15,7 @@
 #include <memory>
 
 
+
 class game {
     std::shared_ptr<Audio> bgMusic;
     bool valid = true;

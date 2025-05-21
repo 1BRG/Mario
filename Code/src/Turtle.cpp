@@ -53,6 +53,10 @@ void Turtle::update() {
 void Turtle::collision(Entity &other, int direction) {
     if (direction == 1) {
         //  updateBottom = false;
+        if (other.lasty()) {
+            bool ok;
+            ok = true;
+        }
         targetY = std::min(targetY, other.coord_y() - y);
         lastY = targetY;
     } else if (direction == -1) {

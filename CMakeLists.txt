@@ -98,6 +98,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/include/Template/templateFunction.h
         Code/include/Template/ResourceAudio.h
         Code/src/EntityInitialization.cpp
+        Code/include/entitati/EntityFactory.h
 
 )
 target_compile_features(oop PUBLIC cxx_std_17)
