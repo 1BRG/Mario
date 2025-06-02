@@ -11,9 +11,9 @@ void Entity::INIT() {
     AnimationManager::animations.load("mario_skidding", "../Texture/all/MarioSkidding.png", 1, 1);
 
 
-    AnimationManager::animations.load("turtle_idle", "../Texture/all/TurtleRun.png", 2, 2);
-    AnimationManager::animations.load("turtle_run", "../Texture/all/TurtleRun.png", 2, 2);
-    AnimationManager::animations.load("turtle_jump", "../Texture/all/TurtleRun.png", 2, 2);
+    AnimationManager::animations.load("turtle_idle", "../Texture/all/TurtleRun.png", 2, 1);
+    AnimationManager::animations.load("turtle_run", "../Texture/all/TurtleRun.png", 2, 1);
+    AnimationManager::animations.load("turtle_jump", "../Texture/all/TurtleRun.png", 2, 1);
 
     AnimationManager::animations.load("furiousRun", "../Texture/all/FuriousRunFixed.png", 1, 1);
 

@@ -42,12 +42,12 @@ void game::StartGameLoop() {
             aux->setWorld(instance);
         }
     }
-
+    ToggleFullscreen();
     while (!WindowShouldClose()) {
         o++;
         ClearBackground(BLUE);
-       // setFPS(fr, o);
-         fr = 0.0056;
+        setFPS(fr, o);
+         //fr = 0.0056;
         bgMusic->update();
         // dt = 0.0096;
         if (IsKeyDown(KEY_Q)) {

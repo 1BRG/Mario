@@ -8,9 +8,9 @@
 
 #define screenWidth 1920
 #define screenHeight 1080
-#define DefaultSpeed 75
-#define ProcentAlergare 0.035 * 50
+#define DefaultSpeed 50
+#define ProcentAlergare 0.035 * 40
 #define JumpMax (lastY-80)
 #define JumpMin (lastY-20)
-#define Jump 100
+#define Jump 80
 #endif //DEFINEURI_H
