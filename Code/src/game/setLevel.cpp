@@ -4,7 +4,7 @@
 
 #include "../../include/entitati/environment/QuestionBlock.h"
 #include "../../include/game/gameFunction.h"
-
+#include "../../include/entitati/EntityFactory.h"
 void game::setLevel(int k) {
     std::string filename = "../Code/Levels/level" + std::to_string(k) + ".txt";
     std::ifstream f(filename);
@@ -27,35 +27,39 @@ void game::setLevel(int k) {
 
     while (std::getline(f, line)) {
         for (long long unsigned int i = 0; i < line.length(); i++) {
-                std::shared_ptr<Entity> a;
-                try {
-                    if (line[i] == '1') {
-                        a = EntityFactory::createEntity(EntityFactory::Type::groundBlock, i * 16, n * 16);
-                        throw(a);
-                    } else if (line[i] == '2') {
-                        a = EntityFactory::createEntity(EntityFactory::Type::turtle,(i) * 16, n * 16);
-                        throw(a);
-                    } else if (line[i] == 'P') {
-                        a = EntityFactory::createEntity(EntityFactory::Type::player,i * 16, n * 16);
-                        throw(a);
-
-                    } else if (line[i] == '3') {
-                        a = EntityFactory::createEntity(EntityFactory::Type::questionBlock,i * 16, n * 16);
-                        throw(a);
-                    }
-                    else if (line[i] == '4') {
-                        a = EntityFactory::createEntity(EntityFactory::Type::brickBlock,i * 16, n * 16);
-                        throw(a);
-                    }else if (line[i] != '0')
-                        throw(BaseException("This entity does not exist!"));
-
-                } catch (const BaseException &txt) {
-                    std::cout << txt.what() << std::endl;
-                    exit(0);
+            std::shared_ptr<Entity> a;
+            try {
+                if (line[i] == '1') {
+                    a = EntityFactory::createEntity(EntityFactory::Type::groundBlock, i * 16, n * 16);
+                    throw(a);
                 }
-                catch (...) {
-                    level.push_back(a);
+                if (line[i] == '2') {
+                    a = EntityFactory::createEntity(EntityFactory::Type::turtle, (i) * 16, n * 16);
+                    throw(a);
                 }
+                if (line[i] == 'P') {
+                    a = EntityFactory::createEntity(EntityFactory::Type::player, i * 16, n * 16);
+                    auto c = std::dynamic_pointer_cast<Player>(a);
+                    c->setScore(score);
+                    throw(a);
+                }
+                if (line[i] == '3') {
+                    a = EntityFactory::createEntity(EntityFactory::Type::questionBlock, i * 16, n * 16);
+                    throw(a);
+                }
+                if (line[i] == '4') {
+                    a = EntityFactory::createEntity(EntityFactory::Type::brickBlock, i * 16, n * 16);
+                    throw(a);
+                }
+                if (line[i] != '0')
+                    throw(BaseException("This entity does not exist!"));
+            } catch (const BaseException &txt) {
+                std::cout << txt.what() << std::endl;
+                exit(0);
+            }
+            catch (...) {
+                level.push_back(a);
+            }
         }
         n++;
     }
@@ -84,12 +88,11 @@ void game::setEntities() {
         } else if (std::dynamic_pointer_cast<MovebleEnvironment>(entity) != nullptr) {
             try {
                 movEnv.push_back(std::dynamic_pointer_cast<MovebleEnvironment>(entity));
-            }
-            catch (TextureException &txt) {
+            } catch (TextureException &txt) {
                 std::cout << txt.what() << std::endl;
                 exit(0);
             }
-        }else {
+        } else {
             try {
                 environment.push_back(std::dynamic_pointer_cast<Environment>(entity));
             } catch (TextureException &txt) {
@@ -98,5 +101,12 @@ void game::setEntities() {
             }
         }
         //  insertEntity(entity);
+    }
+    for (auto& env : movEnv) {
+        auto qb = std::dynamic_pointer_cast<QuestionBlock>(env);
+        if (qb) {
+            qb->setWorld(this);
+            qb->attach(score);
+        }
     }
 }

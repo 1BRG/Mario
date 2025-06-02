@@ -17,14 +17,27 @@ QuestionBlock::QuestionBlock(const float dx, const float dy) : MovebleEnvironmen
 }
 
 
-void QuestionBlock::collision(Entity &other, int direction) {
-    if (moving)
-        MovebleEnvironment::collision(other, direction);
+void QuestionBlock::setWorld(game *g) {
+    world = g;
 }
+
+void QuestionBlock::collision(Entity &other, int direction) {
+    if (active && direction == 1) {
+        MovebleEnvironment::collision(other, direction);
+        animations[IDLE] = AnimationManager::animations.get("EmptyBlock");
+        active = false;
+        world->insertEntity(std::make_shared<Coin>(coordX + x / 4, coordY - y));
+
+        std::shared_ptr<MovebleEnvironment> This = shared_from_this();
+        notify(Question_hit, This);
+    }
+}
+
 
 void QuestionBlock::update() {
     if (targetY != lastY && moving)
         animations[IDLE] = AnimationManager::animations.get("EmptyBlock");
+
     if (targetY != lastY)
         moving = false;
     MovebleEnvironment::update();

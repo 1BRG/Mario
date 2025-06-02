@@ -9,7 +9,7 @@
 
 class BrickBlock : public MovebleEnvironment {
 static std::string BrickTexture;
-
+bool broken{false};
 public:
 
 BrickBlock( float dx,  float dy);

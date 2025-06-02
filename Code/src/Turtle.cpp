@@ -5,7 +5,7 @@
 #include "../include/entitati/Turtle.h"
 
 #include <iostream>
-
+#include "../include/entitati/Coin.h"
 int Turtle::isd = 0;
 
 std::string Turtle::TurtleRUN = "../Texture/all/TurtleRun.png";
@@ -51,6 +51,9 @@ void Turtle::update() {
 }
 
 void Turtle::collision(Entity &other, int direction) {
+    if (auto coin = dynamic_cast<Coin*>(&other); coin != nullptr) {
+        return;
+    }
     if (direction == 1) {
         //  updateBottom = false;
         if (other.lasty()) {
@@ -73,8 +76,6 @@ void Turtle::collision(Entity &other, int direction) {
         tookDamage = true;
 }
 
-void Turtle::collision() {
-}
 
 void Turtle::moveToTarget() {
     if (change) speed *= -1;

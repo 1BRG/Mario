@@ -34,9 +34,14 @@ void game::StartGameLoop() {
     float tileScale = (float) renderTexture.texture.width / bgTexture.width;
     float fr = 0;
     int o = 0;
-
     setLevel(1);
     setEntities();
+    for (const auto& c: movEnv) {
+        auto aux = std::dynamic_pointer_cast<QuestionBlock>(c);
+        if (aux != nullptr) {
+            aux->setWorld(instance);
+        }
+    }
 
     while (!WindowShouldClose()) {
         o++;
@@ -64,6 +69,12 @@ void game::StartGameLoop() {
                     ++it;
                 } else ++it;
             }
+        for (auto it = environment.begin(); it != environment.end();) {
+            (*it)->deltaTime(fr);
+            if (!(*it)->isAlive())
+                it = environment.erase(it);
+            else ++it;
+        }
             for (auto it = movEnv.begin(); it != movEnv.end();) {
                 (*it)->deltaTime(fr);
                 if (!(*it)->isAlive()) {
@@ -140,6 +151,9 @@ void game::StartGameLoop() {
         DrawTexturePro(renderTexture.texture, {0, 0, 495, -270}, {0, 0, 1920, 1080}, {0, 0}, 0, WHITE);
         float fps = GetFPS();
         DrawText(TextFormat("%.1f", fps), 0, 0, 25, GREEN);
+        std::string Score = "Score: ";
+        Score += std::to_string(score->getScore());
+        DrawText(Score.c_str(), 10, 50, 40, WHITE);
         EndDrawing();
 
     }

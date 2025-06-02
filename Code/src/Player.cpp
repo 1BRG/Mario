@@ -59,6 +59,10 @@ void Player::handleInput() {
     }
 }
 
+void Player::setScore(std::shared_ptr<ScoreManager> Score) {
+    score = Score;
+}
+
 void Player::update() {
     handleInput();
     moveX();
@@ -69,6 +73,13 @@ void Player::update() {
 }
 
 void Player::collision(Entity &other, const int direction) {
+    if (auto coin = dynamic_cast<Coin*>(&other); coin != nullptr) {
+            coin->collect();
+            if (score) {
+                score->addScore(2000);
+            }
+        return;
+    }
     // std::cout << health << std::endl;
     if (direction == 1 && targetY - coordY >= 0) {
         targetY = std::min(targetY, other.coord_y() - y);
@@ -86,9 +97,6 @@ void Player::collision(Entity &other, const int direction) {
     if (other.danger() && direction != 1)
         tookDamage = true;
     //canUpdate = false;
-}
-
-void Player::collision() {
 }
 
 /*

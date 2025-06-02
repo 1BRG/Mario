@@ -20,8 +20,6 @@ public:
 
     void collision(Entity &other, int direction) override;
 
-    static void collision();
-
     void update() override;
 
     void moveToTarget() override;

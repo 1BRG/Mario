@@ -99,6 +99,13 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/include/Template/ResourceAudio.h
         Code/src/EntityInitialization.cpp
         Code/include/entitati/EntityFactory.h
+        Code/include/Observer/IObserver.h
+        Code/src/Observer/IObserver.cpp
+        Code/include/Observer/ISubject.h
+        Code/include/Observer/ScoreManager.h
+        Code/src/Observer/ScoreManager.cpp
+        Code/include/entitati/Coin.h
+        Code/src/Coin.cpp
 
 )
 target_compile_features(oop PUBLIC cxx_std_17)

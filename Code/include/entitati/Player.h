@@ -6,13 +6,15 @@
 #define PLAYER_H
 #include "Living.h"
 
-
+#include "Coin.h"
+#include "../Observer/ScoreManager.h"
 class Player : public Living {
     static std::string MarioIDLE;
     static std::string MarioRUN;
     static std::string MarioJUMP;
     static std::string MarioSKIDDING;
     bool gaveDamage {false};
+    std::shared_ptr<ScoreManager> score;
 
 public:
     Player(float x, float y);
@@ -20,14 +22,13 @@ public:
     Player() = default;
 
     void handleInput();
-
+    void setScore(std::shared_ptr<ScoreManager> Score);
     // void moveX();
     //void moveY();
     void update() override;
 
     void collision(Entity &other, int direction) override;
 
-    static void collision();
 
     void moveToTarget() override;
 

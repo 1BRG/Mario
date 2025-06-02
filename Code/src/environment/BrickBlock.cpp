@@ -17,8 +17,15 @@ BrickBlock::BrickBlock(const float dx, const float dy) : MovebleEnvironment(dx, 
 
 
 void BrickBlock::collision(Entity &other, int direction) {
-    if (moving)
+    if (broken == false && direction == 1) {
         MovebleEnvironment::collision(other, direction);
+        if (other.danger() > health) {
+            health = 0, sounds[DIE]->play();
+
+            std::shared_ptr<MovebleEnvironment> This = shared_from_this();
+            notify(Brick_break, This);
+        }
+    }
 }
 
 void BrickBlock::update() {

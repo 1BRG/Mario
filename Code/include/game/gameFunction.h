@@ -17,6 +17,7 @@
 
 
 class game {
+    std::shared_ptr<ScoreManager> score;
     std::shared_ptr<Audio> bgMusic;
     bool valid = true;
     float cameraX {0}, cameraY {0};
@@ -27,7 +28,7 @@ class game {
     std::list<std::shared_ptr<MovebleEnvironment>> movEnv;
     static game *instance;
 
-    game() = default;
+    game() {score = std::make_shared<ScoreManager>();};
 
 public:
     static game *GetInstance();
@@ -35,6 +36,7 @@ public:
     void setLevel(int k);
 
     void setEntities();
+
 
     static void setValid();
 
@@ -58,7 +60,7 @@ public:
 
     void StartGameLoop();
 
-    void draw() const;
+    void draw();
 };
 
 

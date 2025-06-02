@@ -10,8 +10,9 @@ bool game::inScreenEntity(const std::shared_ptr<Entity> &entity) const {
     return true;
 }
 
-void game::draw() const {
+void game::draw()  {
     game *currentGame = GetInstance();
+
     for (const auto &entity: environment)
         if (currentGame->inScreenEntity(entity)) {
             entity->draw(cameraX);
@@ -28,10 +29,7 @@ void game::draw() const {
 
 //Nefolosite:
 void game::insertEntity(const std::shared_ptr<Entity> &entity) {
-    int yy = entity->coord_y(), xx = entity->coord_x();
-    for (int i = yy; i < yy + entity->height() && i < screenHeight - 1; i++)
-        for (int j = xx; j < xx + entity->width() && j < screenWidth - 1; j++)
-            grid[i][j] = entity;
+    environment.push_back(entity);
 }
 
 void game::deleteEntity(const std::shared_ptr<Entity> &entity) {
