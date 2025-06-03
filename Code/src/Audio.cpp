@@ -2,13 +2,12 @@
 // Created by Gabriel on 5/19/2025.
 //
 
-#include "../include/entitati/Audio.h"
+#include "../include/Entities/Audio.h"
 
-Audio::Audio(const std::string &filePath, Type type, bool loop):type(type), loop(loop) {
+Audio::Audio(const std::string &filePath, Type type, bool loop): type(type), loop(loop) {
     if (type == Type::SOUND) {
         sound = LoadSound(filePath.c_str());
-    }
-    else {
+    } else {
         music = LoadMusicStream(filePath.c_str());
         music.looping = loop;
     }
@@ -60,6 +59,7 @@ void Audio::setVolume(float volume) {
         SetMusicVolume(music, volume);
     }
 }
+
 Audio::~Audio() {
     if (type == Type::SOUND) {
         UnloadSound(sound);

@@ -9,16 +9,18 @@
 
 class ScoreManager : public IObserver {
     int score{0};
-    public:
+
+public:
     ScoreManager() = default;
+
     ~ScoreManager() override = default;
 
     void onNotify(EventType event, std::shared_ptr<Entity> entity) override;
+
     int getScore();
 
     void addScore(int i);
 };
-
 
 
 #endif //SCOREMANAGER_H

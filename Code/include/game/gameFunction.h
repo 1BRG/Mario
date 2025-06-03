@@ -8,27 +8,26 @@
 #include <list>
 
 #include "../defineuri.h"
-#include "../entitati/includeAll.h"
+#include "../Entities/includeAll.h"
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <memory>
 
 
-
 class game {
     std::shared_ptr<ScoreManager> score;
     std::shared_ptr<Audio> bgMusic;
     bool valid = true;
-    float cameraX {0}, cameraY {0};
+    float cameraX{0}, cameraY{0};
     std::shared_ptr<Entity> grid[screenHeight][screenWidth];
     std::list<std::shared_ptr<Living> > entities;
     std::list<std::shared_ptr<Entity> > level;
     std::list<std::shared_ptr<Entity> > environment;
-    std::list<std::shared_ptr<MovebleEnvironment>> movEnv;
+    std::list<std::shared_ptr<MovebleEnvironment> > movEnv;
     static game *instance;
 
-    game() {score = std::make_shared<ScoreManager>();};
+    game() { score = std::make_shared<ScoreManager>(); };
 
 public:
     static game *GetInstance();

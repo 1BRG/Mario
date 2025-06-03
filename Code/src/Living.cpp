@@ -2,7 +2,7 @@
 // Created by Gabriel on 4/16/2025.
 //
 
-#include "../include/entitati/Living.h"
+#include "../include/Entities/Living.h"
 
 #include <iostream>
 

@@ -2,7 +2,7 @@
 // Created by Gabriel on 6/2/2025.
 //
 
-#include "../include/entitati/Coin.h"
+#include "../include/Entities/Coin.h"
 
 Coin::Coin(const float x, const float y) : Entity(x, y) {
     animations[IDLE] = AnimationManager::animations.get("coin_idle");

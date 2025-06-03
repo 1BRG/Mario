@@ -2,10 +2,10 @@
 // Created by Gabriel on 4/16/2025.
 //
 
-#include "../include/entitati/Turtle.h"
+#include "../include/Entities/Turtle.h"
 
 #include <iostream>
-#include "../include/entitati/Coin.h"
+#include "../include/Entities/Coin.h"
 int Turtle::isd = 0;
 
 std::string Turtle::TurtleRUN = "../Texture/all/TurtleRun.png";
@@ -51,7 +51,7 @@ void Turtle::update() {
 }
 
 void Turtle::collision(Entity &other, int direction) {
-    if (auto coin = dynamic_cast<Coin*>(&other); coin != nullptr) {
+    if (auto coin = dynamic_cast<Coin *>(&other); coin != nullptr) {
         return;
     }
     if (direction == 1) {
@@ -79,17 +79,16 @@ void Turtle::collision(Entity &other, int direction) {
 
 void Turtle::moveToTarget() {
     if (change) speed *= -1;
-    else coordX = targetX, coordY = targetY;
+    coordX = targetX, coordY = targetY;
     change = false;
     if (tookDamage) {
         health--;
         health = clamp(health, 0, 1000000);
         try {
             auto furiousAnim = AnimationManager::animations.get("furiousRun");
-            animations[RUN]  = furiousAnim;
-            animations[JUMP] = animations[IDLE] =  furiousAnim;
-        }
-        catch (TextureException ex) {
+            animations[RUN] = furiousAnim;
+            animations[JUMP] = animations[IDLE] = furiousAnim;
+        } catch (TextureException ex) {
             std::cout << ex.what() << std::endl;
             exit(0);
         }
@@ -97,7 +96,7 @@ void Turtle::moveToTarget() {
         damage = 2;
 
 
-     //   animations[IDLE] = animations[RUN];
+        //   animations[IDLE] = animations[RUN];
         speed *= 3;
         tookDamage = false;
     } else {

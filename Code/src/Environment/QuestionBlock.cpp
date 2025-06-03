@@ -2,7 +2,7 @@
 // Created by Gabriel on 5/14/2025.
 //
 
-#include "../../include/entitati/environment/QuestionBlock.h"
+#include "../../include/Entities/Environment/QuestionBlock.h"
 
 std::string QuestionBlock::QuestionTexture = "../Texture/all/QuestionBlock.png";
 

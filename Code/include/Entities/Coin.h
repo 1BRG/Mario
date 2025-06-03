@@ -9,7 +9,7 @@
 
 #include "../../include/Template/ResourceAnimation.h"
 #include "../../include/Template/ResourceAudio.h"
-#include "../entitati/Player.h"
+#include "../Entities/Player.h"
 
 #include <iostream>
 #include "../observer/ISubject.h"

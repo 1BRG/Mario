@@ -2,7 +2,7 @@
 // Created by Gabriel on 5/14/2025.
 //
 
-#include "../../include/entitati/environment/BrickBlock.h"
+#include "../../include/Entities/Environment/BrickBlock.h"
 
 std::string BrickBlock::BrickTexture = "../Texture/all/BrickBlockBrown.png";
 

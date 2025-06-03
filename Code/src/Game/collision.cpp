@@ -29,7 +29,7 @@ void game::bottomCollision(const std::shared_ptr<Living> &entity) const {
             entity->collision(*env, 1), env->collision(*entity, -1);
     }
     for (const auto &env: movEnv) {
-        if (entity->bottomCollision(env) )
+        if (entity->bottomCollision(env))
             entity->collision(*env, 1), env->collision(*entity, -1);
     }
 }

@@ -5,7 +5,7 @@
 #ifndef RESOURCEAUDIO_H
 #define RESOURCEAUDIO_H
 #include "ResourceManager.h"
-#include "../entitati/Audio.h"
+#include "../Entities/Audio.h"
 
 struct ResourceAudio {
     inline static ResourceManager<Audio> audio;

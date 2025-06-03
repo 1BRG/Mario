@@ -2,7 +2,7 @@
 // Created by Gabriel on 5/7/2025.
 //
 
-#include "../include/entitati/Animation.h"
+#include "../include/Entities/Animation.h"
 
 Animation::Animation(const std::string &filePath, int frameCount, float frameSpeed)
     : frameCount(frameCount), currentFrame(0), frameSpeed(frameSpeed), elapsedTime(0.0f) {

@@ -4,6 +4,7 @@
 
 #ifndef TEMPLATEFUNCTION_H
 #define TEMPLATEFUNCTION_H
+
 template<typename T>
 T clamp(T v, T lo, T hi) {
     return (v < lo) ? lo : (v > hi) ? hi : v;

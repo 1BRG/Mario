@@ -2,7 +2,7 @@
 // Created by Gabriel on 5/14/2025.
 //
 
-#include "../../include/entitati/environment/MovebleEnvironment.h"
+#include "../../include/Entities/Environment/MovebleEnvironment.h"
 
 void MovebleEnvironment::attach(std::shared_ptr<IObserver> observer) {
     observers.push_back(observer);
@@ -18,10 +18,11 @@ void MovebleEnvironment::detach(std::shared_ptr<IObserver> observer) {
 }
 
 void MovebleEnvironment::notify(EventType event, std::shared_ptr<Entity> entity) {
-    for (const auto& observer : observers) {
+    for (const auto &observer: observers) {
         observer->onNotify(event, entity);
     }
 }
+
 MovebleEnvironment::MovebleEnvironment(const float dx, const float dy) : Environment(dx, dy) {
     sounds[DIE] = ResourceAudio::audio.get("brickDestroy");
 }

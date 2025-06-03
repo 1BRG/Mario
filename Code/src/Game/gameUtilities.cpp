@@ -10,7 +10,7 @@ bool game::inScreenEntity(const std::shared_ptr<Entity> &entity) const {
     return true;
 }
 
-void game::draw()  {
+void game::draw() {
     game *currentGame = GetInstance();
 
     for (const auto &entity: environment)
@@ -56,7 +56,7 @@ void game::setFPS(float &fr, int o) {
     catch (...) {
         fr = 0;
     }
-}/*
+} /*
 void DrawPixels()
 {
         for (int i = 0; i < screenHeight; i ++) {

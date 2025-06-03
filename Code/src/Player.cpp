@@ -2,7 +2,7 @@
 // Created by Gabriel on 4/16/2025.
 //
 
-#include "../include/entitati/Player.h"
+#include "../include/Entities/Player.h"
 
 #include <iostream>
 std::string Player::MarioIDLE = "../Texture/all/Mario.png";
@@ -73,11 +73,11 @@ void Player::update() {
 }
 
 void Player::collision(Entity &other, const int direction) {
-    if (auto coin = dynamic_cast<Coin*>(&other); coin != nullptr) {
-            coin->collect();
-            if (score) {
-                score->addScore(2000);
-            }
+    if (auto coin = dynamic_cast<Coin *>(&other); coin != nullptr) {
+        coin->collect();
+        if (score) {
+            score->addScore(2000);
+        }
         return;
     }
     // std::cout << health << std::endl;

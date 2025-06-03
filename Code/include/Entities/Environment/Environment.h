@@ -8,12 +8,10 @@
 
 
 class Environment : public Entity {
-
 public:
     Environment(float x, float y);
 
     Environment() = default;
-
 };
 
 

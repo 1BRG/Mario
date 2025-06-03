@@ -8,7 +8,7 @@
 #include <raylib.h>
 #include <vector>
 #include <string>
-#include "../Exceptii/exceptii.h"
+#include "../Exception/Exception.h"
 
 class Animation {
 public:

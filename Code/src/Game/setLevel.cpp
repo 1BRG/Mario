@@ -2,9 +2,10 @@
 // Created by Gabriel on 5/3/2025.
 //
 
-#include "../../include/entitati/environment/QuestionBlock.h"
+#include "../../include/Entities/Environment/QuestionBlock.h"
 #include "../../include/game/gameFunction.h"
-#include "../../include/entitati/EntityFactory.h"
+#include "../../include/Entities/EntityFactory.h"
+
 void game::setLevel(int k) {
     std::string filename = "../Code/Levels/level" + std::to_string(k) + ".txt";
     std::ifstream f(filename);
@@ -102,7 +103,7 @@ void game::setEntities() {
         }
         //  insertEntity(entity);
     }
-    for (auto& env : movEnv) {
+    for (auto &env: movEnv) {
         auto qb = std::dynamic_pointer_cast<QuestionBlock>(env);
         if (qb) {
             qb->setWorld(this);

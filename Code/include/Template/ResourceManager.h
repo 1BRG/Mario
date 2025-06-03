@@ -7,7 +7,7 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
-#include "../entitati/Animation.h"
+#include "../Entities/Animation.h"
 #include <stdexcept>
 template <typename T>
 

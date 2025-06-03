@@ -8,13 +8,15 @@
 
 
 class GroundBlock : public Environment {
-static std::string GroundBlockTexture;
+    static std::string GroundBlockTexture;
+
 public:
-    void collision(Entity &other, int direction) override {}
+    void collision(Entity &other, int direction) override {
+    }
 
-    GroundBlock( float dx,  float dy);
+    GroundBlock(float dx, float dy);
 
-     [[nodiscard]] GroundBlock *clone() const override;
+    [[nodiscard]] GroundBlock *clone() const override;
 
     GroundBlock(const GroundBlock &other) = default;
 

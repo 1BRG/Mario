@@ -9,19 +9,19 @@
 
 class Living : public Entity {
 protected:
-    float speed {0};
-    bool canJump {true}, cont {true}, isJumping {false};
-    bool tookDamage {false};
+    float speed{0};
+    bool canJump{true}, cont{true}, isJumping{false};
+    bool tookDamage{false};
 
     void moveX();
 
     void moveY();
 
 public:
-
     Living(float x, float y);
 
     Living() = default;
+
     void draw(float cameraX) override;
 
     virtual void moveToTarget() = 0;

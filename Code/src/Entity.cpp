@@ -2,7 +2,7 @@
 // Created by Gabriel on 4/1/2025.
 //
 #include <iostream>
-#include "../include/entitati/Entity.h"
+#include "../include/Entities/Entity.h"
 
 #include <string>
 
@@ -65,7 +65,6 @@ int Entity::danger() const {
 
 //GPT
 std::string Entity::detectCollisionSide(const std::shared_ptr<Entity> &env, int a, int b) const {
-
     Rectangle r1 = getRect(a, b);
     Rectangle r2 = env->getRect(0, 0);
 
@@ -77,7 +76,6 @@ std::string Entity::detectCollisionSide(const std::shared_ptr<Entity> &env, int 
     float overlapY = std::min(r1.y + r1.height, r2.y + r2.height) - std::max(r1.y, r2.y);
 
     if (overlapX < overlapY) {
-
         float centerX1 = r1.x + r1.width * 0.5f;
         float centerX2 = r2.x + r2.width * 0.5f;
         if (centerX1 < centerX2)
@@ -85,7 +83,6 @@ std::string Entity::detectCollisionSide(const std::shared_ptr<Entity> &env, int 
         else
             return "LEFT";
     } else {
-
         float centerY1 = r1.y + r1.height * 0.5f;
         float centerY2 = r2.y + r2.height * 0.5f;
         if (centerY1 < centerY2)
@@ -108,7 +105,6 @@ Rectangle Entity::getRect(const int a, const int b) const {
 }
 
 Entity::~Entity() {
-
     UnloadTexture(texture);
 }
 

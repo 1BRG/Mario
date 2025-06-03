@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 #include "../defineuri.h"
-#include "../Exceptii/exceptii.h"
+#include "../Exception/Exception.h"
 #include "Animation.h"
 #include "../Template/templateFunction.h"
 #include "../Template/ResourceAnimation.h"
@@ -20,17 +20,21 @@
 
 class Entity {
     struct CollisionInfo {
-        float   time;
+        float time;
         Vector2 normal;
-        bool    collided;
+        bool collided;
     };
+
 protected:
     Vector2 velocity{0, 0};
-    enum State { IDLE, RUN, JUMP, SKIDDING};
-    std::unordered_map<State, std::shared_ptr<Animation>> animations;
 
-    enum Sound {DIE, JUMPPING, COIN};
-    std::unordered_map<Sound, std::shared_ptr<Audio>> sounds;
+    enum State { IDLE, RUN, JUMP, SKIDDING };
+
+    std::unordered_map<State, std::shared_ptr<Animation> > animations;
+
+    enum Sound { DIE, JUMPPING, COIN };
+
+    std::unordered_map<Sound, std::shared_ptr<Audio> > sounds;
 
     Vector2 position;
     State state;
@@ -38,18 +42,20 @@ protected:
     std::string texturePath;
     float coordX{0}, coordY{0}, x{0}, y{0};
     float targetX{0}, targetY{0};
-    int health {1};
-    bool moving {true};
-    int damage {0};
-    bool updateLeft {true}, updateRight {true}, updateTop {true}, updateBottom {true};
+    int health{1};
+    bool moving{true};
+    int damage{0};
+    bool updateLeft{true}, updateRight{true}, updateTop{true}, updateBottom{true};
     Texture2D texture;
-    float lastY {screenHeight};
+    float lastY{screenHeight};
 
 public:
-    bool lasty()
-    {return targetY < lastY;}
+    bool lasty() { return targetY < lastY; }
+
     static void INIT();
-    virtual void incomingDamage(){};
+
+    virtual void incomingDamage() {
+    };
 
     virtual void collision(Entity &other, int direction) = 0;
 
@@ -76,7 +82,9 @@ public:
     [[nodiscard]] float target_y() const;
 
     [[nodiscard]] int danger() const;
+
     [[nodiscard]] bool isAlive() const;
+
     virtual void draw(float cameraX);
 
     void deltaTime(float deltatime);

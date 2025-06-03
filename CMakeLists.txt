@@ -52,25 +52,25 @@ add_executable(${MAIN_EXECUTABLE_NAME}
 
         Code/include/defineuri.h
 
-        Code/include/entitati/Entity.h
-        Code/include/entitati/Enemy.h
-        Code/include/entitati/includeAll.h
-        Code/include/entitati/Living.h
-        Code/include/entitati/Player.h
-        Code/include/entitati/Turtle.h
-        Code/include/entitati/environment/Environment.h
-        Code/include/entitati/environment/GroundBlock.h
-        Code/include/exceptii/BaseException.h
-        Code/include/exceptii/FileException.h
-        Code/include/Exceptii/TextureException.h
-        Code/include/Exceptii/FpsException.h
-        Code/include/Exceptii/exceptii.h
-        Code/include/entitati/Animation.h
-        Code/include/entitati/environment/QuestionBlock.h
-        Code/include/entitati/environment/MovebleEnvironment.h
-        Code/include/entitati/environment/BrickBlock.h
+        Code/include/entities/Entity.h
+        Code/include/entities/Enemy.h
+        Code/include/entities/includeAll.h
+        Code/include/entities/Living.h
+        Code/include/entities/Player.h
+        Code/include/entities/Turtle.h
+        Code/include/Entities/environment/Environment.h
+        Code/include/Entities/environment/GroundBlock.h
+        Code/include/Exception/BaseException.h
+        Code/include/Exception/FileException.h
+        Code/include/Exception/TextureException.h
+        Code/include/Exception/FpsException.h
+        Code/include/Exception/Exception.h
+        Code/include/entities/Animation.h
+        Code/include/Entities/environment/QuestionBlock.h
+        Code/include/Entities/environment/MovebleEnvironment.h
+        Code/include/Entities/environment/BrickBlock.h
         Code/include/Template/ResourceManager.h
-        Code/include/entitati/Audio.h
+        Code/include/entities/Audio.h
 
         Code/src/Enemy.cpp
         Code/src/Entity.cpp
@@ -81,10 +81,10 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/src/Living.cpp
         Code/src/environment/Environment.cpp
         Code/src/environment/GroundBlock.cpp
-        Code/src/exceptii/BaseException.cpp
-        Code/src/exceptii/FileException.cpp
-        Code/src/exceptii/TextureException.cpp
-        Code/src/exceptii/FpsException.cpp
+        Code/src/Exception/BaseException.cpp
+        Code/src/Exception/FileException.cpp
+        Code/src/Exception/TextureException.cpp
+        Code/src/Exception/FpsException.cpp
         Code/src/game/collision.cpp
         Code/src/game/gameUtilities.cpp
         Code/src/game/setLevel.cpp
@@ -98,13 +98,13 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Code/include/Template/templateFunction.h
         Code/include/Template/ResourceAudio.h
         Code/src/EntityInitialization.cpp
-        Code/include/entitati/EntityFactory.h
+        Code/include/entities/EntityFactory.h
         Code/include/Observer/IObserver.h
         Code/src/Observer/IObserver.cpp
         Code/include/Observer/ISubject.h
         Code/include/Observer/ScoreManager.h
         Code/src/Observer/ScoreManager.cpp
-        Code/include/entitati/Coin.h
+        Code/include/entities/Coin.h
         Code/src/Coin.cpp
 
 )

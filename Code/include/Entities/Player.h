@@ -8,12 +8,13 @@
 
 #include "Coin.h"
 #include "../Observer/ScoreManager.h"
+
 class Player : public Living {
     static std::string MarioIDLE;
     static std::string MarioRUN;
     static std::string MarioJUMP;
     static std::string MarioSKIDDING;
-    bool gaveDamage {false};
+    bool gaveDamage{false};
     std::shared_ptr<ScoreManager> score;
 
 public:
@@ -22,7 +23,9 @@ public:
     Player() = default;
 
     void handleInput();
+
     void setScore(std::shared_ptr<ScoreManager> Score);
+
     // void moveX();
     //void moveY();
     void update() override;

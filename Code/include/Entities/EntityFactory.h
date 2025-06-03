@@ -8,12 +8,13 @@
 
 
 class EntityFactory {
-
 public:
-    enum Type {brickBlock, groundBlock, questionBlock, player, turtle};
+    enum Type { brickBlock, groundBlock, questionBlock, player, turtle };
+
     EntityFactory() = default;
+
     template<typename... Args>
-    static std::shared_ptr<Entity> createEntity(Type type, Args&&... args) {
+    static std::shared_ptr<Entity> createEntity(Type type, Args &&... args) {
         if (type == brickBlock)
             return std::make_shared<BrickBlock>(args...);
         if (type == groundBlock)
@@ -27,7 +28,6 @@ public:
         throw std::invalid_argument("Invalid type");
     }
 };
-
 
 
 #endif //ENTITYFACTORY_H
