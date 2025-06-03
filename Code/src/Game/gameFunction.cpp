@@ -46,8 +46,8 @@ void game::StartGameLoop() {
     while (!WindowShouldClose()) {
         o++;
         ClearBackground(BLUE);
-        setFPS(fr, o);
-        //fr = 0.0056;
+     //   setFPS(fr, o);
+        fr = 0.0056;
         bgMusic->update();
         // dt = 0.0096;
         if (IsKeyDown(KEY_Q)) {
@@ -150,7 +150,7 @@ void game::StartGameLoop() {
 
         DrawTexturePro(renderTexture.texture, {0, 0, 495, -270}, {0, 0, 1920, 1080}, {0, 0}, 0, WHITE);
         float fps = GetFPS();
-        DrawText(TextFormat("%.1f", fps), 0, 0, 25, GREEN);
+        DrawText(TextFormat("%.1f", fps), 10, 15, 25, GREEN);
         std::string Score = "Score: ";
         Score += std::to_string(score->getScore());
         DrawText(Score.c_str(), 10, 50, 40, WHITE);

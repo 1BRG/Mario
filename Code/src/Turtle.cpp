@@ -62,15 +62,16 @@ void Turtle::collision(Entity &other, int direction) {
         }
         targetY = std::min(targetY, other.coord_y() - y);
         lastY = targetY;
+        state = RUN;
     } else if (direction == -1) {
         cont = false;
         //    updateTop = false;
         cont = false;
         canJump = false;
     } else if (direction == 2) {
-        targetX = std::min(targetX, other.coord_x() - x), change = true;
+        targetX = std::min(targetX, other.coord_x() - x - 1), change = true;
     } else if (direction == -2) {
-        targetX = std::max(targetX, other.coord_x() + other.width()), change = true;
+        targetX = std::max(targetX, other.coord_x() + other.width() + 1), change = true;
     }
     if (other.danger() > 1)
         tookDamage = true;
@@ -88,7 +89,7 @@ void Turtle::moveToTarget() {
             auto furiousAnim = AnimationManager::animations.get("furiousRun");
             animations[RUN] = furiousAnim;
             animations[JUMP] = animations[IDLE] = furiousAnim;
-        } catch (TextureException ex) {
+        } catch (TextureException &ex) {
             std::cout << ex.what() << std::endl;
             exit(0);
         }

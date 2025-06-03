@@ -90,9 +90,9 @@ void Player::collision(Entity &other, const int direction) {
         targetY = std::max(targetY, other.coord_y() + other.height());
         cont = false, cont = false, canJump = false;
     } else if (direction == 2)
-        targetX = std::min(targetX, other.coord_x() - width());
+        targetX = std::min(targetX, other.coord_x() - width() - 1), speed /= 2;
     else if (direction == -2)
-        targetX = std::max(targetX, other.coord_x() + other.width());
+        targetX = std::max(targetX, other.coord_x() + other.width() + 1), speed /= 2;
 
     if (other.danger() && direction != 1)
         tookDamage = true;
@@ -114,7 +114,8 @@ Player *Player::clone() const {
 
 void Player::moveToTarget() {
     // cout << "ba";
-
+    coordX = targetX;
+    coordY = targetY;
     if (updateLeft && targetX - coordX <= 0) {
         coordX = targetX;
     }

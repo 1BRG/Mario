@@ -57,10 +57,15 @@ int Animation::GetCurrentFrame() const {
     return currentFrame;
 }
 
+
 int Animation::width() const {
     return texture.width / frameCount;
 }
 
 int Animation::height() const {
     return texture.height;
+}
+
+int Animation::GetFrameSpeed() const {
+    return frameSpeed;
 }

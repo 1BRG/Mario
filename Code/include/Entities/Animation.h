@@ -38,6 +38,8 @@ public:
 
     int height() const;
 
+    int GetFrameSpeed() const;
+
 private:
     Texture2D texture;
     std::vector<Rectangle> frames;
