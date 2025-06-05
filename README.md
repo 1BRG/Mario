@@ -1,7 +1,8 @@
 # Super Mario
 ### Scurta descriere a temei alese
 Super Mario POO este o reinterpretare a clasicului joc platformer, în care îl controlezi pe Mario într-o lume plină de blocuri de cărămidă, blocuri misterioase cu semn de întrebare şi inamici ţestoşi. Sari peste obstacole, colectează monede și power-up-uri, evită duşmanii sau transformă-i în furioşi când îi lovești pe verticală. Scopul este să parcurgi nivelurile, să aduni cât mai multe puncte și să ajungi la capăt în stilul autentic Super Mario!
-![image](https://github.com/user-attachments/assets/d3bdf1ef-e97b-4fe2-b06f-eb705d5af34f)
+![image](https://github.com/user-attachments/assets/3971a018-75e7-4e3a-8fec-339ea2daa8ea)
+
 
 ### Folosiți template-ul corespunzător grupei voastre!
 
