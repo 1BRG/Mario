@@ -6,30 +6,28 @@
 #define COIN_H
 
 #include "Entity.h"
-
 #include "../../include/Template/ResourceAnimation.h"
 #include "../../include/Template/ResourceAudio.h"
 #include "../Entities/Player.h"
-
 #include <iostream>
 #include "../observer/ISubject.h"
 
+// Collectible coin that plays sound on pickup and notifies state
 class Coin : public Entity {
-    bool collected{false};
+    bool collected{false};  // Flag if coin has been picked up
 
 public:
-    Coin(float x, float y);
+    Coin(float x, float y);        // Constructor sets up animation and sound
 
-    ~Coin() override = default;
+    ~Coin() override = default;    // Default destructor
 
-    bool isCollected() const;
+    bool isCollected() const;      // Check if already collected
 
-    void collect();
+    void collect();                // Mark as collected and play sound
 
-    void collision(Entity &other, int direction) override;
+    void collision(Entity &other, int direction) override; // Pickup on player collision
 
-    [[nodiscard]] Coin *clone() const override;
+    [[nodiscard]] Coin *clone() const override; // Clone coin for spawning
 };
-
 
 #endif //COIN_H

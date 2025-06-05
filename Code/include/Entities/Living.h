@@ -6,38 +6,41 @@
 #define LIVING_H
 #include "Entity.h"
 
-
+// Class for entities with movement and jumping capabilities
 class Living : public Entity {
 protected:
-    float speed{0};
-    bool canJump{true}, cont{true}, isJumping{false};
-    bool tookDamage{false};
+    float speed{0}; // Current horizontal speed
+    bool canJump{true}, // Flag if entity can initiate jump
+            cont{true}, // Control flag for jump continuation
+            isJumping{false}; // Flag if currently jumping
+    bool tookDamage{false}; // Flag if damage was taken this frame
 
-    void moveX();
+    void moveX(); // Handle horizontal movement
 
-    void moveY();
+    void moveY(); // Handle vertical movement (gravity/jump)
 
 public:
-    Living(float x, float y);
+    Living(float x, float y); // Constructor with initial position
 
     Living() = default;
 
-    void draw(float cameraX) override;
+    void draw(float cameraX) override; // Override draw to include flip based on speed
 
-    virtual void moveToTarget() = 0;
+    virtual void moveToTarget() = 0; // Move logic towards a target position
 
-    virtual void setLastY();
+    virtual void setLastY(); // Update lastY when landing reset
 
-    void collision(Entity &other, int directie) override;
+    void collision(Entity &other, int directie) override; // Handle collision with other entities
 
-    void print() const override;
+    void print() const override; // Print debug info including speed
 
-    [[nodiscard]] bool inCollision(const std::shared_ptr<Entity> &env, int a, int b) const;
+    [[nodiscard]] bool inCollision(const std::shared_ptr<Entity> &env, int a, int b) const; // AABB check
 
-    virtual void update() = 0;
+    virtual void update() = 0; // Update logic each frame
 
-    friend std::ostream &operator<<(std::ostream &os, const Living &living);
+    friend std::ostream &operator<<(std::ostream &os, const Living &living); // Stream output
 
+    // Check collision on specific sides
     bool bottomCollision(const std::shared_ptr<Entity> &env) const;
 
     bool topCollision(const std::shared_ptr<Entity> &env) const;
@@ -46,6 +49,5 @@ public:
 
     bool rightCollision(const std::shared_ptr<Entity> &env) const;
 };
-
 
 #endif //LIVING_H

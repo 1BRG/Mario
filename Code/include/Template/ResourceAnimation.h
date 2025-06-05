@@ -4,9 +4,13 @@
 
 #ifndef RESOURCEANIMATION_H
 #define RESOURCEANIMATION_H
-#include "ResourceManager.h"
 
+#include "ResourceManager.h"
+#include "../Entities/Animation.h"
+
+// Global access point for Animation resources
 struct AnimationManager {
-    inline static ResourceManager<Animation> animations;
+    inline static ResourceManager<Animation> animations; // Manager for Animation objects
 };
+
 #endif //RESOURCEANIMATION_H

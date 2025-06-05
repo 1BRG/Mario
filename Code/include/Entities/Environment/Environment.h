@@ -6,13 +6,12 @@
 #define ENVIRONMENT_H
 #include "../Entity.h"
 
-
+// Static environment entity: non-interactive world elements
 class Environment : public Entity {
 public:
-    Environment(float x, float y);
+    Environment(float x, float y);  // Constructor sets position
 
-    Environment() = default;
+    Environment() = default;         // Default constructor
 };
-
 
 #endif //ENVIRONMENT_H

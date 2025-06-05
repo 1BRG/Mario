@@ -7,10 +7,11 @@
 
 #include "BaseException.h"
 
+// Exception thrown when frame timing exceeds expected threshold
 class FpsException : public BaseException {
 public:
+    // Default constructor with predefined error message
     explicit FpsException();
 };
-
 
 #endif //FPSEXCEPTION_H

@@ -5,7 +5,7 @@
 #include "../../include/Entities/Environment/QuestionBlock.h"
 #include "../../include/game/gameFunction.h"
 #include "../../include/Entities/EntityFactory.h"
-
+// Load level file into entity list using factory and exceptions
 void game::setLevel(int k) {
     std::string filename = "../Code/Levels/level" + std::to_string(k) + ".txt";
     std::ifstream f(filename);
@@ -70,6 +70,7 @@ void game::setLevel(int k) {
     });
 }
 
+// Categorize entities into lists and attach observers
 void game::setEntities() {
     entities.clear();
     environment.clear();
